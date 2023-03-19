@@ -19,13 +19,14 @@ def get_resumes():
 
     return [r.to_dict() for r in resumes]
 
+from ..utils.gpt import generate_gpt_cover_letter
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required
 def create_new_cover_letter(id):
     """
     Creates a new cover letter by resume id.
-    Expects a request body with 'job_title', 'job_description', and 'company_details' attributes
+    Expects a request body with 'job_title', 'job_description', 'company_details' and 'engine' attributes
     """
     resume = Resume.query.get(id)
 
@@ -40,19 +41,21 @@ def create_new_cover_letter(id):
     data = request.json
     job_description = data['job_description']
     company_details = data['company_details']
+    engine=data['engine']
 
-    # Call gpt api here
-    response = 'Test'
-    engine='gpt-3.5-turbo'
+    # Generate a cover letter using OpenAI's API
+    letter = generate_gpt_cover_letter(resume, job_description, company_details, engine)
 
     # Create new cover letter in db
     new_cover_letter = CoverLetter(
         user_id=current_user.id,
-        letter_text=response,
+        letter_text=letter,
         engine=engine,
         job_description=job_description
     )
     db.session.add(new_cover_letter)
     db.session.commit()
 
+
+    # return new_cover_letter.to_dict()
     return new_cover_letter.to_dict()

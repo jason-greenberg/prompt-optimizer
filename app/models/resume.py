@@ -12,6 +12,9 @@ class Resume(db.Model):
     position_type = db.Column(db.String, nullable=True)
     skill_level = db.Column(db.String, nullable=True)
 
+    applications = db.relationship('Application', back_populates='resume')
+    
+
     def to_dict(self):
         return {
             'id': self.id,

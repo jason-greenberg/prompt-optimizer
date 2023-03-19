@@ -1,4 +1,5 @@
 .env
+.flaskenv
 .env.example
 __pycache__/
 *.py[cod]
@@ -6,3 +7,4 @@ __pycache__/
 .DS_Store
 .vscode/
 *.db
+node_modules

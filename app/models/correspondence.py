@@ -13,7 +13,7 @@ class Correspondence(db.Model):
     type = db.Column(db.String, nullable=True)
     context = db.Column(db.Text, nullable=False)
     generated_response = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
 
     user = db.relationship('User', back_populates='correspondences')
     application = db.relationship('Application', back_populates='correspondences')

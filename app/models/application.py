@@ -12,7 +12,7 @@ class Application(db.Model):
     resume_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('resumes.id'), ondelete='CASCADE'), nullable=False)
     cover_letter_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('coverletters.id'), ondelete='CASCADE'), nullable=False)
     job_title = db.Column(db.String, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
 
     user = db.relationship('User', back_populates='applications')
     resume = db.relationship('Resume', back_populates='applications')

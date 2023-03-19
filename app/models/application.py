@@ -14,8 +14,8 @@ class Application(db.Model):
     job_title = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-    user = db.relationship('User', uselist=False, back_populates='applications')
-    resume = db.relationship('Resume', uselist=False, back_populates='applications')
+    user = db.relationship('User', back_populates='applications')
+    resume = db.relationship('Resume', back_populates='applications')
     cover_letter = db.relationship('CoverLetter', uselist=False, back_populates='application')
     correspondences = db.relationship('Correspondence', back_populates='application')
 
@@ -24,5 +24,7 @@ class Application(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'resume_id': self.resume_id,
-            'cover_letter_id': self.cover_letter_id
+            'cover_letter_id': self.cover_letter_id,
+            'job_title': self.job_title,
+            'created_at': self.created_at
         }

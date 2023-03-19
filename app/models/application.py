@@ -13,3 +13,12 @@ class Application(db.Model):
 
     user = db.relationship('User', uselist=False, back_populates='applications')
     resume = db.relationship('Resume', uselist=False, back_populates='applications')
+    cover_letter = db.relationship('CoverLetter', uselist=False, back_populates='application')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'resume_id': self.resume_id,
+            'cover_letter_id': self.cover_letter_id
+        }

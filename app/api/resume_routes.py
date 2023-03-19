@@ -20,7 +20,7 @@ def get_resumes():
     return [r.to_dict() for r in resumes]
 
 from ..utils.gpt import call_gpt
-from ..utils.prompts import prompt_one, prompt_two
+from ..utils.prompts import prompt_one, prompt_two, prompt_three
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required
@@ -60,8 +60,11 @@ def create_new_cover_letter(id):
     messages=[
         {"role": "system", "content": "You will act as an expert in editing cover letters for junior web developers, who wants to include detail about why, on a personal interest level, a candidate is a good fit for a role."},
         {"role": "user", "content": prompt_one(resume, job_description)},
-        {"role": "assistant", "content": 'Assitant generates a cover letter here'},
-        {"role": "user", "content": prompt_two(company_details)}
+        {"role": "assistant", "content": 'Assistant generates a cover letter here'},
+        {"role": "user", "content": prompt_two(company_details)},
+        {"role": "assistant", "content": 'Assistant generates a revised, more personable cover letter here'},
+        {"role": "user", "content": prompt_three()},
+        {"role": "assistant", "content": 'Assistant generates another revision, to include applicants qualifications for the job'}
     ]
 
     output = call_gpt(messages)

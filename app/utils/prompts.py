@@ -20,3 +20,8 @@ def prompt_two(company_details):
     {company_details}
 
     """
+
+def prompt_three():
+    return f"""Now, keep the interest and personal connection to the company in the next revision. This time, when you rewrite it, include toward the middle and a tasteful advertisement of my qualification match for the position, based on comparing my resume to the job description.
+    
+    """

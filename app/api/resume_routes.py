@@ -19,15 +19,14 @@ def get_resumes():
 
     return [r.to_dict() for r in resumes]
 
-from ..utils.gpt import call_gpt
-from ..utils.prompts import prompt_one, prompt_two, prompt_three
+from ..utils.gpt import generate_gpt_cover_letter
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required
 def create_new_cover_letter(id):
     """
     Creates a new cover letter by resume id.
-    Expects a request body with 'job_title', 'job_description', and 'company_details' attributes
+    Expects a request body with 'job_title', 'job_description', 'company_details' and 'engine' attributes
     """
     resume = Resume.query.get(id)
 
@@ -42,32 +41,21 @@ def create_new_cover_letter(id):
     data = request.json
     job_description = data['job_description']
     company_details = data['company_details']
+    engine=data['engine']
 
-    # Call gpt api here
-    response = 'Test'
-    engine='gpt-3.5-turbo'
+    # Generate a cover letter using OpenAI's API
+    letter = generate_gpt_cover_letter(resume, job_description, company_details, engine)
 
     # Create new cover letter in db
     new_cover_letter = CoverLetter(
         user_id=current_user.id,
-        letter_text=response,
+        letter_text=letter,
         engine=engine,
         job_description=job_description
     )
     db.session.add(new_cover_letter)
-    # db.session.commit()
+    db.session.commit()
 
-    messages=[
-        {"role": "system", "content": "You will act as an expert in editing cover letters for junior web developers, who wants to include detail about why, on a personal interest level, a candidate is a good fit for a role."},
-        {"role": "user", "content": prompt_one(resume, job_description)},
-        {"role": "assistant", "content": 'Assistant generates a cover letter here'},
-        {"role": "user", "content": prompt_two(company_details)},
-        {"role": "assistant", "content": 'Assistant generates a revised, more personable cover letter here'},
-        {"role": "user", "content": prompt_three()},
-        {"role": "assistant", "content": 'Assistant generates another revision, to include applicants qualifications for the job'}
-    ]
-
-    output = call_gpt(messages)
 
     # return new_cover_letter.to_dict()
-    return jsonify(output)
+    return new_cover_letter.to_dict()

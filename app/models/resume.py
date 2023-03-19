@@ -13,7 +13,7 @@ class Resume(db.Model):
     skill_level = db.Column(db.String, nullable=True)
 
     applications = db.relationship('Application', back_populates='resume')
-    user = db.relationship('Application', uselist=False, back_populates='resumes')
+    user = db.relationship('User', uselist=False, back_populates='resumes')
 
     def to_dict(self):
         return {

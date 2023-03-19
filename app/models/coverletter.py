@@ -6,7 +6,6 @@ class CoverLetter(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     letter_text = db.Column(db.Text, nullable=False)
@@ -16,7 +15,7 @@ class CoverLetter(db.Model):
 
     application = db.relationship('Application', uselist=False, back_populates='cover_letter')
     user = db.relationship('User', uselist=False, back_populates='cover_letters')
-    
+
 
     def to_dict(self):
         return {

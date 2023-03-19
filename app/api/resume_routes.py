@@ -19,6 +19,7 @@ def get_resumes():
 
     return [r.to_dict() for r in resumes]
 
+from ..utils.gpt import call_gpt
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required
@@ -55,4 +56,11 @@ def create_new_cover_letter(id):
     db.session.add(new_cover_letter)
     db.session.commit()
 
-    return new_cover_letter.to_dict()
+    messages=[
+        {'role': 'user', 'content': 'Hello!'}
+    ]
+
+    output = call_gpt(messages)
+
+    # return new_cover_letter.to_dict()
+    return jsonify(output)

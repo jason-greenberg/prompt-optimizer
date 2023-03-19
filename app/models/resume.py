@@ -12,4 +12,13 @@ class Resume(db.Model):
     position_type = db.Column(db.String, nullable=True)
     skill_level = db.Column(db.String, nullable=True)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'resume_text': self.resume_text,
+            'position_type': self.position_type,
+            'skill_level': self.skill_level
+        }
+
     

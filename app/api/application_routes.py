@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 from app.models import Application, Correspondence, db
+from datetime import datetime
 
 application_routes = Blueprint('applications', __name__)
 
@@ -66,6 +67,35 @@ def get_correspondences_by_application_id(application_id):
         return correspondences_not_found()
 
     return jsonify([c.to_dict() for c in correspondences])
+
+# Create new correspondence by application id
+@application_routes.route('/<int:application_id>', methods=['POST'])
+@login_required
+def create_correspondence(application_id):
+    """
+    Creates a new correspondence
+    Expects 'type', 'context', in request body
+    """
+    data = request.json
+    type = data['type']
+    context = data['context']
+    
+    # GPT logic here
+    generated_response = 'Test'
+
+    # Create new correspondence in db
+    new_correspondence = Correspondence(
+        user_id=current_user.id,
+        application_id=application_id,
+        type=type,
+        context=context,
+        generated_response=generated_response,
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_correspondence)
+    db.session.commit()
+
+    return new_correspondence.to_dict(), 201
 
 # Delete application by id
 @application_routes.route('/<int:id>', methods=['DELETE'])

@@ -39,34 +39,6 @@ def get_correspondence_by_id(id):
     
     return correspondence.to_dict()
 
-# Create new correspondence
-@correspondence_routes.route('/', methods=['POST'])
-@login_required
-def create_correspondence():
-    """
-    Creates a new correspondence
-    Expects 'application_id', 'type', 'context', and 'generated_response' in request body
-    """
-    data = request.json
-    application_id = data['application_id']
-    type = data['type']
-    context = data['context']
-    generated_response = data['generated_response']
-
-    # Create new correspondence in db
-    new_correspondence = Correspondence(
-        user_id=current_user.id,
-        application_id=application_id,
-        type=type,
-        context=context,
-        generated_response=generated_response,
-        created_at=datetime.utcnow()
-    )
-    db.session.add(new_correspondence)
-    db.session.commit()
-
-    return new_correspondence.to_dict(), 201
-
 # Delete correspondence by id
 @correspondence_routes.route('/<int:id>', methods=['DELETE'])
 @login_required

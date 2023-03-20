@@ -9,6 +9,7 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.resume_routes import resume_routes
 from .api.cover_letter_routes import cover_letter_routes
+from .api.application_routes import application_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -32,6 +33,7 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(resume_routes, url_prefix='/api/resumes')
 app.register_blueprint(cover_letter_routes, url_prefix='/api/coverletters')
+app.register_blueprint(application_routes, url_prefix='/api/applications')
 db.init_app(app)
 Migrate(app, db)
 

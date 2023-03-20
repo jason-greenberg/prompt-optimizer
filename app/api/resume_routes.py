@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 from app.models import Resume, CoverLetter, Application, db
+from ..utils.gpt import generate_gpt_cover_letter
+from datetime import datetime
 
 resume_routes = Blueprint('resumes', __name__)
 
@@ -19,8 +21,6 @@ def get_resumes():
 
     return [r.to_dict() for r in resumes]
 
-from ..utils.gpt import generate_gpt_cover_letter
-from datetime import datetime
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required
@@ -75,3 +75,28 @@ def create_new_cover_letter(id):
         'coverletter': new_cover_letter.to_dict(),
         'application': new_application.to_dict()
     }
+
+@resume_routes.route('/', methods=['POST'])
+@login_required
+def create_resume():
+    """
+    Creates a new resume
+    Expects 'resume_text', 'position_type', and 'skill_level' in request body
+    """
+    data = request.json
+    resume_text = data['resume_text']
+    position_type = data['position_type']
+    skill_level = data['skill_level']
+
+    # Create new resume in db
+    new_resume = Resume(
+        user_id=current_user.id,
+        resume_text=resume_text,
+        position_type=position_type,
+        skill_level=skill_level,
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_resume)
+    db.session.commit()
+
+    return new_resume.to_dict()

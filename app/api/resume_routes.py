@@ -74,7 +74,7 @@ def create_new_cover_letter(id):
     return {
         'coverletter': new_cover_letter.to_dict(),
         'application': new_application.to_dict()
-    }
+    }, 201
 
 @resume_routes.route('/', methods=['POST'])
 @login_required
@@ -99,4 +99,28 @@ def create_resume():
     db.session.add(new_resume)
     db.session.commit()
 
-    return new_resume.to_dict()
+    return new_resume.to_dict(), 201
+
+@resume_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_resume(id):
+    """
+    Deletes a resume by id
+    """
+    resume = Resume.query.get(id)
+
+    # Return 404 if resume not found
+    if resume is None:
+        return page_not_found()
+    
+    # Return 403 if resume does not belong to user
+    if resume.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Resume must belong to the current user'}), 403)
+    
+    # Delete resume
+    db.session.delete(resume)
+    db.session.commit()
+
+    return { 'message': 'Successfully deleted resume' }
+
+    

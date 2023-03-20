@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: a6b7ad20145d
+Revision ID: 690a1ef4ad49
 Revises: 
-Create Date: 2023-03-19 21:52:38.144651
+Create Date: 2023-03-20 10:47:09.262631
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = 'a6b7ad20145d'
+revision = '690a1ef4ad49'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,7 +33,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-    
+
     op.create_table('coverletters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -44,10 +44,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
-    
+
     if environment == "production":
         op.execute(f"ALTER TABLE coverletters SET SCHEMA {SCHEMA};")
-    
+
     op.create_table('resumes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -61,7 +61,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE resumes SET SCHEMA {SCHEMA};")
-    
+
     op.create_table('applications',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -77,12 +77,12 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE applications SET SCHEMA {SCHEMA};")
-    
+
     op.create_table('correspondences',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('application_id', sa.Integer(), nullable=False),
-    sa.Column('type', sa.String(), nullable=True),
+    sa.Column('corr_type', sa.String(), nullable=True),
     sa.Column('context', sa.Text(), nullable=False),
     sa.Column('generated_response', sa.Text(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
@@ -93,7 +93,6 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE correspondences SET SCHEMA {SCHEMA};")
-    
     # ### end Alembic commands ###
 
 

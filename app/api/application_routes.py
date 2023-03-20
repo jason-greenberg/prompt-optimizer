@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 from app.models import Application, Correspondence, db
 from datetime import datetime
+from ..utils.gpt import generate_gpt_correspondence
 
 application_routes = Blueprint('applications', __name__)
 
@@ -74,20 +75,21 @@ def get_correspondences_by_application_id(application_id):
 def create_correspondence(application_id):
     """
     Creates a new correspondence
-    Expects 'type', 'context', in request body
+    Expects 'type', 'context', and 'engine' in request body
     """
     data = request.json
-    type = data['type']
+    corr_type = data['corr_type']
     context = data['context']
+    engine = data['engine']
     
     # GPT logic here
-    generated_response = 'Test'
+    generated_response = generate_gpt_correspondence(context, corr_type, engine)
 
     # Create new correspondence in db
     new_correspondence = Correspondence(
         user_id=current_user.id,
         application_id=application_id,
-        type=type,
+        corr_type=corr_type,
         context=context,
         generated_response=generated_response,
         created_at=datetime.utcnow()

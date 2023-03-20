@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
-from app.models import Resume, CoverLetter, db
+from app.models import Resume, CoverLetter, Application, db
+from ..utils.gpt import generate_gpt_cover_letter
+from datetime import datetime
 
 resume_routes = Blueprint('resumes', __name__)
 
@@ -19,7 +21,6 @@ def get_resumes():
 
     return [r.to_dict() for r in resumes]
 
-from ..utils.gpt import generate_gpt_cover_letter
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required
@@ -42,6 +43,7 @@ def create_new_cover_letter(id):
     job_description = data['job_description']
     company_details = data['company_details']
     engine=data['engine']
+    job_title=data['job_title']
 
     # Generate a cover letter using OpenAI's API
     letter = generate_gpt_cover_letter(resume, job_description, company_details, engine)
@@ -56,6 +58,69 @@ def create_new_cover_letter(id):
     db.session.add(new_cover_letter)
     db.session.commit()
 
+    # Create a new application to coincide with new coverletter
+    new_application = Application(
+        user_id=current_user.id,
+        resume_id=resume.id,
+        cover_letter_id=new_cover_letter.id,
+        job_title=job_title,
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_application)
+    db.session.commit()
+
 
     # return new_cover_letter.to_dict()
-    return new_cover_letter.to_dict()
+    return {
+        'coverletter': new_cover_letter.to_dict(),
+        'application': new_application.to_dict()
+    }, 201
+
+@resume_routes.route('/', methods=['POST'])
+@login_required
+def create_resume():
+    """
+    Creates a new resume
+    Expects 'resume_text', 'position_type', and 'skill_level' in request body
+    """
+    data = request.json
+    resume_text = data['resume_text']
+    position_type = data['position_type']
+    skill_level = data['skill_level']
+
+    # Create new resume in db
+    new_resume = Resume(
+        user_id=current_user.id,
+        resume_text=resume_text,
+        position_type=position_type,
+        skill_level=skill_level,
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_resume)
+    db.session.commit()
+
+    return new_resume.to_dict(), 201
+
+@resume_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_resume(id):
+    """
+    Deletes a resume by id
+    """
+    resume = Resume.query.get(id)
+
+    # Return 404 if resume not found
+    if resume is None:
+        return page_not_found()
+    
+    # Return 403 if resume does not belong to user
+    if resume.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Resume must belong to the current user'}), 403)
+    
+    # Delete resume
+    db.session.delete(resume)
+    db.session.commit()
+
+    return { 'message': 'Successfully deleted resume' }
+
+    

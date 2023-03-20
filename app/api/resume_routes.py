@@ -21,6 +21,25 @@ def get_resumes():
 
     return [r.to_dict() for r in resumes]
 
+# Get resume by id
+@resume_routes.route('/<int:id>')
+@login_required
+def get_resume_by_id(id):
+    """
+    Query for a single resume by id
+    """
+    resume = Resume.query.get(id)
+    
+    # Return 404 if cover letter not found
+    if resume is None:
+        return page_not_found()
+    
+    # Return 403 is cover letter does not belong to user
+    if resume.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Resume must belong to the current user'}), 403)
+    
+    return resume.to_dict()
+
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required
@@ -76,6 +95,7 @@ def create_new_cover_letter(id):
         'application': new_application.to_dict()
     }, 201
 
+# Create new resume
 @resume_routes.route('/', methods=['POST'])
 @login_required
 def create_resume():
@@ -101,6 +121,44 @@ def create_resume():
 
     return new_resume.to_dict(), 201
 
+# Update resume by id
+@resume_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def update_resume(id):
+    """
+    Updates a resume by id
+    """
+    resume = Resume.query.get(id)
+
+    # Return 404 if resume not found
+    if resume is None:
+        return page_not_found()
+
+    # Return 403 if resume does not belong to user
+    if resume.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Resume must belong to the current user'}), 403)
+
+    # Get updated data from request
+    data = request.json
+    resume_text = data.get('resume_text')
+    position_type = data.get('position_type')
+    skill_level = data.get('skill_level')
+
+    # Update resume fields
+    if resume_text is not None:
+        resume.resume_text = resume_text
+    if position_type is not None:
+        resume.position_type = position_type
+    if skill_level is not None:
+        resume.skill_level = skill_level
+
+    # Save changes to the database
+    db.session.commit()
+
+    return resume.to_dict()
+
+
+# Delete resume by id
 @resume_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_resume(id):

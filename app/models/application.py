@@ -17,7 +17,7 @@ class Application(db.Model):
     user = db.relationship('User', back_populates='applications')
     resume = db.relationship('Resume', back_populates='applications')
     cover_letter = db.relationship('CoverLetter', uselist=False, back_populates='application')
-    correspondences = db.relationship('Correspondence', back_populates='application')
+    correspondences = db.relationship('Correspondence', back_populates='application', cascade='all, delete')
 
     def to_dict(self):
         return {

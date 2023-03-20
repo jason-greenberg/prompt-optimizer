@@ -69,7 +69,7 @@ def get_correspondences_by_application_id(application_id):
     return jsonify([c.to_dict() for c in correspondences])
 
 # Create new correspondence by application id
-@application_routes.route('/<int:application_id>', methods=['POST'])
+@application_routes.route('/<int:application_id>/correspondences', methods=['POST'])
 @login_required
 def create_correspondence(application_id):
     """

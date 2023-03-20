@@ -38,6 +38,46 @@ def get_cover_by_id(id):
     
     return cover_letter.to_dict()
 
+# Update cover letter by id
+@cover_letter_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def update_cover_letter(id):
+    """
+    Updates a cover_letter by id
+    """
+    cover_letter = CoverLetter.query.get(id)
+
+    # Return 404 if cover_letter not found
+    if cover_letter is None:
+        return page_not_found()
+
+    # Return 403 if cover_letter does not belong to user
+    if cover_letter.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Cover letter must belong to the current user'}), 403)
+
+    # Get updated data from request
+    data = request.json
+    letter_text = data.get('letter_text')
+    rating = data.get('rating')
+    engine = data.get('engine')
+    job_description = data.get('job_description')
+
+    # Update cover_letter fields
+    if letter_text is not None:
+        cover_letter.letter_text = letter_text
+    if rating is not None:
+        cover_letter.rating = rating
+    if engine is not None:
+        cover_letter.engine = engine
+    if job_description is not None:
+        cover_letter.job_description = job_description
+
+    # Save changes to the database
+    db.session.commit()
+
+    return cover_letter.to_dict()
+
+
 # Delete cover letter by id
 @cover_letter_routes.route('/<int:id>', methods=['DELETE'])
 @login_required

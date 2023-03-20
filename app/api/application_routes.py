@@ -75,7 +75,7 @@ def get_correspondences_by_application_id(application_id):
 def create_correspondence(application_id):
     """
     Creates a new correspondence
-    Expects 'type', 'context', and 'engine' in request body
+    Expects 'corr_type', 'context', and 'engine' in request body
     """
     data = request.json
     corr_type = data['corr_type']

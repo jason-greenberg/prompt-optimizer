@@ -21,6 +21,25 @@ def get_resumes():
 
     return [r.to_dict() for r in resumes]
 
+# Get resume by id
+@resume_routes.route('/<int:id>')
+@login_required
+def get_resume_by_id(id):
+    """
+    Query for a single resume by id
+    """
+    resume = Resume.query.get(id)
+    
+    # Return 404 if cover letter not found
+    if resume is None:
+        return page_not_found()
+    
+    # Return 403 is cover letter does not belong to user
+    if resume.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Resume must belong to the current user'}), 403)
+    
+    return resume.to_dict()
+
 # Create new cover letter by resume id
 @resume_routes.route('/<int:id>/coverletters', methods=['POST'])
 @login_required

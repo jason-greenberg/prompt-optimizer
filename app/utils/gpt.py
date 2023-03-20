@@ -50,7 +50,7 @@ def generate_gpt_correspondence(context, corr_type, engine):
 
     messages = [
         {"role": "system", "content": "You will act as an expert LinkedIn and email corresponder for job hunters. You will create LinkedIn and Email follow-up messages for recruiters and create replies to emails related to the job search."},
-        {"role": "user", "content": {prompt}},
+        {"role": "user", "content": f'{prompt}'},
         {"role": "assistant", "content": "Assistant generates a correspondences for LinkedIn or Email with user's context"}
     ]
 

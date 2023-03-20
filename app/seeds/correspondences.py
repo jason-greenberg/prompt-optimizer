@@ -15,7 +15,7 @@ def seed_correspondences():
     demo_linkedin_corr = Correspondence(
         user_id=demo.id, 
         application_id=demo_app.id,
-        type='LinkedIn',
+        corr_type='LinkedIn',
         context='Sent LinkedIn message to recruiter',
         generated_response='Thanks for reaching out. I am interested in learning more about the opportunity.',
         created_at=datetime.utcnow()
@@ -24,7 +24,7 @@ def seed_correspondences():
     demo_email_corr = Correspondence(
         user_id=demo.id, 
         application_id=demo_app.id,
-        type='Email',
+        corr_type='Email',
         context='Sent follow-up email to recruiter',
         generated_response='Thank you for getting back to me. I am excited about the opportunity and would be happy to discuss it further.',
         created_at=datetime.utcnow()
@@ -33,7 +33,7 @@ def seed_correspondences():
     marnie_linkedin_corr = Correspondence(
         user_id=marnie.id, 
         application_id=marnie_app.id,
-        type='LinkedIn',
+        corr_type='LinkedIn',
         context='Sent LinkedIn message to hiring manager',
         generated_response='Thank you for your message. We are currently reviewing applications and will be in touch soon.',
         created_at=datetime.utcnow()
@@ -42,7 +42,7 @@ def seed_correspondences():
     marnie_email_corr = Correspondence(
         user_id=marnie.id, 
         application_id=marnie_app.id,
-        type='Email',
+        corr_type='Email',
         context='Sent follow-up email to hiring manager',
         generated_response='Thank you for your email. I am still very interested in the opportunity and would love to discuss it further.',
         created_at=datetime.utcnow()
@@ -51,7 +51,7 @@ def seed_correspondences():
     bobbie_linkedin_corr = Correspondence(
         user_id=bobbie.id, 
         application_id=bobbie_app.id,
-        type='LinkedIn',
+        corr_type='LinkedIn',
         context='Sent LinkedIn message to HR manager',
         generated_response='Thank you for reaching out. I would be happy to discuss my qualifications and experience further with you.',
         created_at=datetime.utcnow()
@@ -60,7 +60,7 @@ def seed_correspondences():
     bobbie_email_corr = Correspondence(
         user_id=bobbie.id, 
         application_id=bobbie_app.id,
-        type='Email',
+        corr_type='Email',
         context='Sent follow-up email to HR manager',
         generated_response='Thank you for getting back to me. I would be excited to learn more about the opportunity and how I can contribute to the team.',
         created_at=datetime.utcnow()

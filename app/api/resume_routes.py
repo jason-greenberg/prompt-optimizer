@@ -76,6 +76,7 @@ def create_new_cover_letter(id):
         'application': new_application.to_dict()
     }, 201
 
+# Create new resume
 @resume_routes.route('/', methods=['POST'])
 @login_required
 def create_resume():
@@ -101,6 +102,7 @@ def create_resume():
 
     return new_resume.to_dict(), 201
 
+# Delete resume by id
 @resume_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_resume(id):

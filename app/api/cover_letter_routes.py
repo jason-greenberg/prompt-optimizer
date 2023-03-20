@@ -37,3 +37,26 @@ def get_cover_by_id(id):
         return make_response(jsonify({'error': 'Cover letter must belong to the current user'}), 403)
     
     return cover_letter.to_dict()
+
+# Delete cover letter by id
+@cover_letter_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_cover_letter(id):
+    """
+    Deletes a cover_letter by id
+    """
+    cover_letter = CoverLetter.query.get(id)
+
+    # Return 404 if cover_letter not found
+    if cover_letter is None:
+        return page_not_found()
+    
+    # Return 403 if cover_letter does not belong to user
+    if cover_letter.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Cover letter must belong to the current user'}), 403)
+    
+    # Delete cover_letter
+    db.session.delete(cover_letter)
+    db.session.commit()
+
+    return { 'message': 'Successfully deleted cover letter' }

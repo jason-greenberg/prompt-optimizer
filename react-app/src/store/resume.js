@@ -36,7 +36,7 @@ export const createResumeThunk = (resume) => async (dispatch) => {
   const response = await fetch(`/api/resumes/`, {
     method: 'POST',
     headers: {
-      'Content-Application': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(resume)
   })

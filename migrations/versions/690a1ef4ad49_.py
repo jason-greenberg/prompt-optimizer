@@ -65,7 +65,7 @@ def upgrade():
     op.create_table('applications',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('resume_id', sa.Integer(), nullable=False),
+    sa.Column('resume_id', sa.Integer(), nullable=True),
     sa.Column('cover_letter_id', sa.Integer(), nullable=False),
     sa.Column('job_title', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),

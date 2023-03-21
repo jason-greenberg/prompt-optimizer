@@ -2,6 +2,7 @@
 const POPULATE = 'resume/POPULATE_USER_RESUMES'
 const READ = 'resume/READ_SINGLE_RESUME'
 const UPDATE = 'resume/UPDATE_RESUME'
+const DELETE = 'resume/DELETE_RESUME'
 
 // -------- ACTIONS ---------
 const readResumes = (resumes) => ({
@@ -17,6 +18,11 @@ const readSingleResume = (resume) => ({
 const updateResume = (resume) => ({
   type: UPDATE,
   resume
+})
+
+const deleteResume = (resumeId) => ({
+  type: DELETE,
+  resumeId
 })
 
 // ----- THUNK ACTIONS ------
@@ -57,6 +63,16 @@ export const updateResumeThunk = (resume) => async (dispatch) => {
   }
 }
 
+export const deleteResumeThunk = (resumeId) => async (dispatch) => {
+  const response = await fetch(`/api/resumes/${resumeId}`, {
+    method: 'DELETE'
+  });
+  if (response.ok) {
+    await dispatch(deleteResume(resumeId));
+  }
+  return 'Successfully deleted'
+}
+
 // -------- REDUCER ---------
 const initialState = {
   allResumes: {},
@@ -67,14 +83,18 @@ export default function resumesReducer(state = initialState, action) {
   const newState = { ...state }
   switch (action.type) {
     case POPULATE:
-      newState.allResumes = { ...action.resumes }
+      newState.allResumes = { ...action.resumes };
       return newState;
     case READ:
-      newState.currentResume = { ...action.resume }
+      newState.currentResume = { ...action.resume };
       return newState;
     case UPDATE:
-      newState.allResumes = { ...state.allResumes }
+      newState.allResumes = { ...state.allResumes };
       newState.allResumes[action.resume.id] = action.resume
+      return newState;
+    case DELETE:
+      newState.allResumes = { ...state.allResumes };
+      delete newState.allResumes[action.resumeId];
       return newState;
     default:
       return state;

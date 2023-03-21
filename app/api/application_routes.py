@@ -69,6 +69,69 @@ def get_correspondences_by_application_id(application_id):
 
     return jsonify([c.to_dict() for c in correspondences])
 
+# Create new application
+@application_routes.route('/', methods=['POST'])
+@login_required
+def create_application():
+    """
+    Creates a new application
+    Expects 'resume_id', 'cover_letter_id', and 'job_title' in request body
+    """
+    data = request.json
+    resume_id = data.get('resume_id', None)
+    cover_letter_id = data.get('cover_letter_id', None)
+    job_title = data['job_title']
+
+    # Create new application in db
+    new_application = Application(
+        user_id=current_user.id,
+        resume_id=resume_id,
+        cover_letter_id=cover_letter_id,
+        job_title=job_title,
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_application)
+    db.session.commit()
+
+    return new_application.to_dict(), 201
+
+# Update application by id
+@application_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def update_application(id):
+    """
+    Updates an application by id
+    """
+    application = Application.query.get(id)
+
+    # Return 404 if application not found
+    if application is None:
+        return page_not_found()
+    
+    # Return 403 if resume does not belong to user
+    if application.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Application must belong to the current user'}), 403)
+    
+    #Get updated data from request body
+    data = request.json
+    resume_id = data['resume_id']
+    cover_letter_id = data['cover_letter_id']
+    job_title = data['job_title']
+
+    #Update application fields
+    if resume_id is not None:
+        application.resume_id = resume_id
+    if cover_letter_id is not None:
+        application.cover_letter_id = cover_letter_id
+    if job_title is not None:
+        application.job_title = job_title
+    
+    # Save changes to the database
+    db.session.commit()
+
+    return application.to_dict()
+
+
 # Create new correspondence by application id
 @application_routes.route('/<int:application_id>/correspondences', methods=['POST'])
 @login_required

@@ -148,17 +148,23 @@ export default function correspondencesReducer(state = initialState, action) {
     case CREATE:
       newState.currentCorrespondence = { ...action.correspondence };
       newState.allCorrespondences = {
-      ...state.allCorrespondences,
-      ...action.correspondence,
+        ...state.allCorrespondences,
+        ...action.correspondence,
       };
       return newState;
     case UPDATE:
       newState.allCorrespondences = { ...state.allCorrespondences };
       newState.allCorrespondences[action.correspondence.id] = action.correspondence;
+      if (newState.currentApplicationCorrespondences[action.correspondence.id]) {
+        newState.currentApplicationCorrespondences[action.correspondence.id] = action.correspondence;
+      }
       return newState;
     case DELETE:
       newState.allCorrespondences = { ...state.allCorrespondences };
       delete newState.allCorrespondences[action.correspondenceId];
+      if (newState.currentApplicationCorrespondences[action.correspondenceId]) {
+        delete newState.currentApplicationCorrespondences[action.correspondenceId];
+      }
       return newState;
     default:
       return state;

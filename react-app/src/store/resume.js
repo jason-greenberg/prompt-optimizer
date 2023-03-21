@@ -1,6 +1,7 @@
 // constants
 const POPULATE = 'resume/POPULATE_USER_RESUMES'
 const READ = 'resume/READ_SINGLE_RESUME'
+const UPDATE = 'resume/UPDATE_RESUME'
 
 // -------- ACTIONS ---------
 const readResumes = (resumes) => ({
@@ -10,6 +11,11 @@ const readResumes = (resumes) => ({
 
 const readSingleResume = (resume) => ({
   type: READ,
+  resume
+})
+
+const updateResume = (resume) => ({
+  type: UPDATE,
   resume
 })
 
@@ -36,6 +42,21 @@ export const fetchSingleResumeThunk = (resumeId) => async (dispatch) => {
   }
 }
 
+export const updateResumeThunk = (resume) => async (dispatch) => {
+  const response = await fetch(`/api/resumes/${resume.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(resume)
+  });
+  if (response.ok) {
+    const updatedResume = await response.json();
+    await dispatch(updateResume(updatedResume));
+    await dispatch(readSingleResume(updatedResume));
+  }
+}
+
 // -------- REDUCER ---------
 const initialState = {
   allResumes: {},
@@ -50,6 +71,10 @@ export default function resumesReducer(state = initialState, action) {
       return newState;
     case READ:
       newState.currentResume = { ...action.resume }
+      return newState;
+    case UPDATE:
+      newState.allResumes = { ...state.allResumes }
+      newState.allResumes[action.resume.id] = action.resume
       return newState;
     default:
       return state;

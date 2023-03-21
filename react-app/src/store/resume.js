@@ -1,10 +1,16 @@
 // constants
+const CREATE = 'resume/CREATE_RESUME'
 const POPULATE = 'resume/POPULATE_USER_RESUMES'
 const READ = 'resume/READ_SINGLE_RESUME'
 const UPDATE = 'resume/UPDATE_RESUME'
 const DELETE = 'resume/DELETE_RESUME'
 
 // -------- ACTIONS ---------
+const createResume = (resume) => ({
+  type: CREATE,
+  resume
+})
+
 const readResumes = (resumes) => ({
   type: POPULATE,
   resumes
@@ -26,6 +32,23 @@ const deleteResume = (resumeId) => ({
 })
 
 // ----- THUNK ACTIONS ------
+export const createResumeThunk = (resume) => async (dispatch) => {
+  const response = await fetch(`/api/resumes/`, {
+    method: 'POST',
+    headers: {
+      'Content-Application': 'application/json'
+    },
+    body: JSON.stringify(resume)
+  })
+  if (response.ok) {
+    const newResume = await response.json();
+    await dispatch(createResume(newResume));
+    return newResume;
+  } else {
+    throw new Error('Error creating resume');
+  }
+}
+
 export const fetchAllResumesThunk = () => async (dispatch) => {
   const response = await fetch('/api/resumes/')
   if (response.ok) {
@@ -36,6 +59,8 @@ export const fetchAllResumesThunk = () => async (dispatch) => {
     })
     await dispatch(readResumes(normalizedResumes))
     return normalizedResumes
+  } else {
+    throw new Error('Error fetching resumes');
   }
 }
 
@@ -45,6 +70,8 @@ export const fetchSingleResumeThunk = (resumeId) => async (dispatch) => {
     const resume = await response.json();
     await dispatch(readSingleResume(resume));
     return resume
+  } else {
+    throw new Error('Error fetching single resume');
   }
 }
 
@@ -60,6 +87,8 @@ export const updateResumeThunk = (resume) => async (dispatch) => {
     const updatedResume = await response.json();
     await dispatch(updateResume(updatedResume));
     await dispatch(readSingleResume(updatedResume));
+  } else {
+    throw new Error('Error updating resume');
   }
 }
 
@@ -69,8 +98,10 @@ export const deleteResumeThunk = (resumeId) => async (dispatch) => {
   });
   if (response.ok) {
     await dispatch(deleteResume(resumeId));
+    return 'Successfully deleted'
+  } else {
+    throw new Error('Error deleting resume');
   }
-  return 'Successfully deleted'
 }
 
 // -------- REDUCER ---------

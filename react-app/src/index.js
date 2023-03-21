@@ -9,6 +9,7 @@ import * as sessionActions from "./store/session";
 import * as resumeActions from "./store/resume";
 import * as coverLetterActions from "./store/coverletter";
 import * as applicationActions from "./store/application";
+import * as correspondenceActions from "./store/correspondence";
 import App from "./App";
 
 import "./index.css";
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV !== "production") {
 	window.resumeActions = resumeActions;
 	window.coverLetterActions = coverLetterActions;
 	window.applicationActions = applicationActions;
+	window.correspondenceActions = correspondenceActions;
 }
 
 // Wrap the application with the Modal provider and render the Modal component

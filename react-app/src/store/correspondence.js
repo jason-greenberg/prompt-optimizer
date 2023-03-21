@@ -1,6 +1,7 @@
 // constants
 const CREATE = 'correspondence/CREATE_CORRESPONDENCE';
 const POPULATE = 'correspondence/POPULATE_USER_CORRESPONDENCES';
+const POPULATE_BY_APPLICATION = 'correspondence/POPULATE_BY_APPLICATION';
 const READ = 'correspondence/READ_SINGLE_CORRESPONDENCE';
 const UPDATE = 'correspondence/UPDATE_CORRESPONDENCE';
 const DELETE = 'correspondence/DELETE_CORRESPONDENCE';
@@ -9,6 +10,11 @@ const DELETE = 'correspondence/DELETE_CORRESPONDENCE';
 const createCorrespondence = (correspondence) => ({
   type: CREATE,
   correspondence,
+});
+
+const populateApplicationCorrespondences = (correspondences) => ({
+  type: POPULATE_BY_APPLICATION,
+  correspondences,
 });
 
 const readCorrespondences = (correspondences) => ({
@@ -64,6 +70,22 @@ export const fetchAllCorrespondencesThunk = () => async (dispatch) => {
   }
 };
 
+export const fetchCorrespondencesByApplicationIdThunk = (applicationId) => async (dispatch) => {
+  const response = await fetch(`/api/correspondences/application/${applicationId}`);
+  if (response.ok) {
+    const correspondences = await response.json();
+    const normalizedCorrespondences = {};
+    correspondences.forEach((correspondence) => {
+      normalizedCorrespondences[correspondence.id] = correspondence;
+    });
+    await dispatch(populateApplicationCorrespondences(normalizedCorrespondences));
+    return normalizedCorrespondences;
+  } else {
+    throw new Error('Error fetching correspondences by application id');
+  }
+};
+
+
 export const fetchSingleCorrespondenceThunk = (correspondenceId) => async (dispatch) => {
   const response = await fetch(`/api/correspondences/${correspondenceId}`);
   if (response.ok) {
@@ -107,6 +129,7 @@ export const deleteCorrespondenceThunk = (correspondenceId) => async (dispatch) 
 // -------- REDUCER ---------
 const initialState = {
   allCorrespondences: {},
+  currentApplicationCorrespondences: {},
   currentCorrespondence: {},
 };
   
@@ -115,6 +138,9 @@ export default function correspondencesReducer(state = initialState, action) {
   switch (action.type) {
     case POPULATE:
       newState.allCorrespondences = { ...action.correspondences };
+      return newState;
+    case POPULATE_BY_APPLICATION:
+      newState.currentApplicationCorrespondences = { ...action.correspondences };
       return newState;
     case READ:
       newState.currentCorrespondence = { ...action.correspondence };
@@ -137,4 +163,4 @@ export default function correspondencesReducer(state = initialState, action) {
     default:
       return state;
   }
-  }
+}

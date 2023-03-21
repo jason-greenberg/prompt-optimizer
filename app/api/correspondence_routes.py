@@ -39,6 +39,18 @@ def get_correspondence_by_id(id):
     
     return correspondence.to_dict()
 
+# Get all correspondences by application_id
+@correspondence_routes.route('/application/<int:application_id>')
+@login_required
+def get_correspondences_by_application_id(application_id):
+    """
+    Query for all correspondences related to a specific application and returns them in a list of correspondence dictionaries
+    """
+    correspondences = Correspondence.query.filter_by(application_id=application_id, user_id=current_user.id).all()
+
+    return jsonify([c.to_dict() for c in correspondences])
+
+
 # Update correspondence by id
 @correspondence_routes.route('/<int:id>', methods=['PUT'])
 @login_required

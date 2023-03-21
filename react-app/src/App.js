@@ -5,12 +5,18 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import { fetchAllResumesThunk } from "./store/resume";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
+    const fetchAsync = async () => {
+      await dispatch(authenticate());
+      await dispatch(fetchAllResumesThunk());
+      setIsLoaded(true);
+    }
+    fetchAsync()
   }, [dispatch]);
 
   return (

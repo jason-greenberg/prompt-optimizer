@@ -54,9 +54,9 @@ def generate_gpt_cover_letter(resume, job_description, company_details, engine):
 def generate_gpt_correspondence(context, corr_type, engine):
     """
     Generates a correspondence using OpenAI's chat completion api.
-    Dynamically generated according to passed in 'context' and 'type'
+    Dynamically generated according to passed in 'context' and 'corr_type'
     """
-    # Determine prompt based on passed in type
+    # Determine prompt based on passed in 'corr_type'
     prompt = None
     if corr_type.lower() == 'application follow-up':
         # Context should be a cover letter

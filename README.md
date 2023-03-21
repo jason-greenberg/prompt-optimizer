@@ -5,7 +5,7 @@ ZipCover is a tool designed to simplify the process of writing and editing cover
 [![My Skills](https://skillicons.dev/icons?i=py,flask,postgres,react,redux,js,css)](https://skillicons.dev)
 
 ## Live Site
-https://zipcover-api.onrender.com
+https://zipcover-vsd4.onrender.com
 
 ## Features
 - Generate cover letters from scratch based on your resume and job descriptions

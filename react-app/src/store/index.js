@@ -2,10 +2,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session'
 import resumesReducer from './resume'
+import coverLettersReducer from './coverletter';
 
 const rootReducer = combineReducers({
   session,
-  resumes: resumesReducer
+  resumes: resumesReducer,
+  coverletters: coverLettersReducer
 });
 
 

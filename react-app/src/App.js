@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import { fetchAllResumesThunk } from "./store/resume";
+import { fetchAllCoverLettersThunk } from "./store/coverletter";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function App() {
     const fetchAsync = async () => {
       await dispatch(authenticate());
       await dispatch(fetchAllResumesThunk());
+      await dispatch(fetchAllCoverLettersThunk());
       setIsLoaded(true);
     }
     fetchAsync()

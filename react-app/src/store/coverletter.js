@@ -136,6 +136,6 @@ export default function coverLettersReducer(state = initialState, action) {
       delete newState.allCoverLetters[action.coverLetterId];
       return newState;
     default:
-      return state;
+      return state
   }
 }

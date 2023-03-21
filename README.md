@@ -44,23 +44,25 @@ Before you can start using ZipCover, you will need to set up the following envir
 
 ```
 DATABASE_URL
+FLASK_APP
+FLASK_ENV
 JWT_EXPIRES_IN
 JWT_SECRET
 NODE_ENV (e.g. production or development)
-SCHEMA (for database configuration, e.g. 'airbnb_data')
-GPT_API_KEY (found under your OpenAI account)
-FRONTEND_URL (e.g. http://localhost:3000)
+SCHEMA (for database configuration, e.g. 'zipcover_data')
+OPENAI_API_KEY (found under your OpenAI account)
+REACT_APP_BASE_URL (e.g. zipcover.onrender.com)
 ```
 ## **Build**
 To install and build the front and backend, run the following command:
 ```bash
-npm install && npm run render-postbuild && npm run build && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all
+npm install --prefix react-app && npm run build --prefix react-app && pip install -r requirements.txt && pip install psycopg2 && flask db upgrade && flask seed all
 ```
 The API comes seeded with 3 demo users for testing purposes. The build command will migrate the Users table and seed it with these 3 users.
 ## **Start**
 To start the application, run the following command:
 ```bash
-npm start
+gunicorn app:app
 ```
 # **Frontend**
 <!-- ![landing-page](./backend/assets/landing-page.png) -->

@@ -3,11 +3,15 @@ import thunk from 'redux-thunk';
 import session from './session'
 import resumesReducer from './resume'
 import coverLettersReducer from './coverletter';
+import applicationsReducer from './application';
+import correspondencesReducer from './correspondence';
 
 const rootReducer = combineReducers({
   session,
   resumes: resumesReducer,
-  coverletters: coverLettersReducer
+  coverletters: coverLettersReducer,
+  applications: applicationsReducer,
+  correspondences: correspondencesReducer
 });
 
 

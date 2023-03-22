@@ -38,6 +38,7 @@
   background-position: top center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: 98vh;
   margin-top: 42px;
   width: 100vw;
@@ -72,4 +73,16 @@
   font-weight: 400;
   height: 32px;
   padding: 0px 16px;
+}
+
+.message {
+  font-family: neo-sans,"Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin-left: 200px;
+  width: 100%;
+}
+
+.message-container {
+  font-size: 62px;
+  font-weight: 700;
+  width: 425px;
 }

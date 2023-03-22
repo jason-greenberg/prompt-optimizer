@@ -49,6 +49,10 @@
   border-bottom: 1px solid #D0DBF0;
   padding: 25px 0px;
 }
+
+.applications-table tr:hover {
+  background-color: rgb(255, 245, 247);
+}
 /* ------------- */
 .individual-app {
   color: #4a5d8a;
@@ -78,6 +82,11 @@
   font-weight: 300;
 }
 
+th.job-title {
+  padding-left: 20px;
+}
+
 td.job-title {
   font-weight: 500;
+  padding-left: 20px;
 }

@@ -11,6 +11,7 @@ def seed_applications():
     demo_resume = Resume.query.filter_by(user_id=demo.id).first()
     marnie_resume = Resume.query.filter_by(user_id=marnie.id).first()
     bobbie_resume = Resume.query.filter_by(user_id=bobbie.id).first()
+    demo_resumes = Resume.query.filter_by(user_id=demo.id).all()
 
     demo_coverletter = CoverLetter.query.filter_by(user_id=demo.id).first()
     marnie_coverletter = CoverLetter.query.filter_by(user_id=marnie.id).first()
@@ -41,49 +42,49 @@ def seed_applications():
     )
 
     application1 = Application(
-        user_id=1,
-        resume_id=demo_resume.id,
-        cover_letter_id=coverletter1.id,
+        user_id=demo.id,
+        resume_id=demo_resumes[1].id,
+        cover_letter_id=demo_coverletter.id,
         job_title='Software Engineer',
         created_at=datetime.utcnow()
     )
 
     application2 = Application(
-        user_id=1,
-        resume_id=demo_resume.id,
-        cover_letter_id=coverletter2.id,
+        user_id=demo.id,
+        resume_id=demo_resumes[4].id,
+        cover_letter_id=demo_coverletter.id,
         job_title='Frontend Developer',
         created_at=datetime.utcnow()
     )
 
     application3 = Application(
-        user_id=1,
-        resume_id=resume3.id,
+        user_id=demo.id,
+        resume_id=demo_resumes[6].id,
         cover_letter_id=bobbie_coverletter.id,
         job_title='Project Manager',
         created_at=datetime.utcnow()
     )
 
     application4 = Application(
-        user_id=1,
-        resume_id=resume4.id,
-        cover_letter_id=coverletter1.id,
+        user_id=demo.id,
+        resume_id=demo_resumes[4].id,
+        cover_letter_id=demo_coverletter.id,
         job_title='Software Engineer',
         created_at=datetime.utcnow()
     )
 
     application5 = Application(
-        user_id=1,
-        resume_id=resume5.id,
-        cover_letter_id=coverletter2.id,
+        user_id=demo.id,
+        resume_id=demo_resumes[4].id,
+        cover_letter_id=demo_coverletter.id,
         job_title='Frontend Developer',
         created_at=datetime.utcnow()
     )
 
     application6 = Application(
-        user_id=1,
-        resume_id=resume6.id,
-        cover_letter_id=coverletter3.id,
+        user_id=demo.id,
+        resume_id=demo_resumes[0].id,
+        cover_letter_id=demo_coverletter.id,
         job_title='Full Stack Developer',
         created_at=datetime.utcnow()
     )
@@ -98,7 +99,7 @@ def seed_applications():
     db.session.add(application5)
     db.session.add(application6)
     db.session.commit()
-    
+
 # Uses a raw SQL query to TRUNCATE or DELETE the applications table. SQLAlchemy doesn't
 # have a built in function to do this. With postgres in production TRUNCATE
 # removes all the data from the table, and RESET IDENTITY resets the auto

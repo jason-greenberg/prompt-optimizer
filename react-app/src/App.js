@@ -11,6 +11,7 @@ import Dashboard from "./components/DashboardPage/Dashboard";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     const fetchAsync = async () => {
       await dispatch(authenticate());
@@ -21,7 +22,6 @@ function App() {
 
   return (
     <>
-      {/* <Navigation isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
           <Route path="/login" component={LoginFormPage} />

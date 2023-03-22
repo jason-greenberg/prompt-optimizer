@@ -17,20 +17,28 @@ export default function Dashboard() {
       await dispatch(authenticate());
       setIsLoaded(true);
     }
-    fetchAsync()
+    fetchAsync();
+
     if (!user) {
       history.push('/')
       return null
     }
-
   }, [dispatch]);
 
   return (
     <>
       <Navigation />
-      <div className="dashboard-container">
-        <h1>Dashboard Component</h1>
-      </div>
+      { isLoaded && (
+        <div className="dashboard-container">
+          <div className="dashboard-body">
+            <div className="current-apps-table">
+              <h2 className="table-heading-container">
+                <h3 className="table-heading">Current Applications</h3>
+              </h2>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

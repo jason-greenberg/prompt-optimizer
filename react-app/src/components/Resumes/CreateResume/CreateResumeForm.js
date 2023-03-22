@@ -4,9 +4,11 @@ import { useMenuSelector } from '../../../context/Menu'
 import './CreateResume.css'
 import { useDispatch } from 'react-redux'
 import { createResumeThunk } from '../../../store/resume'
+import { useHistory } from 'react-router-dom'
 
 export default function CreateResumeForm() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { setSelectedLink } = useMenuSelector();
   const [resumeText, setResumeText] = useState('');
   const [positionType, setPositionType] = useState('');
@@ -38,8 +40,8 @@ export default function CreateResumeForm() {
         skill_level: skillLevel
       }
 
-      const response = await dispatch(createResumeThunk(newResume));
-      console.log(response)
+      const resume = await dispatch(createResumeThunk(newResume));
+      history.push(`/resumes/${resume.id}`)
     }
 
   }

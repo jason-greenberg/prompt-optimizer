@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 import Navigation from '../../Navigation'
 import { useMenuSelector } from '../../../context/Menu'
 import './CreateResume.css'
+import { useDispatch } from 'react-redux'
+import { createResumeThunk } from '../../../store/resume'
 
 export default function CreateResumeForm() {
+  const dispatch = useDispatch()
   const { setSelectedLink } = useMenuSelector();
   const [resumeText, setResumeText] = useState('');
   const [positionType, setPositionType] = useState('');
@@ -13,8 +16,31 @@ export default function CreateResumeForm() {
     setSelectedLink('resumes')
   }, [])
 
+  const validate = () => {
+    const validationErrors = {}
+
+    if (!resumeText) validationErrors.resumeText = 'Resume text is required'
+    if (!positionType) validationErrors.positionType = 'Postion type is required'
+    if (!skillLevel) validationErrors.skillLevel = 'Skill level is required'
+
+    return validationErrors;
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault()
+    const validationErrors = validate()
+
+    // If no validation errors, submit resume
+    if (!Object.keys(validationErrors).length > 0) {
+      const newResume = {
+        resume_text: resumeText,
+        position_type: positionType,
+        skill_level: skillLevel
+      }
+
+      const response = await dispatch(createResumeThunk(newResume));
+      console.log(response)
+    }
 
   }
 

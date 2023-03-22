@@ -121,7 +121,8 @@ export default function resumesReducer(state = initialState, action) {
       return newState;
     case CREATE:
       newState.currentResume = { ...action.resume };
-      newState.allResumes = { ...state.allResumes, ...action.resume }
+      newState.allResumes = { ...state.allResumes }
+      newState.allResumes[action.resume.id] = action.resume
       return newState;
     case UPDATE:
       newState.allResumes = { ...state.allResumes };

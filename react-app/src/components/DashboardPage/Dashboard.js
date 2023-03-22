@@ -49,7 +49,11 @@ export default function Dashboard() {
                 </thead>
                 <tbody className="applications-container">
                   {applicationsArray.map((app) => (
-                    <tr key={app.id} className="individual-app">
+                    <tr 
+                      key={app.id} 
+                      className="individual-app"
+                      onClick={() => history.push(`/applications/${app.id}`)}
+                    >
                       <td className="job-title">{app.job_title}</td>
                       <td>{app.position_type}</td>
                       <td>{app.created_at}</td>

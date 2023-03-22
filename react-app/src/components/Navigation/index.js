@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import { useMenuSelector } from '../../context/Menu';
 
 export default function Navigation() {
   const user = useSelector(state => state.session.user)
-	const [selectedLink, setSelectedLink] = useState('dashboard')
+	const { selectedLink, setSelectedLink } = useMenuSelector()
 
 	const changeSelectedLink = (selection) => {
 		setSelectedLink(selection);
@@ -22,27 +23,28 @@ export default function Navigation() {
 								className={"nav-link" + (selectedLink === "dashboard" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('dashboard')}
 							>
-								Dashboard
+								<NavLink to="/dashboard">Dashboard</NavLink>
 							</div>
 							<div 
 								className={"nav-link" + (selectedLink === "resumes" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('resumes')}
 							>
-								Resumes
+								<NavLink to="/resumes">Resumes</NavLink>
 							</div>
 							<div 
 								className={"nav-link" + (selectedLink === "coverletters" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('coverletters')}
 							>
-									Cover Letters
-								</div>
+								<NavLink to="/coverletters">Cover Letters</NavLink>
+							</div>
 						</div>
+						<div className="vertical-divider"></div>
 						<div className="second-nav-links">
 							<div 
 								className={"nav-link" + (selectedLink === "correspondences" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('correspondences')}
 							>
-								Correspondences
+								<NavLink to='/correspondences'>Correspondences</NavLink>
 							</div>
 							<div 
 								className={"nav-link" + (selectedLink === "help" ? " selected-link" : "")}

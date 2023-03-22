@@ -40,10 +40,9 @@
 
 .first-nav-links {
   align-items: center;
-  border-right: 1px solid rgb(208, 219, 240);
   display: flex;
   height: 100%;
-  padding: 0px 10px 0px 20px;
+  padding: 0px 0px 0px 20px;
 }
 
 .logo {
@@ -74,6 +73,10 @@
   line-height: 24px;
   padding: 0px 10px;
   min-width: fit-content;
+}
+
+.nav-link > a::after {
+  color: #21232e;
 }
 
 .nav-right {
@@ -109,19 +112,19 @@
 }
 
 .profile-dropdown > li {
+  height: 100%;
   margin: 4px 0px 4px 2px;
   width: 100%;
 }
 
 .profile-dropdown > li:hover {
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(248, 248, 248);
 }
 
 .second-nav-links {
   align-items: center;
   display: flex;
   height: 100%;
-  padding-left: 10px;
 }
 
 .selected-link {
@@ -133,6 +136,9 @@
   align-items: center;
   cursor: pointer;
   display: flex;
+  height: 100%;
+  padding: 10px 5px 10px 1px;
+  width: 100%;
 }
 
 .signout-icon {
@@ -153,7 +159,7 @@
 .user-icon {
   border-radius: 7px;
   height: 40px;
-  margin: 0px 12px;
+  margin: 0px 8px 0px 13px;
   width: auto;
 }
 
@@ -178,6 +184,13 @@
   align-items: center;
   display: flex;
   cursor: pointer;
+}
+
+.vertical-divider {
+  background-color: #D0DBF0;
+  height: 30px;
+  margin: 0px 15px;
+  width: 1px;
 }
 
 /* HIDDEN - DO NOT MOVE FROM BOTTOM */

@@ -40,14 +40,28 @@
 .applications-container {
   width: 100%;
 }
+
+.applications-table th {
+  border-bottom: 1px solid #D0DBF0;
+  padding: 5px 0px;
+}
+.applications-table td {
+  border-bottom: 1px solid #D0DBF0;
+  padding: 25px 0px;
+}
 /* ------------- */
 .individual-app {
+  color: #4a5d8a;
+  font-size: 14px;
+  font-weight: 400;
   width: 100%;
 }
 
 .table-title {
   color: #21232E;
+  font-size: 24px;
   font-weight: 500;
+  line-height: 32px;
   width: 100%;
 }
 
@@ -58,10 +72,12 @@
 }
 
 .column-name {
+  color: #8D96BA;
   text-align: left;
   padding: 4px;
+  font-weight: 300;
 }
 
-.job-title {
-  width: 25%;
+td.job-title {
+  font-weight: 500;
 }

@@ -50,7 +50,7 @@ export default function Dashboard() {
                 <tbody className="applications-container">
                   {applicationsArray.map((app) => (
                     <tr key={app.id} className="individual-app">
-                      <td>{app.job_title}</td>
+                      <td className="job-title">{app.job_title}</td>
                       <td>{app.position_type}</td>
                       <td>{app.created_at}</td>
                       <td>

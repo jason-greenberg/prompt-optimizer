@@ -75,6 +75,10 @@
   min-width: fit-content;
 }
 
+.nav-link > a::after {
+  color: #21232e;
+}
+
 .nav-right {
   align-items: center;
   display: flex;

@@ -24,14 +24,8 @@ export default function Navigation() {
 						</div>
 					</div>
           <div className="nav-right">
-            { user ? (
-              <>
-								<ProfileButton user={user} />
-							</>
-            ): (
-              <>
-              </>
-            )}
+						<button className="create-button"><span>New</span> <span className="plus">+</span></button>
+            <ProfileButton user={user} />
           </div>
         </div>
       </div>

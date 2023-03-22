@@ -24,11 +24,25 @@
   width: 100%;
 }
 /* ---------------- */
+.create-button {
+  align-items: center;
+  background-color: rgb(79, 101, 241);
+  background-image: linear-gradient(90deg, rgb(111, 137, 251) 0%, rgb(97, 109, 245) 33%, rgb(92, 82, 235) 100%);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 11px 16px;
+  transition: all 250ms ease 0s;
+}
+
 .first-nav-links {
   align-items: center;
   border-right: 1px solid rgb(208, 219, 240);
   display: flex;
-  padding-right: 6px;
+  padding: 0px 10px 0px 20px;
 }
 
 .logo {
@@ -48,18 +62,26 @@
 }
 
 .nav-link {
-  color: #232a55;
+  color: #21232e;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   line-height: 24px;
-  padding: 0px 6px;
+  padding: 0px 10px;
 }
 
 .nav-right {
-
+  align-items: center;
+  display: flex;
+  padding: 0px 50px;
 }
 
+.plus {
+  font-size: 20px;
+  line-height: 0;
+  margin-left: 7px;
+  padding-bottom: 3px;
+}
 
 .profile-dropdown {
   position: absolute;
@@ -68,7 +90,7 @@
 .second-nav-links {
   align-items: center;
   display: flex;
-  padding-left: 6px;
+  padding-left: 10px;
 }
 
 .hidden {

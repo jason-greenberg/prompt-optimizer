@@ -28,7 +28,9 @@ export default function SplashPage() {
         </div>
       </div>
       <div className="splash-body-container">
-        <div>The fastest way to write your cover letter.</div>
+        <div className="message-container">
+          <div className="message">The fastest way to write a cover letter.</div>
+        </div>
       </div>
     </div>
   )

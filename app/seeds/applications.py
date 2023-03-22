@@ -40,11 +40,65 @@ def seed_applications():
         created_at=datetime.utcnow()
     )
 
+    application1 = Application(
+        user_id=1,
+        resume_id=demo_resume.id,
+        cover_letter_id=coverletter1.id,
+        job_title='Software Engineer',
+        created_at=datetime.utcnow()
+    )
+
+    application2 = Application(
+        user_id=1,
+        resume_id=demo_resume.id,
+        cover_letter_id=coverletter2.id,
+        job_title='Frontend Developer',
+        created_at=datetime.utcnow()
+    )
+
+    application3 = Application(
+        user_id=1,
+        resume_id=resume3.id,
+        cover_letter_id=bobbie_coverletter.id,
+        job_title='Project Manager',
+        created_at=datetime.utcnow()
+    )
+
+    application4 = Application(
+        user_id=1,
+        resume_id=resume4.id,
+        cover_letter_id=coverletter1.id,
+        job_title='Software Engineer',
+        created_at=datetime.utcnow()
+    )
+
+    application5 = Application(
+        user_id=1,
+        resume_id=resume5.id,
+        cover_letter_id=coverletter2.id,
+        job_title='Frontend Developer',
+        created_at=datetime.utcnow()
+    )
+
+    application6 = Application(
+        user_id=1,
+        resume_id=resume6.id,
+        cover_letter_id=coverletter3.id,
+        job_title='Full Stack Developer',
+        created_at=datetime.utcnow()
+    )
+
     db.session.add(demo_application)
     db.session.add(marnie_application)
     db.session.add(bobbie_application)
+    db.session.add(application1)
+    db.session.add(application2)
+    db.session.add(application3)
+    db.session.add(application4)
+    db.session.add(application5)
+    db.session.add(application6)
     db.session.commit()
-
+    
 # Uses a raw SQL query to TRUNCATE or DELETE the applications table. SQLAlchemy doesn't
 # have a built in function to do this. With postgres in production TRUNCATE
 # removes all the data from the table, and RESET IDENTITY resets the auto

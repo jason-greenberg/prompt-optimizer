@@ -5,6 +5,7 @@ import { authenticate } from '../../store/session';
 import { fetchAllApplicationsThunk } from '../../store/application';
 import Navigation from '../Navigation';
 import './Dashboard.css';
+import { fetchAllResumesThunk } from '../../store/resume';
 
 export default function Dashboard() {
   const user = useSelector(state => state.session.user);
@@ -19,6 +20,7 @@ export default function Dashboard() {
     const fetchAsync = async () => {
       await dispatch(authenticate());
       await dispatch(fetchAllApplicationsThunk());
+      dispatch(fetchAllResumesThunk())
       setIsLoaded(true);
     }
     fetchAsync();

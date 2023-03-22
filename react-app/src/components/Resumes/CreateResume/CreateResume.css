@@ -1,5 +1,36 @@
 /* CONTAINERS */
+.create-resume-page-container {
+  color: #21232E;
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+  width: 100%;
+}
 
+.create-resume-body {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  justify-content: flex-start;
+  max-width: 1250px;
+  min-width: 1065px;
+  overflow-x: auto;
+  width: 100%;
+}
 
+/* Error styling */
+.error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
 
 /* ----------- */

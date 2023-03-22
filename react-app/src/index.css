@@ -17,3 +17,8 @@ button {
   border: 1px solid #4351e8;
   color: #4351e8;
 }
+
+.break {
+  border-bottom: 1px solid #F0F2F9;
+  width: 100%;
+}

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import { useMenuSelector } from '../../context/Menu';
+import NewButton from './NewButton';
 
 export default function Navigation() {
   const user = useSelector(state => state.session.user)
@@ -55,7 +56,7 @@ export default function Navigation() {
 						</div>
 					</div>
           <div className="nav-right">
-						<button className="create-button"><span>New</span> <span className="plus">+</span></button>
+						<NewButton />
             <ProfileButton user={user} />
           </div>
         </div>

@@ -37,6 +37,7 @@ export default function Navigation() {
 									Cover Letters
 								</div>
 						</div>
+						<div className="vertical-divider"></div>
 						<div className="second-nav-links">
 							<div 
 								className={"nav-link" + (selectedLink === "correspondences" ? " selected-link" : "")}

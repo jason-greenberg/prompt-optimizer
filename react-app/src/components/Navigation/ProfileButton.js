@@ -5,6 +5,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from "react-router-dom";
+import userImage from "./assets/user-regular.png"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -42,9 +43,10 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+      <div onClick={openMenu}>
+        <img className="user-icon" src={userImage} alt="user-icon" />
+      </div>
+      <div className="user-email">{user.email}</div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>

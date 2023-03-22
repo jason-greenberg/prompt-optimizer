@@ -21,4 +21,16 @@
   overflow-x: auto;
   width: 100%;
 }
+
+/* Error styling */
+.error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
 /* ----------- */

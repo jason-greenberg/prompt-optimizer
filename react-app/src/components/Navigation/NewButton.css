@@ -1,0 +1,29 @@
+.create-container {
+  width: 100%;
+}
+
+.create-dropdown-container {
+  background-color: white;
+  border: 1px solid #D0DBF0;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 65px;
+  right: 200px;
+}
+
+.option-container {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  padding: 10px 5px 10px 1px;
+  width: 100%;
+}
+
+.option-icon {
+  border-radius: 7px;
+  height: 25px;
+  margin: 0px 8px 0px 3px;
+  width: auto;
+}

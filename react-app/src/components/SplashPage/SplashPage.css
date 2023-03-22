@@ -63,7 +63,10 @@
 
 .splash-nav-right > a {
   color: rgb(24, 27, 56);
+  font-family: "Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
+  font-weight: 500;
+  margin-right: 12px;
   padding: 16px 12px;
 }
 
@@ -77,11 +80,13 @@
 
 .message {
   font-family: neo-sans,"Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
-  margin-left: 200px;
   width: 100%;
 }
 
 .message-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 250px;
   font-size: 62px;
   font-weight: 700;
   width: 425px;

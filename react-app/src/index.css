@@ -31,3 +31,8 @@ button {
   border-bottom: 1px solid #F0F2F9;
   width: 100%;
 }
+
+.table-break {
+  border-bottom: 1px solid #D0DBF0;
+  width: 100%;
+}

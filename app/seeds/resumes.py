@@ -11,7 +11,7 @@ def seed_resumes():
     demo_resume = Resume(
         user_id=demo.id, 
         resume_text='I am an experienced software engineer with a background in full-stack web development.',
-        position_type='Software Engineer',
+        position_type='Fullstack',
         skill_level='Senior',
         created_at=datetime.utcnow()
     )
@@ -19,7 +19,7 @@ def seed_resumes():
     marnie_resume = Resume(
         user_id=marnie.id,
         resume_text='I am a recent graduate with a degree in computer science and experience in software development internships.',
-        position_type='Software Developer',
+        position_type='Frontend',
         skill_level='Entry-Level',
         created_at=datetime.utcnow()
     )
@@ -27,7 +27,7 @@ def seed_resumes():
     bobbie_resume = Resume(
         user_id=bobbie.id,
         resume_text='I am a skilled project manager with experience leading teams and delivering successful projects.',
-        position_type='Project Manager',
+        position_type='Backend',
         skill_level='Senior',
         created_at=datetime.utcnow()
     )

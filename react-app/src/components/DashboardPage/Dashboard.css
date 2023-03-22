@@ -31,16 +31,37 @@
   max-width: 100%;
   width: 100%;
 }
+
+.applications-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.applications-container {
+  width: 100%;
+}
 /* ------------- */
-.table-heading {
+.individual-app {
+  width: 100%;
+}
+
+.table-title {
   color: #21232E;
   font-weight: 500;
   width: 100%;
 }
 
-.table-heading-container {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+.column-headings {
+  color: #8892B8;
+  font-size: 11px;
   width: 100%;
+}
+
+.column-name {
+  text-align: left;
+  padding: 4px;
+}
+
+.job-title {
+  width: 25%;
 }

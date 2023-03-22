@@ -19,6 +19,10 @@ class Application(db.Model):
     cover_letter = db.relationship('CoverLetter', uselist=False, back_populates='application')
     correspondences = db.relationship('Correspondence', back_populates='application', cascade='all, delete')
 
+    @property
+    def position_type(self):
+        return self.resume.position_type
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -26,5 +30,6 @@ class Application(db.Model):
             'resume_id': self.resume_id,
             'cover_letter_id': self.cover_letter_id,
             'job_title': self.job_title,
+            'position_type': self.position_type,
             'created_at': self.created_at
         }

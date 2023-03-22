@@ -1,3 +1,19 @@
 a {
   text-decoration: none;
 }
+
+button {
+  font-family: "Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.purple-button {
+  background-color: #4351e8;
+  border: #4351e8;
+  color: white;
+}
+
+.white-button {
+  background-color: white;
+  border: 1px solid #4351e8;
+  color: #4351e8;
+}

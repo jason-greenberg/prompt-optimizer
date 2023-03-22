@@ -9,8 +9,20 @@ export default function Navigation() {
 
   return (
       <div className="navigation-container">
-        <div className="nav-bar">
-          <div className="nav-left">zipcover</div>
+        <div className="navigation-bar">
+          <div className="nav-left">
+						<div className="logo">zipcover</div>
+						<div className="first-nav-links">
+							<div className="nav-link">Dashboard</div>
+							<div className="nav-link">Resumes</div>
+							<div className="nav-link">Cover Letters</div>
+						</div>
+						<div className="second-nav-links">
+							<div className="nav-link">Correspondences</div>
+							<div className="nav-link">Help</div>
+							<div className="nav-link"></div>
+						</div>
+					</div>
           <div className="nav-right">
             { user ? (
               <>

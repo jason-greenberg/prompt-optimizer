@@ -1,5 +1,74 @@
+/* CONTAINERS */
+.navigation-container {
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgb(229, 231, 235);
+  display: flex;
+  justify-content: center;
+  height: 71px;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+.navigation-bar {
+  align-items: center;
+  display: flex;
+  background-color: #ffffff;
+  color: #232a55;
+  justify-content: space-between;
+  height: 71px;
+  max-width: 1300px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+/* ---------------- */
+.first-nav-links {
+  align-items: center;
+  border-right: 1px solid rgb(208, 219, 240);
+  display: flex;
+  padding-right: 6px;
+}
+
+.logo {
+  padding: 0px 20px;
+  font-family: "Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #232a55;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 20px;
+  transform: scaleY(1.05);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: #232a55;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 24px;
+  padding: 0px 6px;
+}
+
+.nav-right {
+
+}
+
+
 .profile-dropdown {
   position: absolute;
+}
+
+.second-nav-links {
+  align-items: center;
+  display: flex;
+  padding-left: 6px;
 }
 
 .hidden {

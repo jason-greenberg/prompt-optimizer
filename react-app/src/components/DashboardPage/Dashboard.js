@@ -28,7 +28,9 @@ export default function Dashboard() {
   return (
     <>
       <Navigation />
-      <h1>Dashboard Component</h1>
+      <div className="dashboard-container">
+        <h1>Dashboard Component</h1>
+      </div>
     </>
   )
 }

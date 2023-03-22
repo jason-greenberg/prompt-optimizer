@@ -5,6 +5,9 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from "react-router-dom";
+import userImage from "./assets/default_gravatar.webp"
+import downArrow from "./assets/down-arrow.png";
+import signOut from "./assets/sign_out_icon.png";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -42,16 +45,22 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+      <div className="user-menu" onClick={openMenu}>
+        <img className="user-icon" src={userImage} alt="user-icon" />
+        <div className="user-email">{user.email}</div>
+        <img className="down-arrow" src={downArrow} alt="down-arrow" />
+      </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
+            <li className="user-email-container">
+              <img className="user-icon-dropdown" src={userImage} alt="user-icon" />
+              <div>{user.email}</div>
+            </li>
+            <li className="break"></li>
+            <li className="signout-container">
+              <img className="signout-icon" src={signOut} alt="sign-out-icon" />
+              <div onClick={handleLogout}>Sign Out</div>
             </li>
           </>
         ) : (

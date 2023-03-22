@@ -5,8 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
-import { fetchAllResumesThunk } from "./store/resume";
-import { fetchAllCoverLettersThunk } from "./store/coverletter";
+import SplashPage from "./components/SplashPage/SplashPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,8 +13,6 @@ function App() {
   useEffect(() => {
     const fetchAsync = async () => {
       await dispatch(authenticate());
-      await dispatch(fetchAllResumesThunk());
-      await dispatch(fetchAllCoverLettersThunk());
       setIsLoaded(true);
     }
     fetchAsync()
@@ -23,15 +20,12 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      {/* <Navigation isLoaded={isLoaded} /> */}
       {isLoaded && (
         <Switch>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
+          <Route path="/login" component={LoginFormPage} />
+          <Route path="/signup" component={SignupFormPage} />
+          <Route exact path = '/' component={SplashPage} />
         </Switch>
       )}
     </>

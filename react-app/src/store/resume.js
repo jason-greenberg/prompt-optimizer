@@ -45,7 +45,7 @@ export const createResumeThunk = (resume) => async (dispatch) => {
     await dispatch(createResume(newResume));
     return newResume;
   } else {
-    throw new Error('Error creating resume');
+    return { 'error': 'Error creating resume'};
   }
 }
 
@@ -60,7 +60,7 @@ export const fetchAllResumesThunk = () => async (dispatch) => {
     await dispatch(readResumes(normalizedResumes))
     return normalizedResumes
   } else {
-    throw new Error('Error fetching resumes');
+    return { 'error': 'Error fetching resumes'};
   }
 }
 
@@ -71,7 +71,7 @@ export const fetchSingleResumeThunk = (resumeId) => async (dispatch) => {
     await dispatch(readSingleResume(resume));
     return resume
   } else {
-    throw new Error('Error fetching single resume');
+    return {'error': 'Error fetching single resume'};
   }
 }
 
@@ -88,7 +88,7 @@ export const updateResumeThunk = (resume) => async (dispatch) => {
     await dispatch(updateResume(updatedResume));
     await dispatch(readSingleResume(updatedResume));
   } else {
-    throw new Error('Error updating resume');
+    return { 'error': 'Error updating resume'};
   }
 }
 
@@ -100,7 +100,7 @@ export const deleteResumeThunk = (resumeId) => async (dispatch) => {
     await dispatch(deleteResume(resumeId));
     return 'Successfully deleted'
   } else {
-    throw new Error('Error deleting resume');
+    return { 'error': 'Error deleting resume'};
   }
 }
 

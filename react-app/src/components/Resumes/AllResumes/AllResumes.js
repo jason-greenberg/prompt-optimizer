@@ -14,6 +14,7 @@ export default function AllResumes() {
   const [state, setState] = useState({ isLoaded: false, error: false })
   const allResumes = useSelector(state => state.resumes?.allResumes)
   const allResumesArray = Object.values(allResumes)
+  const [showDeleteDropdown, setShowDeleteDropdown] = useState([]);
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -40,14 +41,17 @@ export default function AllResumes() {
     <>
       <Navigation />
       { state.isLoaded && !state.error && (
-        <div className="all-resumes-page-container">
+        <div 
+          className="all-resumes-page-container"
+          onClick={() => setShowDeleteDropdown(prev => prev.map(() => false))}
+        >
           <div className="all-resumes-body">
             <h1><span className="form-action">Manage</span> <span className="form-title">Resumes</span></h1>
             <div>Select a resume to view</div>
             <div className='resume-input-box'>
               <div className="input-msg">Choose a resume</div>
               <div className="resumes-container">
-                { Object.values(allResumes).map(resume => (
+                { Object.values(allResumes).map((resume, index) => (
                   <>
                     <div key={resume.id} className="resume-overview">
                       <div className="resume-left">
@@ -72,10 +76,46 @@ export default function AllResumes() {
                         </button>
                         <button
                           className="delete-button"
-                          onClick={(e) => handleDelete(e, resume)}
+                          key={resume.id}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            setShowDeleteDropdown(prev => {
+                              const newState = [...prev];
+                              newState[index] = !newState[index];
+                              return newState;
+                            })
+                          }}
                         >
                           Delete
                         </button>
+                        { showDeleteDropdown[index] && (
+                          <div className="delete-dropdown" key={resume.id}>
+                            <div>Confirm delete?</div>
+                            <div className="delete-options">
+                              <button 
+                                className="delete-option-button delete-option-yes"
+                                onClick={(e) => handleDelete(e, resume)}
+                              >
+                                Yes
+                              </button>
+                              <button 
+                                className="delete-option-button delete-option-no"
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  setShowDeleteDropdown(prev => {
+                                    const newState = [...prev];
+                                    newState[index] = false;
+                                    return newState;
+                                  })
+                                }}
+                              >
+                                No
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="break"></div>
@@ -88,11 +128,11 @@ export default function AllResumes() {
       )}
       { state.isLoaded && state.error && (
         <div className="all-resumes-container">
-        <div className="all-resumes-body">
-          <h3>No resumes found, please try again momentarily</h3>
+          <div className="all-resumes-body">
+            <h3>No resumes found, please try again momentarily</h3>
+          </div>
         </div>
-      </div>
       )}
     </>
-  )
+  )  
 }

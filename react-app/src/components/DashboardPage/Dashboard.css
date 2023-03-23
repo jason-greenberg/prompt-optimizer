@@ -55,21 +55,6 @@
 }
 
 /* ------------- */
-.individual-app {
-  color: #4a5d8a;
-  font-size: 14px;
-  font-weight: 400;
-  width: 100%;
-}
-
-.table-title {
-  color: #21232E;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 32px;
-  width: 100%;
-}
-
 .column-headings {
   color: #8892B8;
   font-size: 11px;
@@ -81,6 +66,47 @@
   text-align: left;
   padding: 4px;
   font-weight: 300;
+}
+
+.individual-app {
+  color: #4a5d8a;
+  font-size: 14px;
+  font-weight: 400;
+  width: 100%;
+}
+
+.resume-deleted-banner {
+  background-color: #fd5a5a;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 16px;
+  margin: 0;
+  padding: 10px 20px;
+  position: absolute;
+  top: 100px;
+  width: fit-content;
+  animation: fadeOut 3s forwards;
+  opacity: 1;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.table-title {
+  color: #21232E;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  width: 100%;
 }
 
 th.job-title {

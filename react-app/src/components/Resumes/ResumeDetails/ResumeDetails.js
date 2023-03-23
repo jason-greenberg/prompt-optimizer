@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../../store/resume'
+import { useHistory, useParams } from 'react-router-dom'
+import { deleteResumeThunk, fetchAllResumesThunk, fetchSingleResumeThunk } from '../../../store/resume'
 import Navigation from '../../Navigation'
 import './ResumeDetails.css'
 
 export default function ResumeDetails() {
   const { resumeId } = useParams()
   const dispatch = useDispatch()
+  const history = useHistory()
   const [state, setState] = useState({ isLoaded: false, error: false });
   const resume = useSelector(state => state.resumes.currentResume);
   const allResumes = useSelector(state => state.resumes.allResumes);
   const allResumesArray = Object.values(allResumes);
+  const [showDeleteDropdown, setShowDeleteDropdown] = useState(false)
   
   useEffect(() => {
     const fetchAsync = async () => {
@@ -64,6 +66,19 @@ export default function ResumeDetails() {
   }
   const romanNumber = numberToRoman(allResumesArray.length + 1);
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  
+    const response = await dispatch(deleteResumeThunk(resumeId));
+    if (!response.error) {
+      history.push('/dashboard', { resumeDeleted: true });
+    } else {
+      alert('Error deleting resume, please try again.');
+    }
+  };
+  
+
   if (!resume) {
     return (
       <div className="resume-details-container">
@@ -78,7 +93,10 @@ export default function ResumeDetails() {
     <>
       <Navigation />
       {state.isLoaded && !state.error && (
-        <div className="resume-details-container">
+        <div 
+          className="resume-details-container"
+          onClick={() => setShowDeleteDropdown(false)}
+        >
           <div className="resume-details-body">
             <div className="resume-header">
               <div className="header-left">
@@ -89,7 +107,34 @@ export default function ResumeDetails() {
                 </div>
               </div>
               <div className="header-right">
-                <button className="skill-level-box remove-button">Remove</button>
+                <button 
+                  className="skill-level-box remove-button"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setShowDeleteDropdown(true)
+                  }}
+                >
+                  Remove
+                </button>
+                { showDeleteDropdown && (
+                  <div className="delete-dropdown">
+                    <div>Confirm delete?</div>
+                    <div className="delete-options">
+                      <button 
+                        className="delete-option-button delete-option-yes"
+                        onClick={handleDelete}
+                      >
+                        Yes
+                      </button>
+                      <button 
+                        className="delete-option-button delete-option-no"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="resume-text">{resume.resume_text}</div>

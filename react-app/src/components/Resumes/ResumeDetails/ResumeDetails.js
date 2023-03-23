@@ -64,7 +64,20 @@ export default function ResumeDetails() {
   
     return roman;
   }
-  const romanNumber = numberToRoman(allResumesArray.length + 1);
+  const getRomanIndex = (currentResume) => {
+    let count = 0;
+    for (const resume of allResumesArray) {
+      if (resume.position_type === currentResume.position_type) {
+        count++;
+        if (resume.id === currentResume.id) {
+          break;
+        }
+      }
+    }
+    return count;
+  };
+  
+  const romanNumber = resume ? numberToRoman(getRomanIndex(resume)) : '';
 
   const handleDelete = async (e) => {
     e.preventDefault();

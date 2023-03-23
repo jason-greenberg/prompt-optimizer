@@ -43,3 +43,27 @@ export const getRomanIndex = (currentResume, resumesArray) => {
   }
   return count;
 };
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const currentDate = new Date();
+  const seconds = Math.floor((currentDate - date) / 1000);
+
+  if (seconds < 60) {
+    return seconds <= 1 ? 'a few seconds ago' : `${seconds} seconds ago`;
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) {
+    return minutes === 1 ? 'a minute ago' : `${minutes} minutes ago`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) {
+    return hours === 1 ? 'an hour ago' : `${hours} hours ago`;
+  }
+
+  const days = Math.floor(hours / 24);
+  return days === 1 ? 'a day ago' : `${days} days ago`;
+};
+

@@ -12,6 +12,7 @@ export default function ResumeDetails() {
   const resume = useSelector(state => state.resumes.currentResume);
   const allResumes = useSelector(state => state.resumes.allResumes);
   const allResumesArray = Object.values(allResumes);
+  const [showDeleteDropdown, setShowDeleteDropdown] = useState(false)
   
   useEffect(() => {
     const fetchAsync = async () => {
@@ -78,7 +79,10 @@ export default function ResumeDetails() {
     <>
       <Navigation />
       {state.isLoaded && !state.error && (
-        <div className="resume-details-container">
+        <div 
+          className="resume-details-container"
+          onClick={() => setShowDeleteDropdown(false)}
+        >
           <div className="resume-details-body">
             <div className="resume-header">
               <div className="header-left">
@@ -89,7 +93,25 @@ export default function ResumeDetails() {
                 </div>
               </div>
               <div className="header-right">
-                <button className="skill-level-box remove-button">Remove</button>
+                <button 
+                  className="skill-level-box remove-button"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setShowDeleteDropdown(true)
+                  }}
+                >
+                  Remove
+                </button>
+                { showDeleteDropdown && (
+                  <div className="delete-dropdown">
+                    <div>Confirm delete?</div>
+                    <div className="delete-options">
+                      <button className="delete-option-button delete-option-yes">Yes</button>
+                      <button className="delete-option-button delete-option-no">No</button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="resume-text">{resume.resume_text}</div>

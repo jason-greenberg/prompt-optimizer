@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { deleteResumeThunk, fetchAllResumesThunk, fetchSingleResumeThunk } from '../../../store/resume'
+import { capitalizeResumeTitle, numberToRoman, getRomanIndex } from '../../../utils/format'
 import Navigation from '../../Navigation'
 import './ResumeDetails.css'
 
@@ -28,56 +29,7 @@ export default function ResumeDetails() {
     fetchAsync();
   }, [resumeId]);
   
-  const capitalizeResumeTitle = (string) => {
-    const output = []
-    const arr = string?.split(' ')
-    arr?.forEach(word => output.push(word[0]?.toUpperCase() + word.slice(1)?.toLowerCase()))
-    return output.join(' ');
-  }
-  const resumeTitle = resume ? capitalizeResumeTitle(resume.position_type) : ''
-
-  const numberToRoman = (num) => {
-    const romanNumerals = [
-      ['M', 1000],
-      ['CM', 900],
-      ['D', 500],
-      ['CD', 400],
-      ['C', 100],
-      ['XC', 90],
-      ['L', 50],
-      ['XL', 40],
-      ['X', 10],
-      ['IX', 9],
-      ['V', 5],
-      ['IV', 4],
-      ['I', 1],
-    ];
-  
-    let roman = '';
-  
-    for (const [numeral, value] of romanNumerals) {
-      while (num >= value) {
-        roman += numeral;
-        num -= value;
-      }
-    }
-  
-    return roman;
-  }
-  const getRomanIndex = (currentResume) => {
-    let count = 0;
-    for (const resume of allResumesArray) {
-      if (resume.position_type === currentResume.position_type) {
-        count++;
-        if (resume.id === currentResume.id) {
-          break;
-        }
-      }
-    }
-    return count;
-  };
-  
-  const romanNumber = resume ? numberToRoman(getRomanIndex(resume)) : '';
+  const romanNumber = resume ? numberToRoman(getRomanIndex(resume, allResumesArray)) : '';
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -120,7 +72,7 @@ export default function ResumeDetails() {
           <div className="resume-details-body">
             <div className="resume-header">
               <div className="header-left">
-                <h1 className="resume-title">{resumeTitle + ` Resume ${romanNumber}`}</h1>
+                <h1 className="resume-title">{capitalizeResumeTitle(resume.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}</h1>
                 <div className="skill-edit">
                   <div className="skill-level-box">{resume.skill_level}</div>
                   <button 

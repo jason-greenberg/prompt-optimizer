@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { useMenuSelector } from '../../../context/Menu'
-import { fetchAllResumesThunk } from '../../../store/resume'
+import { deleteResumeThunk, fetchAllResumesThunk } from '../../../store/resume'
+import { capitalizeResumeTitle, numberToRoman, getRomanIndex } from '../../../utils/format'
 import Navigation from '../../Navigation'
 import './AllResumes.css'
 
 export default function AllResumes() {
   const dispatch = useDispatch();
+  const history = useHistory()
   const { setSelectedLink } = useMenuSelector()
   const [state, setState] = useState({ isLoaded: false, error: false })
   const allResumes = useSelector(state => state.resumes?.allResumes)
@@ -25,51 +28,13 @@ export default function AllResumes() {
     fetchAsync()
   }, [])
 
-  const capitalizeResumeTitle = (string) => {
-    const output = []
-    const arr = string?.split(' ')
-    arr?.forEach(word => output.push(word[0]?.toUpperCase() + word.slice(1)?.toLowerCase()))
-    return output.join(' ');
-  }
+  const handleDelete = async (e, resume) => {
+    e.preventDefault()
+    e.stopPropagation()
 
-  const numberToRoman = (num) => {
-    const romanNumerals = [
-      ['M', 1000],
-      ['CM', 900],
-      ['D', 500],
-      ['CD', 400],
-      ['C', 100],
-      ['XC', 90],
-      ['L', 50],
-      ['XL', 40],
-      ['X', 10],
-      ['IX', 9],
-      ['V', 5],
-      ['IV', 4],
-      ['I', 1],
-    ];
-    let roman = '';
-    for (const [numeral, value] of romanNumerals) {
-      while (num >= value) {
-        roman += numeral;
-        num -= value;
-      }
-    }
-    return roman;
-  }
+    await dispatch(deleteResumeThunk(resume.id));
 
-  const getRomanIndex = (currentResume) => {
-    let count = 0;
-    for (const resume of allResumesArray) {
-      if (resume.position_type === currentResume.position_type) {
-        count++;
-        if (resume.id === currentResume.id) {
-          break;
-        }
-      }
-    }
-    return count;
-  };
+  }
 
   return (
     <>
@@ -86,14 +51,30 @@ export default function AllResumes() {
                   <div key={resume.id} className="resume-overview">
                     <div className="resume-left">
                       <div className="resume-name">
-                        {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume))}`}
+                        {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
                       </div>
+                      <div className="dot">•</div>
                       <div className="resume-date">{resume.created_at}</div>
                     </div>
                     <div className="resume-right">
-                      <button className="view-button">View</button>
-                      <button className="update-button">Edit</button>
-                      <button className="delete-button">Delete</button>
+                      <button 
+                        className="view-button"
+                        onClick={() => history.push(`/resumes/${resume.id}`)}
+                      >
+                        View
+                      </button>
+                      <button 
+                        className="update-button"
+                        onClick={() => history.push(`/resumes/${resume.id}/edit`)}
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        className="delete-button"
+                        onClick={(e) => handleDelete(e, resume)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 ))}

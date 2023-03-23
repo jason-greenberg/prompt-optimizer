@@ -8,16 +8,21 @@ import './ResumeDetails.css'
 export default function ResumeDetails() {
   const { resumeId } = useParams()
   const dispatch = useDispatch()
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [state, setState] = useState({ isLoaded: false, error: false });
   const resume = useSelector(state => state.resumes.currentResume)
 
   useEffect(() => {
     const fetchAsync = async () => {
-      await dispatch(fetchSingleResumeThunk(resumeId))
-      setIsLoaded(true)
-    }
-    fetchAsync()
-  }, [resumeId])
+      const response = await dispatch(fetchSingleResumeThunk(resumeId));
+      if (response.error) {
+        setState({ isLoaded: true, error: true });
+      } else {
+        setState({ isLoaded: true, error: false });
+      }
+    };
+    fetchAsync();
+  }, [resumeId]);
+  
 
   if (!resume) {
     return (
@@ -32,14 +37,22 @@ export default function ResumeDetails() {
   return (
     <>
       <Navigation />
-      { isLoaded && (
+      {state.isLoaded && !state.error && (
         <div className="resume-details-container">
           <div className="resume-details-body">
             <h1>Resume Details</h1>
-            <div>{resume.resume_text}</div>
+            <div className="resume-text">{resume.resume_text}</div>
+          </div>
+        </div>
+      )}
+      {state.isLoaded && state.error && (
+        <div className="resume-details-container">
+          <div className="resume-details-body">
+            <h1>Resume Not Found</h1>
           </div>
         </div>
       )}
     </>
-  )
+  );
+  
 }

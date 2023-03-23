@@ -62,7 +62,8 @@ export default function CreateResumeForm() {
               placeholder='"Satya Nadella, Redmond WA..."'
               value={resumeText}
               onChange={(e) => {
-                setResumeText(e.target.value)
+                const cleanedText = e.target.value.replace(/\s{3,}/g, ' '); //remove triple whitespaces
+                setResumeText(cleanedText);
                 setErrors({...errors, resumeText: null})
               }}
             >

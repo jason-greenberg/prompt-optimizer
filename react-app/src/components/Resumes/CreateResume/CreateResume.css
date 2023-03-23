@@ -80,6 +80,7 @@
   font-size: 14px;
   max-width: 98%;
   padding: 15px 0px 15px 15px;
+  white-space: pre-wrap;
   width: 100%;
 }
 

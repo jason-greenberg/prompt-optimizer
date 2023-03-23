@@ -84,16 +84,6 @@ export default function ResumeDetails() {
                 </div>
               </div>
               <div className="header-right">
-                <button 
-                  className="skill-level-box remove-button"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setShowDeleteDropdown(true)
-                  }}
-                >
-                  Remove
-                </button>
                 { showDeleteDropdown && (
                   <div className="delete-dropdown">
                     <div>Confirm delete?</div>
@@ -114,7 +104,20 @@ export default function ResumeDetails() {
                 )}
               </div>
             </div>
-            <div className="resume-text">{resume.resume_text}</div>
+            <div className="resume-text">
+              {resume.resume_text}
+              <button 
+                className="skill-level-box remove-button"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setShowDeleteDropdown(true)
+                }}
+              >
+                Remove
+              </button>
+
+              </div>
           </div>
         </div>
       )}

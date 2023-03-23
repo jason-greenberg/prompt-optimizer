@@ -24,6 +24,11 @@
 }
 
 /* Error styling */
+.create-resume-body > div {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .form-action {
   font-size: 24px;
   font-weight: 400;
@@ -45,6 +50,21 @@
   color: red;
   font-size: 0.9em;
   margin-top: 5px;
+}
+
+.resume-text-box {
+  border: 1px solid #D0DBF0;
+  border-radius: 6px;
+  max-width: 742px;
+  padding: 28px 32px;
+  width: 100%;
+}
+
+.resume-text-box > textarea {
+  border: 1px solid #D0DBF0;
+  border-radius: 6px;
+  max-width: 100%;
+  width: 100%;
 }
 
 /* ----------- */

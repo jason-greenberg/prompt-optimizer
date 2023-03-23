@@ -10,6 +10,7 @@ import Dashboard from "./components/DashboardPage/Dashboard";
 import CreateResumeForm from "./components/Resumes/CreateResume/CreateResumeForm";
 import ResumeDetails from "./components/Resumes/ResumeDetails/ResumeDetails";
 import EditResume from "./components/Resumes/EditResume/EditResume";
+import AllResumes from "./components/Resumes/AllResumes/AllResumes";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
           <Route path="/resumes/new" component={CreateResumeForm} />
           <Route path="/resumes/:resumeId/edit" component={EditResume} />
           <Route path="/resumes/:resumeId" component={ResumeDetails} />
+          <Route path="/resumes" component={AllResumes} />
           <Route exact path = '/' component={SplashPage} />
         </Switch>
       )}

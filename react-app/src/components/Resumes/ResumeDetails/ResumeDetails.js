@@ -80,7 +80,18 @@ export default function ResumeDetails() {
       {state.isLoaded && !state.error && (
         <div className="resume-details-container">
           <div className="resume-details-body">
-            <h1 className="resume-title">{resumeTitle + ` Resume ${romanNumber}`}</h1>
+            <div className="resume-header">
+              <div className="header-left">
+                <h1 className="resume-title">{resumeTitle + ` Resume ${romanNumber}`}</h1>
+                <div className="skill-edit">
+                  <div className="skill-level-box">{resume.skill_level}</div>
+                  <button className="skill-level-box edit-button">Edit</button>
+                </div>
+              </div>
+              <div className="header-right">
+                <button className="skill-level-box remove-button">Remove</button>
+              </div>
+            </div>
             <div className="resume-text">{resume.resume_text}</div>
           </div>
         </div>

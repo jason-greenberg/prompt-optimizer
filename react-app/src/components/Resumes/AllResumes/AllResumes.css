@@ -1,5 +1,5 @@
 /* CONTAINERS */
-.all-resumes-container {
+.all-resumes-page-container {
   color: #21232E;
   display: flex;
   justify-content: center;
@@ -20,6 +20,18 @@
   max-width: 1250px;
   min-width: 1065px;
   overflow-x: auto;
+  width: 100%;
+}
+
+.resumes-container {
+  border: 1px solid #D0DBF0;
+  border-radius: 6px;
+  height: 300px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  max-width: 98%;
+  padding: 15px 0px 15px 15px;
+  white-space: pre-wrap;
   width: 100%;
 }
 /* ----------- */

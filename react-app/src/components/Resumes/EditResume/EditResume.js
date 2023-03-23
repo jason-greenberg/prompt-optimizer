@@ -10,11 +10,11 @@ export default function EditResume() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { resumeId } = useParams()
-  const resume = useSelector(state => state.resume?.currentResume);
+  const resume = useSelector(state => state.resumes?.currentResume);
   const { setSelectedLink } = useMenuSelector();
-  const [resumeText, setResumeText] = useState('');
-  const [positionType, setPositionType] = useState('');
-  const [skillLevel, setSkillLevel] = useState('Entry Level');
+  const [resumeText, setResumeText] = useState(resume?.resume_text);
+  const [positionType, setPositionType] = useState(resume?.position_type);
+  const [skillLevel, setSkillLevel] = useState(resume?.skill_level);
   const [errors, setErrors] = useState({});
   const [state, setState] = useState({ isLoaded: false, error: false });
 
@@ -30,6 +30,14 @@ export default function EditResume() {
     }
     fetchAsync()
   }, [resumeId])
+
+  useEffect(() => {
+    if (resume) {
+      setResumeText(resume.resume_text);
+      setPositionType(resume.position_type);
+      setSkillLevel(resume.skill_level);
+    }
+  }, [resume]);
 
   const validate = () => {
     const validationErrors = {}
@@ -50,13 +58,14 @@ export default function EditResume() {
     // If no validation errors, submit resume
     if (!Object.keys(validationErrors).length > 0) {
       const newResume = {
+        id: resumeId,
         resume_text: resumeText,
         position_type: positionType,
         skill_level: skillLevel
       }
 
       const resume = await dispatch(updateResumeThunk(newResume));
-      history.push(`/resumes/${resume.id}`)
+      history.push(`/resumes/${newResume.id}`)
     }
   }
 

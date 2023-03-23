@@ -23,3 +23,6 @@
   width: 100%;
 }
 /* ---------- */
+.resume-text {
+  white-space: pre-wrap;
+}

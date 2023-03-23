@@ -41,7 +41,7 @@ export default function ResumeDetails() {
         <div className="resume-details-container">
           <div className="resume-details-body">
             <h1>Resume Details</h1>
-            <div>{resume.resume_text}</div>
+            <div className="resume-text">{resume.resume_text}</div>
           </div>
         </div>
       )}

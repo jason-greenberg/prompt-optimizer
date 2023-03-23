@@ -53,7 +53,7 @@ export default function CreateResumeForm() {
       <Navigation />
       <div className="create-resume-page-container">
         <div className="create-resume-body">
-          <h1>Upload a new Resume</h1>
+          <h1><span className="form-action">Upload a new</span> <span className="form-title">Resume</span></h1>
           <div>Paste your resume below</div>
           <div className={`resume-text-box ${errors.resumeText ? 'error' : ''}`}>
             <div>Paste resume</div>

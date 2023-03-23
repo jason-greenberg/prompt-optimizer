@@ -36,3 +36,19 @@ button {
   border-bottom: 1px solid #D0DBF0;
   width: 100%;
 }
+
+textarea {
+  resize: none;
+}
+
+textarea::placeholder {
+  font-size: 14px;
+  color: #9c9c9c;
+  font-family: 'Roboto', sans-serif;
+}
+
+input::placeholder {
+  font-size: 14px;
+  color: #9c9c9c;
+  font-family: 'Roboto', sans-serif;
+}

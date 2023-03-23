@@ -77,6 +77,13 @@ export default function ResumeDetails() {
       alert('Error deleting resume, please try again.');
     }
   };
+
+  const handleEdit = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    history.push(`/resumes/${resumeId}/edit`)
+  }
   
 
   if (!resume) {
@@ -103,7 +110,12 @@ export default function ResumeDetails() {
                 <h1 className="resume-title">{resumeTitle + ` Resume ${romanNumber}`}</h1>
                 <div className="skill-edit">
                   <div className="skill-level-box">{resume.skill_level}</div>
-                  <button className="skill-level-box edit-button">Edit</button>
+                  <button 
+                    className="skill-level-box edit-button"
+                    onClick={handleEdit}
+                  >
+                    Edit
+                  </button>
                 </div>
               </div>
               <div className="header-right">

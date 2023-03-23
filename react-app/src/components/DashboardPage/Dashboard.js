@@ -6,6 +6,7 @@ import { fetchAllApplicationsThunk } from '../../store/application';
 import Navigation from '../Navigation';
 import './Dashboard.css';
 import { fetchAllResumesThunk } from '../../store/resume';
+import { useMenuSelector } from '../../context/Menu';
 
 export default function Dashboard() {
   const user = useSelector(state => state.session.user);
@@ -14,7 +15,8 @@ export default function Dashboard() {
   const history = useHistory()
   const location = useLocation();
   const resumeDeleted = location.state?.resumeDeleted;
-  const [showBanner, setShowBanner] = useState(resumeDeleted)
+  const [showBanner, setShowBanner] = useState(resumeDeleted);
+  const { setSelectedLink } = useMenuSelector()
 
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,6 +29,8 @@ export default function Dashboard() {
       setIsLoaded(true);
     }
     fetchAsync();
+
+    setSelectedLink('dashboard')
 
     if (!user) {
       history.push('/')

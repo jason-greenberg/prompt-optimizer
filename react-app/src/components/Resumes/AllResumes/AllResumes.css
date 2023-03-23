@@ -30,8 +30,56 @@
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   max-width: 98%;
+  overflow-y: auto;
   padding: 15px 0px 15px 15px;
   white-space: pre-wrap;
   width: 100%;
 }
 /* ----------- */
+.resume-left {
+  align-items: center;
+  display: flex;
+}
+
+.resume-overview {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  padding: 20px 20px 30px 0px;
+}
+
+/* BUTTONS */
+.view-button,
+.update-button,
+.delete-button {
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 3px 5px;
+}
+
+.view-button {
+  background-color: rgb(79, 101, 241);
+  background-image: linear-gradient(90deg, rgb(111, 137, 251) 0%, rgb(97, 109, 245) 33%, rgb(92, 82, 235) 100%);
+}
+
+.update-button {
+  background-color: rgb(84, 170, 84);
+  margin-left: 10px;
+}
+
+.update-button:hover {
+  background-color: green;
+}
+
+.delete-button {
+  background-color: rgb(253, 90, 90);
+  margin-left: 10px;
+}
+
+.delete-button:hover {
+  background-color: red;
+}

@@ -82,8 +82,20 @@ export default function AllResumes() {
             <div className='resume-input-box'>
               <div className="input-msg">Choose a resume</div>
               <div className="resumes-container">
-                { Object.values(allResumes).map((resume, index) => (
-                  <div key={resume.id}>{`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume))}`}</div>
+                { Object.values(allResumes).map(resume => (
+                  <div key={resume.id} className="resume-overview">
+                    <div className="resume-left">
+                      <div className="resume-name">
+                        {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume))}`}
+                      </div>
+                      <div className="resume-date">{resume.created_at}</div>
+                    </div>
+                    <div className="resume-right">
+                      <button className="view-button">View</button>
+                      <button className="update-button">Edit</button>
+                      <button className="delete-button">Delete</button>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>

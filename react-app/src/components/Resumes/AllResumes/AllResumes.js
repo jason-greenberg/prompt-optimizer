@@ -92,7 +92,7 @@ export default function AllResumes() {
                     </div>
                     <div className="resume-right">
                       <button className="view-button">View</button>
-                      <button className="edit-button">Edit</button>
+                      <button className="update-button">Edit</button>
                       <button className="delete-button">Delete</button>
                     </div>
                   </div>

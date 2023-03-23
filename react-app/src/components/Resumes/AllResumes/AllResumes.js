@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useMenuSelector } from '../../../context/Menu'
 import { deleteResumeThunk, fetchAllResumesThunk } from '../../../store/resume'
-import { capitalizeResumeTitle, numberToRoman, getRomanIndex } from '../../../utils/format'
+import { capitalizeResumeTitle, numberToRoman, getRomanIndex, formatDate } from '../../../utils/format'
 import Navigation from '../../Navigation'
 import './AllResumes.css'
 
@@ -48,35 +48,38 @@ export default function AllResumes() {
               <div className="input-msg">Choose a resume</div>
               <div className="resumes-container">
                 { Object.values(allResumes).map(resume => (
-                  <div key={resume.id} className="resume-overview">
-                    <div className="resume-left">
-                      <div className="resume-name">
-                        {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                  <>
+                    <div key={resume.id} className="resume-overview">
+                      <div className="resume-left">
+                        <div className="resume-name">
+                          {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                        </div>
+                        <div className="dot">•</div>
+                        <div className="resume-date">{formatDate(resume.created_at)}</div>
                       </div>
-                      <div className="dot">•</div>
-                      <div className="resume-date">{resume.created_at}</div>
+                      <div className="resume-right">
+                        <button
+                          className="view-button"
+                          onClick={() => history.push(`/resumes/${resume.id}`)}
+                        >
+                          View
+                        </button>
+                        <button
+                          className="update-button"
+                          onClick={() => history.push(`/resumes/${resume.id}/edit`)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={(e) => handleDelete(e, resume)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                    <div className="resume-right">
-                      <button 
-                        className="view-button"
-                        onClick={() => history.push(`/resumes/${resume.id}`)}
-                      >
-                        View
-                      </button>
-                      <button 
-                        className="update-button"
-                        onClick={() => history.push(`/resumes/${resume.id}/edit`)}
-                      >
-                        Edit
-                      </button>
-                      <button 
-                        className="delete-button"
-                        onClick={(e) => handleDelete(e, resume)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
+                    <div className="break"></div>
+                  </>
                 ))}
               </div>
             </div>

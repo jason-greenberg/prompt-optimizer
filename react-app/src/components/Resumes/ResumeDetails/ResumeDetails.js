@@ -67,16 +67,17 @@ export default function ResumeDetails() {
   const romanNumber = numberToRoman(allResumesArray.length + 1);
 
   const handleDelete = async (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-
+    e.preventDefault();
+    e.stopPropagation();
+  
     const response = await dispatch(deleteResumeThunk(resumeId));
-  if (!response.error) {
-    history.push('/dashboard');
-  } else {
-    alert('Error deleting resume, please try again.')
-  }
-  }
+    if (!response.error) {
+      history.push('/dashboard', { resumeDeleted: true });
+    } else {
+      alert('Error deleting resume, please try again.');
+    }
+  };
+  
 
   if (!resume) {
     return (

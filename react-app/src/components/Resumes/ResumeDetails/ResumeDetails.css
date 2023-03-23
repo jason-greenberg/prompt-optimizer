@@ -24,5 +24,11 @@
 }
 /* ---------- */
 .resume-text {
+  font-size: 14px;
   white-space: pre-wrap;
+}
+
+.resume-title {
+  font-size: 24px;
+  font-weight: 500;
 }

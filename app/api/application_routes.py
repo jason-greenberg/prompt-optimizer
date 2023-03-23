@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
-from app.models import Application, Correspondence, db
+from app.models import Application, Correspondence, Resume, db
 from datetime import datetime
 from ..utils.gpt import generate_gpt_correspondence
 
@@ -82,18 +82,23 @@ def create_application():
     cover_letter_id = data.get('cover_letter_id', None)
     job_title = data['job_title']
 
+    # Fetch the associated resume
+    resume = Resume.query.get(resume_id)
+
     # Create new application in db
     new_application = Application(
         user_id=current_user.id,
         resume_id=resume_id,
         cover_letter_id=cover_letter_id,
         job_title=job_title,
+        position_type=resume.position_type if resume else None,
         created_at=datetime.utcnow()
     )
     db.session.add(new_application)
     db.session.commit()
 
     return new_application.to_dict(), 201
+
 
 # Update application by id
 @application_routes.route('/<int:id>', methods=['PUT'])

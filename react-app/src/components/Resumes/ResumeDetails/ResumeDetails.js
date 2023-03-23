@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../../store/resume'
+import { useHistory, useParams } from 'react-router-dom'
+import { deleteResumeThunk, fetchAllResumesThunk, fetchSingleResumeThunk } from '../../../store/resume'
 import Navigation from '../../Navigation'
 import './ResumeDetails.css'
 
 export default function ResumeDetails() {
   const { resumeId } = useParams()
   const dispatch = useDispatch()
+  const history = useHistory()
   const [state, setState] = useState({ isLoaded: false, error: false });
   const resume = useSelector(state => state.resumes.currentResume);
   const allResumes = useSelector(state => state.resumes.allResumes);
@@ -65,6 +66,18 @@ export default function ResumeDetails() {
   }
   const romanNumber = numberToRoman(allResumesArray.length + 1);
 
+  const handleDelete = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const response = await dispatch(deleteResumeThunk(resumeId));
+  if (!response.error) {
+    history.push('/dashboard');
+  } else {
+    alert('Error deleting resume, please try again.')
+  }
+  }
+
   if (!resume) {
     return (
       <div className="resume-details-container">
@@ -107,8 +120,17 @@ export default function ResumeDetails() {
                   <div className="delete-dropdown">
                     <div>Confirm delete?</div>
                     <div className="delete-options">
-                      <button className="delete-option-button delete-option-yes">Yes</button>
-                      <button className="delete-option-button delete-option-no">No</button>
+                      <button 
+                        className="delete-option-button delete-option-yes"
+                        onClick={handleDelete}
+                      >
+                        Yes
+                      </button>
+                      <button 
+                        className="delete-option-button delete-option-no"
+                      >
+                        No
+                      </button>
                     </div>
                   </div>
                 )}

@@ -12,16 +12,13 @@ class Application(db.Model):
     resume_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('resumes.id'), ondelete='CASCADE'), nullable=True)
     cover_letter_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('coverletters.id'), ondelete='CASCADE'), nullable=True)
     job_title = db.Column(db.String, nullable=False)
+    position_type = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
 
     user = db.relationship('User', back_populates='applications')
     resume = db.relationship('Resume', back_populates='applications')
     cover_letter = db.relationship('CoverLetter', uselist=False, back_populates='application')
     correspondences = db.relationship('Correspondence', back_populates='application', cascade='all, delete')
-
-    @property
-    def position_type(self):
-        return self.resume.position_type
 
     def to_dict(self):
         return {

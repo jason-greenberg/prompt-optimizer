@@ -68,6 +68,7 @@ def upgrade():
     sa.Column('resume_id', sa.Integer(), nullable=True),
     sa.Column('cover_letter_id', sa.Integer(), nullable=True),
     sa.Column('job_title', sa.String(), nullable=False),
+    sa.Column('position_type', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['cover_letter_id'], ['coverletters.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['resume_id'], ['resumes.id'], ondelete='CASCADE'),

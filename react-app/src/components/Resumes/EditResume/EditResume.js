@@ -1,12 +1,12 @@
+import '../CreateResume/CreateResume.css'
 import { useEffect, useState } from 'react'
 import Navigation from '../../Navigation'
 import { useMenuSelector } from '../../../context/Menu'
-import './CreateResume.css'
 import { useDispatch } from 'react-redux'
-import { createResumeThunk } from '../../../store/resume'
+import { updateResumeThunk } from '../../../store/resume'
 import { useHistory } from 'react-router-dom'
 
-export default function CreateResumeForm() {
+export default function EditResume() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { setSelectedLink } = useMenuSelector();
@@ -43,7 +43,7 @@ export default function CreateResumeForm() {
         skill_level: skillLevel
       }
 
-      const resume = await dispatch(createResumeThunk(newResume));
+      const resume = await dispatch(updateResumeThunk(newResume));
       history.push(`/resumes/${resume.id}`)
     }
   }
@@ -53,8 +53,8 @@ export default function CreateResumeForm() {
       <Navigation />
       <div className="create-resume-page-container">
         <div className="create-resume-body">
-          <h1><span className="form-action">Upload a new</span> <span className="form-title">Resume</span></h1>
-          <div>Paste your resume below</div>
+          <h1><span className="form-action">Edit</span> <span className="form-title">Resume</span></h1>
+          <div>Update your resume details below</div>
           <div className={`resume-input-box ${errors.resumeText ? 'error' : ''}`}>
             <div className="input-msg">Paste resume</div>
             <textarea 
@@ -83,7 +83,7 @@ export default function CreateResumeForm() {
             />
             {errors.positionType && <div className="error-message">{errors.positionType}</div>}
           </div>
-          <div className={`skill-box resume-input-box ${errors.skillLevel ? 'error' : ''}`}>
+          <div className={`resume-input-box ${errors.skillLevel ? 'error' : ''}`}>
             <div className="input-msg">Select Target Skill Level</div>
             <select
               className="select-level-input"

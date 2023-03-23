@@ -24,6 +24,7 @@ export default function CreateResumeForm() {
 
     if (!resumeText) validationErrors.resumeText = 'Resume text is required'
     if (!positionType) validationErrors.positionType = 'Postion type is required'
+    if (positionType && positionType.split(' ').length > 3) validationErrors.positionType = 'Position type must be less than 3 words'
     if (!skillLevel) validationErrors.skillLevel = 'Skill level is required'
 
     return validationErrors;

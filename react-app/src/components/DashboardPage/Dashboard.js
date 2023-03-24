@@ -29,14 +29,15 @@ export default function Dashboard() {
       setIsLoaded(true);
     }
     fetchAsync();
-
+  
     setSelectedLink('dashboard')
-
-    if (!user) {
+  
+    if (!user && isLoaded) {
       history.push('/')
       return null
     }
-  }, [dispatch, history, user]);
+  }, [dispatch, history, isLoaded]);
+  
 
   useEffect(() => {
     if (resumeDeleted) {

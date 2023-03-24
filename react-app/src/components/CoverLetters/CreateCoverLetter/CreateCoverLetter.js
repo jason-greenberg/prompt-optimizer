@@ -8,6 +8,7 @@ import Navigation from '../../Navigation'
 import './CreateCoverLetter.css'
 import LoadingDefault from '../../Loading/LoadingDefault';
 import linkIcon from './assets/link-icon.png'
+import { createCoverLetterThunk } from '../../../store/coverletter';
 
 export default function CreateCoverLetter() {
   const dispatch = useDispatch();
@@ -20,8 +21,9 @@ export default function CreateCoverLetter() {
   const [selectedResume, setSelectedResume] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [jobDescrition, setJobDescription] = useState('');
+  const [jobDescription, setJobDescription] = useState('');
   const [companyDetails, setCompanyDetails] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -55,6 +57,35 @@ export default function CreateCoverLetter() {
     await setLoading(true);
   }
 
+  const validate = () => {
+    const validationErrors = {};
+
+    if (!jobDescription) validationErrors.jobDescrition = 'Job Description is required';
+    if (!companyDetails) validationErrors.companyDetails = 'Company Details are required';
+    if (!jobTitle) validationErrors.jobTitle = 'Job title is required';
+
+    return validationErrors;
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    // If no validation errors, submit resume
+    if (!Object.keys(validationErrors).length > 0) {
+      const response = await dispatch(
+        createCoverLetterThunk(
+          resume.id, // resume id
+          jobDescription, // job description
+          companyDetails, // company details
+          'gpt-3.5-turbo', // engine
+          jobTitle // job title
+        ));
+      history.push(`/resumes/${resume.id}`);
+    }
+  };
+
   return (
     <>
       <Navigation />
@@ -71,22 +102,36 @@ export default function CreateCoverLetter() {
                     <div>{capitalizeResumeTitle(resume.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}</div>
                     <img className="link-icon" src={linkIcon} alt="link-icon" />
                   </div>
-                  <div className={`resume-input-box ${errors.resumeText ? 'error' : ''}`}>
-                  <div className="input-msg">Paste Job Description</div>
-                  <textarea 
-                    className=""
-                    placeholder='"Fullstack Software Engineer I, OpenAI..."'
-                    value={jobDescrition}
-                    onChange={(e) => {
-                      const cleanedText = e.target.value.replace(/\s{3,}/g, ' '); //remove triple whitespaces
-                      setJobDescription(cleanedText);
-                      setErrors({...errors, resumeText: null})
-                    }}
-                  >
-                  </textarea>
-                  {errors.resumeText && <div className="error-message">{errors.resumeText}</div>}
-                </div>
-                <div className={`position-type-box resume-input-box ${errors.positionType ? 'error' : ''}`}>
+                  <div className={`position-type-box resume-input-box ${errors.jobTitle ? 'error' : ''}`}>
+                    <div className="input-msg">Job Title</div>
+                    <input 
+                      type="text" 
+                      className="position-type-input"
+                      placeholder='"Software Engineer I"'
+                      value={jobTitle}
+                      onChange={(e) => {
+                        setJobTitle(e.target.value)
+                        setErrors({...errors, jobTitle: null})
+                      }} 
+                    />
+                    {errors.jobTitle && <div className="error-message">{errors.jobTitle}</div>}
+                  </div>
+                  <div className={`resume-input-box ${errors.jobDescription ? 'error' : ''}`}>
+                    <div className="input-msg">Paste Job Description</div>
+                    <textarea 
+                      className=""
+                      placeholder='"Fullstack Software Engineer I, OpenAI..."'
+                      value={jobDescription}
+                      onChange={(e) => {
+                        const cleanedText = e.target.value.replace(/\s{3,}/g, ' '); //remove triple whitespaces
+                        setJobDescription(cleanedText);
+                        setErrors({...errors, jobDescrition: null})
+                      }}
+                    >
+                    </textarea>
+                    {errors.jobDescription && <div className="error-message">{errors.jobDescription}</div>}
+                  </div>
+                <div className={`position-type-box resume-input-box ${errors.companyDetails ? 'error' : ''}`}>
                   <div className="input-msg">Paste Company Details</div>
                   <textarea 
                     className=""
@@ -94,20 +139,28 @@ export default function CreateCoverLetter() {
     
     1.  A recent news article or press release regarding company activities (this is ideal!)
     
-    2.  A detailed about 'About' section from a company website or job site
+    2.  A detailed 'About' section from a company website or job site
                     `}
                     value={companyDetails}
                     onChange={(e) => {
                       const cleanedText = e.target.value.replace(/\s{3,}/g, ' '); //remove triple whitespaces
                       setCompanyDetails(cleanedText);
-                      setErrors({...errors, resumeText: null})
+                      setErrors({...errors, companyDetails: null})
                     }}
                   >
                   </textarea>
-                  {errors.positionType && <div className="error-message">{errors.positionType}</div>}
+                  {errors.companyDetails && <div className="error-message">{errors.companyDetails}</div>}
                 </div>
+                <div className="submit-container">
+                  <button 
+                    className="submit-button"
+                    onClick={onSubmit}
+                  >
+                    Create Cover Letter
+                  </button>
                 </div>
               </div>
+            </div>
           )}
           { !selectedResume && (
             <div 

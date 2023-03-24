@@ -7,6 +7,7 @@ import { capitalizeResumeTitle, formatDate, getRomanIndex, numberToRoman } from 
 import loading from './assets/loading.gif'
 import Navigation from '../../Navigation'
 import './CreateCoverLetter.css'
+import LoadingDefault from '../../Loading/LoadingDefault';
 
 export default function CreateCoverLetter() {
   const dispatch = useDispatch();
@@ -15,7 +16,11 @@ export default function CreateCoverLetter() {
   const [state, setState] = useState({ isLoaded: false, error: false })
   const allResumes = useSelector(state => state.resumes?.allResumes)
   const allResumesArray = Object.values(allResumes)
-  const [selectedResume, setSelectedResume] = useState('')
+  const [selectedResume, setSelectedResume] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
+  const [jobDescrition, setJobDescription] = useState('');
+  const [companyDetails, setCompanyDetails] = useState('');
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -30,17 +35,29 @@ export default function CreateCoverLetter() {
     fetchAsync()
   }, [dispatch])
 
-  const selectResume = (e, resumeId) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 300);
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [selectedResume])
+
+  const selectResume = async (e, resumeId) => {
     e.preventDefault();
     e.stopPropagation();
 
-    setSelectedResume(resumeId)
+    await setSelectedResume(resumeId);
+    await setLoading(true);
   }
 
   return (
     <>
       <Navigation />
-      { state.isLoaded && !state.error && (
+      { loading && <LoadingDefault />}
+      { state.isLoaded && !state.error && !loading && (
         <>
           { (selectedResume !== '') && (
           <div 
@@ -49,14 +66,36 @@ export default function CreateCoverLetter() {
               <div className="all-resumes-body">
                 <h1><span className="form-action">Create a new</span> <span className="form-title">Cover Letter</span></h1>
                 <div>Connect a resume to generate a cover letter</div>
-                <div className='resume-input-box'>
-                  <div className="input-msg">Connect a resume</div>
-                  <div className="resumes-container">
-
-                  </div>
+                  <div className={`resume-input-box ${errors.resumeText ? 'error' : ''}`}>
+                  <div className="input-msg">Paste resume</div>
+                  <textarea 
+                    placeholder='"Satya Nadella, Redmond WA..."'
+                    value={jobDescrition}
+                    onChange={(e) => {
+                      const cleanedText = e.target.value.replace(/\s{3,}/g, ' '); //remove triple whitespaces
+                      setJobDescription(cleanedText);
+                      setErrors({...errors, resumeText: null})
+                    }}
+                  >
+                  </textarea>
+                  {errors.resumeText && <div className="error-message">{errors.resumeText}</div>}
+                </div>
+                <div className={`position-type-box resume-input-box ${errors.positionType ? 'error' : ''}`}>
+                  <div className="input-msg">Describe in 1-3 words the types of positions this resume is for</div>
+                  <input 
+                    type="text" 
+                    className="position-type-input"
+                    placeholder='"Fullstack"'
+                    value={companyDetails}
+                    onChange={(e) => {
+                      setCompanyDetails(e.target.value)
+                      setErrors({...errors, positionType: null})
+                    }} 
+                  />
+                  {errors.positionType && <div className="error-message">{errors.positionType}</div>}
+                </div>
                 </div>
               </div>
-            </div>
           )}
           { !selectedResume && (
             <div 
@@ -107,7 +146,7 @@ export default function CreateCoverLetter() {
           )}
         </>
       )}
-      { state.isLoaded && state.error && (
+      { state.isLoaded && state.error && !loading && (
         <div className="all-resumes-container">
           <div className="all-resumes-body">
             <h3>No resumes found, please try again momentarily</h3>

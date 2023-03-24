@@ -35,27 +35,34 @@ export default function ApplicationDetails() {
     <>
       <Navigation />
       { state.isLoaded && !state.error && (
-        <div className="application-details-container">
-          <div className="application-details-body">
-            <div className="app-info-box">
-              <div className="app-info-left">
-                <div className="job-title">{application?.job_title}</div>
-                <div className="skill-level-box skill">{resume?.skill_level}</div>
-                <div className="skill-level-box position-type">{resume?.position_type}</div>
-                <div className="resume-name">
-                  {capitalizeResumeTitle(resume?.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+        <>
+          <div className="application-details-container">
+            <div className="application-details-body">
+              <div className="app-info-box">
+                <div className="app-info-left">
+                  <div className="job-name">{application?.job_title}</div>
+                  <div className="skill-level-box skill">{resume?.skill_level}</div>
+                  <div className="skill-level-box position-type">{resume?.position_type}</div>
+                  <div className="resume-name">
+                    {capitalizeResumeTitle(resume?.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                  </div>
+                </div>
+                <div className="app-info-right">
+                  <div className="manage-menu">
+                    <div>Manage</div>
+                    <img className="down" src={downArrow} alt="" />
+                  </div>
+                  <button className="create-button message-recruiter">Message Recruiter</button>
                 </div>
               </div>
-              <div className="app-info-right">
-                <div className="manage-menu">
-                  <div>Manage</div>
-                  <img className="down" src={downArrow} alt="" />
-                </div>
-                <button className="message-recruiter create-button">Message Recruiter</button>
+              <div className="app-materials">
+                <div className="materials-left"></div>
+                <div className="materials-right"></div>
               </div>
             </div>
           </div>
-        </div>
+          <div className="app-break"></div>
+        </>
       )}
       { state.isLoaded && state.error && (
         <div className="application-details-container">

@@ -36,7 +36,7 @@ export default function Dashboard() {
       history.push('/')
       return null
     }
-  }, [dispatch]);
+  }, [dispatch, history, user]);
 
   useEffect(() => {
     if (resumeDeleted) {

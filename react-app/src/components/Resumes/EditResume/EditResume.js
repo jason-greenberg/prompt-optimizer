@@ -29,7 +29,7 @@ export default function EditResume() {
       await setSelectedLink('resumes')
     }
     fetchAsync()
-  }, [resumeId])
+  }, [dispatch, resumeId])
 
   useEffect(() => {
     if (resume) {
@@ -64,7 +64,7 @@ export default function EditResume() {
         skill_level: skillLevel
       }
 
-      const resume = await dispatch(updateResumeThunk(newResume));
+      await dispatch(updateResumeThunk(newResume));
       history.push(`/resumes/${newResume.id}`)
     }
   }

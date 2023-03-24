@@ -1,0 +1,25 @@
+/* CONTAINERS */
+.create-cover-letter-container {
+  color: #21232E;
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  flex-direction: column;
+  align-items: center;
+  margin: 90px 30px;
+  width: 100%;
+}
+
+.create-cover-letter-body {
+  align-items: flex-start;
+  color: rgb(33, 35, 46);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  justify-content: flex-start;
+  max-width: 1250px;
+  min-width: 1065px;
+  overflow-x: auto;
+  width: 100%;
+}
+/* ----------- */

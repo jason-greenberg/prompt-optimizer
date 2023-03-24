@@ -4,13 +4,13 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
-import Navigation from "./components/Navigation";
 import SplashPage from "./components/SplashPage/SplashPage";
 import Dashboard from "./components/DashboardPage/Dashboard";
 import CreateResumeForm from "./components/Resumes/CreateResume/CreateResumeForm";
 import ResumeDetails from "./components/Resumes/ResumeDetails/ResumeDetails";
 import EditResume from "./components/Resumes/EditResume/EditResume";
 import AllResumes from "./components/Resumes/AllResumes/AllResumes";
+import CreateCoverLetter from "./components/CoverLetters/CreateCoverLetter/CreateCoverLetter";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ function App() {
           <Route path="/resumes/:resumeId/edit" component={EditResume} />
           <Route path="/resumes/:resumeId" component={ResumeDetails} />
           <Route path="/resumes" component={AllResumes} />
+          <Route path="/coverletters/new" component={CreateCoverLetter} />
           <Route exact path = '/' component={SplashPage} />
         </Switch>
       )}

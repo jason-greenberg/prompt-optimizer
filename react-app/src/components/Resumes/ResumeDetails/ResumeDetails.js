@@ -27,9 +27,7 @@ export default function ResumeDetails() {
       await dispatch(fetchAllResumesThunk())
     };
     fetchAsync();
-  }, [resumeId]);
-  
-  const romanNumber = resume ? numberToRoman(getRomanIndex(resume, allResumesArray)) : '';
+  }, [resumeId, dispatch]);
 
   const handleDelete = async (e) => {
     e.preventDefault();

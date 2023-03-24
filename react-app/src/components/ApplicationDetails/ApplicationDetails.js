@@ -55,13 +55,20 @@ export default function ApplicationDetails() {
                   <button className="create-button message-recruiter">Message Recruiter</button>
                 </div>
               </div>
-              <div className="app-materials">
-                <div className="materials-left"></div>
-                <div className="materials-right"></div>
-              </div>
             </div>
           </div>
           <div className="app-break"></div>
+          <div className="app-materials-container">
+            <div className="app-materials">
+              <div className="materials-left">
+                <div className="app-link job-details-link">Job Details</div>
+                <div className="app-link correspondence-link">Correspondence</div>
+                <div className="app-link cover-letter-link">Cover Letter</div>
+                <div className="app-link resume-link">Resume</div>
+              </div>
+              <div className="materials-right"></div>
+            </div>
+          </div>
         </>
       )}
       { state.isLoaded && state.error && (

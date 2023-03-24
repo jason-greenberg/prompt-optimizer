@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useMenuSelector } from '../../../context/Menu'
-import { fetchAllResumesThunk } from '../../../store/resume';
+import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../../store/resume';
 import { capitalizeResumeTitle, formatDate, getRomanIndex, numberToRoman } from '../../../utils/format';
-import loading from './assets/loading.gif'
 import Navigation from '../../Navigation'
 import './CreateCoverLetter.css'
 import LoadingDefault from '../../Loading/LoadingDefault';
+import linkIcon from './assets/link-icon.png'
 
 export default function CreateCoverLetter() {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ export default function CreateCoverLetter() {
   const { setSelectedLink } = useMenuSelector()
   const [state, setState] = useState({ isLoaded: false, error: false })
   const allResumes = useSelector(state => state.resumes?.allResumes)
+  const resume = useSelector(state => state.resumes?.currentResume)
   const allResumesArray = Object.values(allResumes)
   const [selectedResume, setSelectedResume] = useState('');
   const [loading, setLoading] = useState(false);
@@ -50,6 +51,7 @@ export default function CreateCoverLetter() {
     e.stopPropagation();
 
     await setSelectedResume(resumeId);
+    await dispatch(fetchSingleResumeThunk(resumeId))
     await setLoading(true);
   }
 
@@ -65,7 +67,10 @@ export default function CreateCoverLetter() {
             >
               <div className="all-resumes-body">
                 <h1><span className="form-action">Create a new</span> <span className="form-title">Cover Letter</span></h1>
-                <div>Connect a resume to generate a cover letter</div>
+                  <div className="resume-name resume-format">
+                    <div>{capitalizeResumeTitle(resume.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}</div>
+                    <img className="link-icon" src={linkIcon} alt="link-icon" />
+                  </div>
                   <div className={`resume-input-box ${errors.resumeText ? 'error' : ''}`}>
                   <div className="input-msg">Paste resume</div>
                   <textarea 

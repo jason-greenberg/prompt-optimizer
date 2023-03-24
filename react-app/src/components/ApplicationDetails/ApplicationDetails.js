@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
+import { useMenuSelector } from '../../context/Menu'
 import { fetchSingleApplicationThunk } from '../../store/application'
 import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../store/resume'
 import { capitalizeResumeTitle, getRomanIndex, numberToRoman } from '../../utils/format'
@@ -17,6 +18,7 @@ export default function ApplicationDetails() {
   const resume = useSelector(state => state.resumes.currentResume)
   const allResumes = useSelector(state => state.resumes.allResumes)
   const allResumesArray = Object.values(allResumes);
+  const { selectedSide, setSelectedSide } = useMenuSelector();
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -61,10 +63,34 @@ export default function ApplicationDetails() {
           <div className="app-materials-container">
             <div className="app-materials">
               <div className="materials-left">
-                <div className="app-link job-details-link">Job Details</div>
-                <div className="app-link correspondence-link">Correspondence</div>
-                <div className="app-link cover-letter-link">Cover Letter</div>
-                <div className="app-link resume-link">Resume</div>
+                <div 
+                  className={"app-link job-details-link" + (selectedSide === 'job details' ? ' side-select': '')}
+                  onClick={() => {
+                    setSelectedSide('job details')
+                  }}
+                >Job Details
+                </div>
+                <div 
+                  className={"app-link correspondence-link" + (selectedSide === 'correspondence' ? ' side-select': '')}
+                  onClick={() => {
+                    setSelectedSide('correspondence')
+                  }}
+                >Correspondence
+                </div>
+                <div 
+                  className={"app-link cover-letter-link" + (selectedSide === 'cover letter' ? ' side-select': '')}
+                  onClick={() => {
+                    setSelectedSide('cover letter')
+                  }}
+                >Cover Letter
+                </div>
+                <div 
+                  className={"app-link resume-link" + (selectedSide === 'resume' ? ' side-select': '')}
+                  onClick={() => {
+                    setSelectedSide('resume')
+                  }}
+                >Resume
+                </div>
               </div>
               <div className="materials-right"></div>
             </div>

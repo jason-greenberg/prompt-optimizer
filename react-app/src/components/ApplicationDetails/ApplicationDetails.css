@@ -92,6 +92,7 @@
 
 .app-link {
   margin-bottom: 20px;
+  width: 70%;
 }
 
 .down {
@@ -133,6 +134,10 @@
   color: rgb(94, 107,  150);
   font-size: 14px;
   font-weight: 400;
+}
+
+.side-select {
+  background-color: #F1F6FF;
 }
 
 .skill {

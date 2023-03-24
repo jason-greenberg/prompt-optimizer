@@ -5,6 +5,7 @@ import { fetchSingleApplicationThunk } from '../../store/application'
 import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../store/resume'
 import { capitalizeResumeTitle, getRomanIndex, numberToRoman } from '../../utils/format'
 import Navigation from '../Navigation'
+import downArrow from '../Navigation/assets/down-arrow.png'
 import './ApplicationDetails.css'
 
 export default function ApplicationDetails() {
@@ -48,6 +49,7 @@ export default function ApplicationDetails() {
               <div className="app-info-right">
                 <div className="manage-menu">
                   <div>Manage</div>
+                  <img className="down" src={downArrow} alt="" />
                 </div>
                 <button className="message-recruiter create-button">Message Recruiter</button>
               </div>

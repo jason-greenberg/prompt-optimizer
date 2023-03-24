@@ -44,10 +44,26 @@
   display: flex;
 }
 
+.down {
+  margin-left: 5px;
+}
+
 .job-title {
   font-size: 24px;
   font-weight: 500;
   margin-right: 15px;
+}
+
+.manage-menu {
+  align-items: center;
+  background-color: white;
+  border: 1px solid rgb(94, 107,  150);
+  border-radius: 5px;
+  color: rgb(94, 107,  150);
+  display: flex;
+  margin-right: 15px;
+  justify-content: space-between;
+  padding: 10px 20px;
 }
 
 .position-type {

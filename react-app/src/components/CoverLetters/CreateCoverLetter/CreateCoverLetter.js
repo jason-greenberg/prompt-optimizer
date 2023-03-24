@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useMenuSelector } from '../../../context/Menu'
 import { fetchAllResumesThunk } from '../../../store/resume';
 import { capitalizeResumeTitle, formatDate, getRomanIndex, numberToRoman } from '../../../utils/format';
+import loading from './assets/loading.gif'
 import Navigation from '../../Navigation'
 import './CreateCoverLetter.css'
 
@@ -64,10 +65,17 @@ export default function CreateCoverLetter() {
                       </div>
                       <div className="resume-right">
                         <button 
-                          className="create-button resume-connect"
+                          className={`create-button resume-connect ${selectedResume === resume.id ? 'selected' : ''}`}
                           onClick={(e) => selectResume(e, resume.id)}
                         >
-                          Connect
+                          {
+                            selectedResume === resume.id ? 
+                            <div className="connected">
+                              <img className="loading-icon" src={loading} alt="link-icon" />
+                              {/* <div>Connected</div> */}
+                            </div>
+                            : <div>Connect</div>
+                          }
                         </button>
 
                       </div>

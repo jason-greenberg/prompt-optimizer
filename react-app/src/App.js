@@ -11,6 +11,7 @@ import ResumeDetails from "./components/Resumes/ResumeDetails/ResumeDetails";
 import EditResume from "./components/Resumes/EditResume/EditResume";
 import AllResumes from "./components/Resumes/AllResumes/AllResumes";
 import CreateCoverLetter from "./components/CoverLetters/CreateCoverLetter/CreateCoverLetter";
+import ApplicationDetails from "./components/ApplicationDetails/ApplicationDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
           <Route path="/login" component={LoginFormPage} />
           <Route path="/signup" component={SignupFormPage} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/applications/:applicationId" component={ApplicationDetails} />
           <Route path="/resumes/new" component={CreateResumeForm} />
           <Route path="/resumes/:resumeId/edit" component={EditResume} />
           <Route path="/resumes/:resumeId" component={ResumeDetails} />

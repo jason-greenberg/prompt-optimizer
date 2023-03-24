@@ -1,3 +1,5 @@
+import { fetchSingleResumeThunk } from "./resume";
+
 // constants
 const CREATE = 'application/CREATE_APPLICATION';
 const POPULATE = 'application/POPULATE_USER_APPLICATIONS';
@@ -69,6 +71,7 @@ export const fetchSingleApplicationThunk = (applicationId) => async (dispatch) =
   if (response.ok) {
     const application = await response.json();
     await dispatch(readSingleApplication(application));
+    await dispatch(fetchSingleResumeThunk(application.resume_id))
     return application;
   } else {
     throw new Error('Error fetching single application');

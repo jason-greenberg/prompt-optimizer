@@ -1,12 +1,13 @@
 /* CONTAINERS */
 .application-details-container {
+  background-color: #FBFCFE;
   color: #21232E;
   display: flex;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   flex-direction: column;
   align-items: center;
-  margin: 90px 30px;
+  margin: 69px 0px;
   width: 100%;
 }
 
@@ -25,8 +26,10 @@
 /* ----------- */
 .app-info-box {
   align-items: center;
+  background-color: #FBFCFE;
   display: flex;
   justify-content: space-between;
+  height: 172.5px;
   max-width: 100%;
   width: 100%;
 }

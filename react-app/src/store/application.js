@@ -47,7 +47,7 @@ export const createApplicationThunk = (application) => async (dispatch) => {
     await dispatch(createApplication(newApplication));
     return newApplication;
   } else {
-    throw new Error('Error creating application');
+    return { error: 'Error creating application' };
   }
 };
 
@@ -62,7 +62,7 @@ export const fetchAllApplicationsThunk = () => async (dispatch) => {
     await dispatch(readApplications(normalizedApplications));
     return normalizedApplications;
   } else {
-    throw new Error('Error fetching applications');
+    return { error: 'Error fetching applications' };
   }
 };
 
@@ -74,7 +74,7 @@ export const fetchSingleApplicationThunk = (applicationId) => async (dispatch) =
     await dispatch(fetchSingleResumeThunk(application.resume_id))
     return application;
   } else {
-    throw new Error('Error fetching single application');
+    return { error: 'Error fetching single application' };
   }
 };
 
@@ -91,7 +91,7 @@ export const updateApplicationThunk = (application) => async (dispatch) => {
     await dispatch(updateApplication(updatedApplication));
     await dispatch(readSingleApplication(updatedApplication));
   } else {
-    throw new Error('Error updating application');
+    return { error: 'Error updating application' };
   }
 };
 
@@ -103,7 +103,7 @@ export const deleteApplicationThunk = (applicationId) => async (dispatch) => {
     await dispatch(deleteApplication(applicationId));
     return 'Successfully deleted';
   } else {
-    throw new Error('Error deleting application');
+    return { error: 'Error deleting application' };
   }
 };
 

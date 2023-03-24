@@ -1,12 +1,13 @@
 /* CONTAINERS */
 .application-details-container {
+  background-color: #FBFCFE;
   color: #21232E;
   display: flex;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   flex-direction: column;
   align-items: center;
-  margin: 90px 30px;
+  margin: 69px 0px;
   width: 100%;
 }
 
@@ -25,8 +26,10 @@
 /* ----------- */
 .app-info-box {
   align-items: center;
+  background-color: #FBFCFE;
   display: flex;
   justify-content: space-between;
+  height: 172.5px;
   max-width: 100%;
   width: 100%;
 }
@@ -39,4 +42,25 @@
 .app-info-right {
   align-items: center;
   display: flex;
+}
+
+.job-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.position-type {
+  background-color: #F2F2FE;
+  margin-right: 10px;
+}
+
+.resume-name {
+  color: rgb(94, 107,  150);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.skill {
+  margin-right: 7px;
 }

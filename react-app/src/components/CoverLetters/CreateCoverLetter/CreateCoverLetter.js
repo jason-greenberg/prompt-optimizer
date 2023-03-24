@@ -8,6 +8,7 @@ import Navigation from '../../Navigation'
 import './CreateCoverLetter.css'
 import LoadingDefault from '../../Loading/LoadingDefault';
 import linkIcon from './assets/link-icon.png'
+import { createCoverLetterThunk } from '../../../store/coverletter';
 
 export default function CreateCoverLetter() {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export default function CreateCoverLetter() {
   const [errors, setErrors] = useState([]);
   const [jobDescrition, setJobDescription] = useState('');
   const [companyDetails, setCompanyDetails] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -54,6 +56,30 @@ export default function CreateCoverLetter() {
     await dispatch(fetchSingleResumeThunk(resumeId))
     await setLoading(true);
   }
+
+  const validate = () => {
+    const validationErrors = {};
+
+    if (!jobDescrition) validationErrors.jobDescrition = 'Job Description is required';
+    if (!companyDetails) validationErrors.companyDetails = 'Company Details are required';
+    if (!jobTitle) validationErrors.jobTitle = 'Job title is required';
+
+    return validationErrors;
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    // If no validation errors, submit resume
+    if (!Object.keys(validationErrors).length > 0) {
+      const response = await dispatch(
+        createCoverLetterThunk(resume.id, jobDescrition, companyDetails, 'gpt-3.5-turbo')
+      );
+      history.push(`/resumes/${resume.id}`);
+    }
+  };
 
   return (
     <>
@@ -106,8 +132,16 @@ export default function CreateCoverLetter() {
                   </textarea>
                   {errors.positionType && <div className="error-message">{errors.positionType}</div>}
                 </div>
+                <div className="submit-container">
+                  <button 
+                    className="submit-button"
+                    onClick={onSubmit}
+                  >
+                    Upload Resume
+                  </button>
                 </div>
               </div>
+            </div>
           )}
           { !selectedResume && (
             <div 

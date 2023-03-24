@@ -60,7 +60,7 @@ export default function CreateCoverLetter() {
   const validate = () => {
     const validationErrors = {};
 
-    if (!jobDescription) validationErrors.jobDescrition = 'Job Description is required';
+    if (!jobDescription) validationErrors.jobDescription = 'Job Description is required';
     if (!companyDetails) validationErrors.companyDetails = 'Company Details are required';
     if (!jobTitle) validationErrors.jobTitle = 'Job title is required';
 
@@ -82,7 +82,7 @@ export default function CreateCoverLetter() {
           'gpt-3.5-turbo', // engine
           jobTitle // job title
         ));
-      history.push(`/resumes/${resume.id}`);
+      history.push(`/coverletters/${response.coverletter.id}`);
     }
   };
 

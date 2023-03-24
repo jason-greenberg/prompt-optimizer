@@ -41,52 +41,71 @@ export default function CreateCoverLetter() {
     <>
       <Navigation />
       { state.isLoaded && !state.error && (
-        <div 
-          className="all-resumes-page-container"
-        >
-          <div className="all-resumes-body">
-            <h1><span className="form-action">Create a new</span> <span className="form-title">Cover Letter</span></h1>
-            <div>Connect a resume to generate a cover letter</div>
-            <div className='resume-input-box'>
-              <div className="input-msg">Connect a resume</div>
-              <div className="resumes-container">
-                { Object.values(allResumes).map((resume) => (
-                  <div key={resume.id}>
-                    <div 
-                      key={resume.id} 
-                      className={`resume-overview ${selectedResume === resume.id ? 'selected': ''}`}
-                    >
-                      <div className="resume-left">
-                        <div className="resume-name">
-                          {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
-                        </div>
-                        <div className="dot">•</div>
-                        <div className="resume-date">{formatDate(resume.created_at)}</div>
-                      </div>
-                      <div className="resume-right">
-                        <button 
-                          className={`create-button resume-connect ${selectedResume === resume.id ? 'selected' : ''}`}
-                          onClick={(e) => selectResume(e, resume.id)}
-                        >
-                          {
-                            selectedResume === resume.id ? 
-                            <div className="connected">
-                              <img className="loading-icon" src={loading} alt="link-icon" />
-                              {/* <div>Connected</div> */}
-                            </div>
-                            : <div>Connect</div>
-                          }
-                        </button>
+        <>
+          { (selectedResume !== '') && (
+          <div 
+              className="all-resumes-page-container"
+            >
+              <div className="all-resumes-body">
+                <h1><span className="form-action">Create a new</span> <span className="form-title">Cover Letter</span></h1>
+                <div>Connect a resume to generate a cover letter</div>
+                <div className='resume-input-box'>
+                  <div className="input-msg">Connect a resume</div>
+                  <div className="resumes-container">
 
-                      </div>
-                    </div>
-                    <div className="break"></div>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          )}
+          { !selectedResume && (
+            <div 
+              className="all-resumes-page-container"
+            >
+              <div className="all-resumes-body">
+                <h1><span className="form-action">Create a new</span> <span className="form-title">Cover Letter</span></h1>
+                <div>Connect a resume to generate a cover letter</div>
+                <div className='resume-input-box'>
+                  <div className="input-msg">Connect a resume</div>
+                  <div className="resumes-container">
+                    { Object.values(allResumes).map((resume) => (
+                      <div key={resume.id}>
+                        <div 
+                          key={resume.id} 
+                          className={`resume-overview ${selectedResume === resume.id ? 'selected': ''}`}
+                        >
+                          <div className="resume-left">
+                            <div className="resume-name">
+                              {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                            </div>
+                            <div className="dot">•</div>
+                            <div className="resume-date">{formatDate(resume.created_at)}</div>
+                          </div>
+                          <div className="resume-right">
+                            <button 
+                              className={`create-button resume-connect ${selectedResume === resume.id ? 'selected' : ''}`}
+                              onClick={(e) => selectResume(e, resume.id)}
+                            >
+                              {
+                                selectedResume === resume.id ? 
+                                <div className="connected">
+                                  <img className="loading-icon" src={loading} alt="link-icon" />
+                                </div>
+                                : <div>Connect</div>
+                              }
+                            </button>
+
+                          </div>
+                        </div>
+                        <div className="break"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
       { state.isLoaded && state.error && (
         <div className="all-resumes-container">

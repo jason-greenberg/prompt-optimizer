@@ -19,12 +19,14 @@ button {
   background-color: #4351e8;
   border: #4351e8;
   color: white;
+  cursor: pointer;
 }
 
 .white-button {
   background-color: white;
   border: 1px solid #4351e8;
   color: #4351e8;
+  cursor: pointer;
 }
 
 .break {

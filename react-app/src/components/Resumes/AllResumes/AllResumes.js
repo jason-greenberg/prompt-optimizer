@@ -27,7 +27,7 @@ export default function AllResumes() {
       await setSelectedLink('resumes')
     }
     fetchAsync()
-  }, [])
+  }, [dispatch])
 
   const handleDelete = async (e, resume) => {
     e.preventDefault()

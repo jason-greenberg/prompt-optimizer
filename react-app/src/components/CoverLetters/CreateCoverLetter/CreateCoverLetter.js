@@ -31,20 +31,20 @@ export default function CreateCoverLetter() {
       } else {
         setState({ isLoaded: true, error: false })
       }
-      await setSelectedLink('resumes')
+      await setSelectedLink('coverletters')
     }
     fetchAsync()
   }, [dispatch])
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false)
-    }, 300);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false)
+  //   }, 300);
 
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [selectedResume])
+  //   return () => {
+  //     clearTimeout(timer)
+  //   }
+  // }, [selectedResume])
 
   const selectResume = async (e, resumeId) => {
     e.preventDefault();
@@ -58,8 +58,8 @@ export default function CreateCoverLetter() {
   return (
     <>
       <Navigation />
-      { loading && <LoadingDefault />}
-      { state.isLoaded && !state.error && !loading && (
+      {/* { loading && <LoadingDefault />} */}
+      { state.isLoaded && !state.error && (
         <>
           { (selectedResume !== '') && (
           <div 
@@ -72,9 +72,10 @@ export default function CreateCoverLetter() {
                     <img className="link-icon" src={linkIcon} alt="link-icon" />
                   </div>
                   <div className={`resume-input-box ${errors.resumeText ? 'error' : ''}`}>
-                  <div className="input-msg">Paste resume</div>
+                  <div className="input-msg">Paste Job Description</div>
                   <textarea 
-                    placeholder='"Satya Nadella, Redmond WA..."'
+                    className=""
+                    placeholder='"Fullstack Software Engineer I, OpenAI..."'
                     value={jobDescrition}
                     onChange={(e) => {
                       const cleanedText = e.target.value.replace(/\s{3,}/g, ' '); //remove triple whitespaces
@@ -86,17 +87,23 @@ export default function CreateCoverLetter() {
                   {errors.resumeText && <div className="error-message">{errors.resumeText}</div>}
                 </div>
                 <div className={`position-type-box resume-input-box ${errors.positionType ? 'error' : ''}`}>
-                  <div className="input-msg">Describe in 1-3 words the types of positions this resume is for</div>
-                  <input 
-                    type="text" 
-                    className="position-type-input"
-                    placeholder='"Fullstack"'
+                  <div className="input-msg">Paste Company Details</div>
+                  <textarea 
+                    className=""
+                    placeholder={`The best coverletters are tailored specifically to a company. Here is what works best for this box:
+    
+    1.  A recent news article or press release regarding company activities (this is ideal!)
+    
+    2.  A detailed about 'About' section from a company website or job site
+                    `}
                     value={companyDetails}
                     onChange={(e) => {
-                      setCompanyDetails(e.target.value)
-                      setErrors({...errors, positionType: null})
-                    }} 
-                  />
+                      const cleanedText = e.target.value.replace(/\s{3,}/g, ' '); //remove triple whitespaces
+                      setCompanyDetails(cleanedText);
+                      setErrors({...errors, resumeText: null})
+                    }}
+                  >
+                  </textarea>
                   {errors.positionType && <div className="error-message">{errors.positionType}</div>}
                 </div>
                 </div>
@@ -151,7 +158,7 @@ export default function CreateCoverLetter() {
           )}
         </>
       )}
-      { state.isLoaded && state.error && !loading && (
+      { state.isLoaded && state.error && (
         <div className="all-resumes-container">
           <div className="all-resumes-body">
             <h3>No resumes found, please try again momentarily</h3>

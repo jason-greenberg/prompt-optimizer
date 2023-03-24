@@ -23,14 +23,47 @@
   width: 100%;
 }
 /* ----------- */
+.connected {
+  align-items: center;
+  display: flex;
+}
+
+.loading-icon {
+  height: 20px;
+  padding: 0px 18px;
+}
+
+.link-icon {
+  height: 30px;
+  padding-left: 5px;
+}
+
+.resume-overview {
+  transition: all 0.1s ease;
+}
+
 .resume-overview.selected {
-  /* background-color: #f0f0f0; */
-  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  background-color: rgba(79, 101, 241, 0.5);
+  transform: scaleY(1.03);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); /* Adds a subtle shadow */
+}
+
+.resume-format {
+  display: flex;
+  align-items: center;
+  color: #4F65F1;
 }
 
 /* BUTTONS */
 .resume-connect {
   padding: 10px 15px;
+  transition: all 0.1s ease;
 }
+
+.resume-connect.selected {
+  background-color: #4F65F1; /* Change to desired color when selected */
+  color: #ffffff; /* Change to desired text color when selected */
+}
+
 
 /* ---------- */

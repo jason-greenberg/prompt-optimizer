@@ -1,0 +1,29 @@
+/* CONTAINERS */
+
+.loading-page-container {
+  color: rgb(74, 93, 138);
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 300px;
+  width: 100%;
+}
+
+.loading-page-body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  justify-content: flex-start;
+  max-width: 1250px;
+  min-width: 1065px;
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* ------------ */
+.loading-gif {
+  height: 25px;
+}

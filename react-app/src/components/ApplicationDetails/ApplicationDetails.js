@@ -9,6 +9,7 @@ import CoverLetterDetails from '../CoverLetters/CoverLetterDetails/CoverLetterDe
 import Navigation from '../Navigation'
 import downArrow from '../Navigation/assets/down-arrow.png'
 import './ApplicationDetails.css'
+import { clearCurrentCoverLetter, fetchSingleCoverLetterThunk } from '../../store/coverletter';
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -19,20 +20,29 @@ export default function ApplicationDetails() {
   const resume = useSelector(state => state.resumes.currentResume)
   const allResumes = useSelector(state => state.resumes.allResumes)
   const allResumesArray = Object.values(allResumes);
+  const coverLetter = useSelector(state => state.coverletters.currentCoverLetter)
   const { selectedSide, setSelectedSide } = useMenuSelector();
 
-  useEffect(() => {
-    const fetchAsync = async () => {
-      const response = await dispatch(fetchSingleApplicationThunk(applicationId));
-      if (response.error) {
-        setState({ isLoaded: true, error: true });
-      } else {
-        await dispatch(fetchAllResumesThunk());
-        setState({ isLoaded: true, error: false });
+useEffect(() => {
+  const fetchAsync = async () => {
+    const response = await dispatch(fetchSingleApplicationThunk(applicationId));
+    if (response.error) {
+      setState({ isLoaded: true, error: true });
+    } else {
+      await dispatch(fetchAllResumesThunk());
+      
+      // Fetch the cover letter and handle the 404 case
+      const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(applicationId));
+      if (coverLetterResponse.error) {
+        dispatch(clearCurrentCoverLetter());
       }
-    };
-    fetchAsync();
-  }, [applicationId, dispatch, history]);
+      
+      setState({ isLoaded: true, error: false });
+    }
+  };
+  fetchAsync();
+}, [applicationId, dispatch, history, selectedSide]);
+
 
   return (
     <>
@@ -107,7 +117,7 @@ export default function ApplicationDetails() {
               </div>
               <div className="materials-right">
                 { selectedSide === 'cover letter' && (
-                  <CoverLetterDetails selectedSide={selectedSide} setSelectedSide={setSelectedSide}/>
+                  <CoverLetterDetails coverLetter={coverLetter} selectedSide={selectedSide}/>
                 )}
               </div>
             </div>

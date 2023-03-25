@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { authenticate } from '../../store/session';
-import { fetchAllApplicationsThunk } from '../../store/application';
+import { fetchAllApplicationsThunk, fetchSingleApplicationThunk } from '../../store/application';
 import Navigation from '../Navigation';
 import './Dashboard.css';
 import { fetchAllResumesThunk } from '../../store/resume';
@@ -48,6 +48,11 @@ export default function Dashboard() {
     }
   }, [resumeDeleted]);
 
+  const handleClick = async (app) => {
+    await dispatch(fetchSingleApplicationThunk(app.id))
+    return history.push(`/applications/${app.id}`)
+  }
+
   return (
     <>
       <Navigation />
@@ -76,7 +81,7 @@ export default function Dashboard() {
                     <tr 
                       key={app.id} 
                       className="individual-app"
-                      onClick={() => history.push(`/applications/${app.id}`)}
+                      onClick={() => handleClick(app)}
                     >
                       <td className="job-title">{app.job_title}</td>
                       <td>{app.position_type}</td>

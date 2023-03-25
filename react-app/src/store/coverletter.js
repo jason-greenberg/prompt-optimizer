@@ -4,11 +4,17 @@ const POPULATE = 'coverLetter/POPULATE_USER_COVER_LETTERS';
 const READ = 'coverLetter/READ_SINGLE_COVER_LETTER';
 const UPDATE = 'coverLetter/UPDATE_COVER_LETTER';
 const DELETE = 'coverLetter/DELETE_COVER_LETTER';
+export const CLEAR_CURRENT_COVER_LETTER = 'coverletter/CLEAR_CURRENT_COVER_LETTER';
+
 
 // -------- ACTIONS ---------
 const createCoverLetter = (coverLetter) => ({
   type: CREATE,
   coverLetter,
+});
+
+export const clearCurrentCoverLetter = () => ({
+  type: CLEAR_CURRENT_COVER_LETTER,
 });
 
 const readCoverLetters = (coverLetters) => ({
@@ -50,7 +56,7 @@ export const createCoverLetterThunk = (resumeId, jobDescription, companyDetails,
     await dispatch(createCoverLetter(newCoverLetter));
     return newCoverLetter;
   } else {
-    throw new Error('Error creating cover letter');
+    return { error: 'Error creating cover letter' };
   }
 };
 
@@ -65,7 +71,7 @@ export const fetchAllCoverLettersThunk = () => async (dispatch) => {
     await dispatch(readCoverLetters(normalizedCoverLetters));
     return normalizedCoverLetters;
   } else {
-    throw new Error('Error fetching cover letters');
+    return { error: 'Error fetching cover letters' };
   }
 };
 
@@ -75,10 +81,13 @@ export const fetchSingleCoverLetterThunk = (coverLetterId) => async (dispatch) =
     const coverLetter = await response.json();
     await dispatch(readSingleCoverLetter(coverLetter));
     return coverLetter;
+  } else if (response.status === 404) {
+    return { notFound: true };
   } else {
-    throw new Error('Error fetching single cover letter');
+    return { error: 'Error fetching single cover letter' };
   }
 };
+
 
 export const updateCoverLetterThunk = (coverLetter) => async (dispatch) => {
   const response = await fetch(`/api/coverletters/${coverLetter.id}`, {
@@ -93,7 +102,7 @@ export const updateCoverLetterThunk = (coverLetter) => async (dispatch) => {
     await dispatch(updateCoverLetter(updatedCoverLetter));
     await dispatch(readSingleCoverLetter(updatedCoverLetter));
   } else {
-    throw new Error('Error updating cover letter');
+    return { error: 'Error updating cover letter' };
   }
 };
 
@@ -105,7 +114,7 @@ export const deleteCoverLetterThunk = (coverLetterId) => async (dispatch) => {
     await dispatch(deleteCoverLetter(coverLetterId));
     return 'Successfully deleted';
   } else {
-    throw new Error('Error deleting cover letter');
+    return { error: 'Error deleting cover letter' };
   }
 };
 
@@ -135,6 +144,11 @@ export default function coverLettersReducer(state = initialState, action) {
     case DELETE:
       delete newState.allCoverLetters[action.coverLetterId];
       return newState;
+    case CLEAR_CURRENT_COVER_LETTER:
+      return {
+        ...state,
+        currentCoverLetter: null,
+      };
     default:
       return state
   }

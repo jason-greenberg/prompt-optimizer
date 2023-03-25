@@ -60,6 +60,30 @@ export const createCoverLetterThunk = (resumeId, jobDescription, companyDetails,
   }
 };
 
+export const updateCoverLetterWithApplicationThunk = (resumeId, jobDescription, companyDetails, engine, jobTitle, applicationId) => async (dispatch) => {
+  const response = await fetch(`/api/resumes/${resumeId}/coverletters`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      job_description: jobDescription,
+      company_details: companyDetails,
+      engine: engine,
+      job_title: jobTitle,
+      application_id: applicationId
+    }),
+  });
+  if (response.ok) {
+    const updatedCoverLetter = await response.json();
+    await dispatch(updateCoverLetter(updatedCoverLetter.coverletter));
+    await dispatch(readSingleCoverLetter(updatedCoverLetter.coverletter));
+    return updatedCoverLetter;
+  } else {
+    return { error: 'Error updating cover letter' };
+  }
+};
+
 export const fetchAllCoverLettersThunk = () => async (dispatch) => {
   const response = await fetch('/api/coverletters/');
   if (response.ok) {

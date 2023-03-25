@@ -86,7 +86,8 @@ export default function CoverLetterDetails({ coverLetter, selectedSide, onDelete
       )}
       {!coverLetter && !notFound && (
         <div className="not-found">
-          <h1>No Cover Letter Found</h1>
+          <h3>This application does not have an associated cover letter</h3>
+          <button className="create-button">Create a Cover Letter</button>
         </div>
       )}
       {notFound && (

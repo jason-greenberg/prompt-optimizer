@@ -96,6 +96,57 @@ def create_new_cover_letter(id):
         'application': new_application.to_dict()
     }, 201
 
+# Create new cover letter by resume id (STANDALONE -- DOES NOT CREATE APPLICATION)
+@resume_routes.route('/<int:id>/coverletters', methods=['POST'])
+@login_required
+def create_new_cover_letter_standalone(id):
+    """
+    Creates a new cover letter by resume id.
+    Expects a request body with 'job_title', 'job_description', 'company_details' and 'engine' attributes
+    """
+    resume = Resume.query.get(id)
+
+    # Return 404 if resume does not exist in db
+    if resume is None:
+        return page_not_found()
+    
+    # Return 403 if resume does not belong to user
+    if resume.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Resume must belong to the current user'}), 403)
+    
+    data = request.json
+    job_description = data['job_description']
+    company_details = data['company_details']
+    engine=data['engine']
+    job_title=data['job_title']
+    application_id=data['application_id']
+
+    # Generate a cover letter using OpenAI's API
+    letter = generate_gpt_cover_letter(resume, job_description, company_details, engine)
+
+    # Create new cover letter in db
+    new_cover_letter = CoverLetter(
+        user_id=current_user.id,
+        letter_text=letter,
+        engine=engine,
+        job_description=job_description
+    )
+    db.session.add(new_cover_letter)
+    db.session.commit()
+
+    # Update an existing application to reflect with new coverletter id
+    existing_application = Application.query.get(application_id)
+    if application_id is not None:
+        existing_application.cover_letter_id = new_cover_letter.id
+    db.session.commit()
+
+
+    # return new_cover_letter.to_dict()
+    return {
+        'coverletter': new_cover_letter.to_dict(),
+        'application': existing_application.to_dict()
+    }, 201
+
 # Create new resume
 @resume_routes.route('/', methods=['POST'])
 @login_required

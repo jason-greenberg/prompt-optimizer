@@ -5,6 +5,7 @@ import { useMenuSelector } from '../../context/Menu'
 import { fetchSingleApplicationThunk } from '../../store/application'
 import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../store/resume'
 import { capitalizeResumeTitle, getRomanIndex, numberToRoman } from '../../utils/format'
+import CoverLetterDetails from '../CoverLetters/CoverLetterDetails/CoverLetterDetails'
 import Navigation from '../Navigation'
 import downArrow from '../Navigation/assets/down-arrow.png'
 import './ApplicationDetails.css'
@@ -104,7 +105,11 @@ export default function ApplicationDetails() {
                   )}
                 </div>
               </div>
-              <div className="materials-right"></div>
+              <div className="materials-right">
+                { selectedSide === 'cover letter' && (
+                  <CoverLetterDetails selectedSide={selectedSide} setSelectedSide={setSelectedSide}/>
+                )}
+              </div>
             </div>
           </div>
         </>

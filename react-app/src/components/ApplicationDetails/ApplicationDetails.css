@@ -39,7 +39,6 @@
   align-items: flex-start;
   color: rgb(33, 35, 46);
   display: flex;
-  flex-direction: column;
   font-family: 'Roboto', sans-serif;
   justify-content: flex-start;
   max-width: 1250px;
@@ -60,6 +59,7 @@
 .materials-right {
   display: flex;
   flex-direction: column;
+  height: 100%;
   max-width: 80%;
   width: 100%;
 }

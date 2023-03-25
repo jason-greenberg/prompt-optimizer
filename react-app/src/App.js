@@ -38,8 +38,8 @@ function App() {
           <Route path="/resumes/:resumeId/edit" component={EditResume} />
           <Route path="/resumes/:resumeId" component={ResumeDetails} />
           <Route path="/resumes" component={AllResumes} />
-          <Route path="/coverletters/new" component={CreateCoverLetter} />
           <Route path="/coverletters/add/:applicationId" component={CreateCoverLetterExistingApp} />
+          <Route path="/coverletters/new" component={CreateCoverLetter} />
           <Route exact path = '/' component={SplashPage} />
         </Switch>
       )}

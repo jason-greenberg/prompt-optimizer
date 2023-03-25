@@ -13,7 +13,7 @@ import { createCoverLetterThunk } from '../../../store/coverletter';
 export default function CreateCoverLetter() {
   const dispatch = useDispatch();
   const history = useHistory()
-  const { setSelectedLink } = useMenuSelector()
+  const { setSelectedLink, setSelectedSide } = useMenuSelector()
   const [state, setState] = useState({ isLoaded: false, error: false })
   const allResumes = useSelector(state => state.resumes?.allResumes)
   const resume = useSelector(state => state.resumes?.currentResume)
@@ -82,7 +82,8 @@ export default function CreateCoverLetter() {
           'gpt-3.5-turbo', // engine
           jobTitle // job title
         ));
-      history.push(`/coverletters/${response.coverletter.id}`);
+      await setSelectedSide('cover letter'); // sets up view in application details
+      history.push(`/applications/${response.application.id}`);
     }
   };
 

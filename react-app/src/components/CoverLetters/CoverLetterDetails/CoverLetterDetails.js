@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk } from '../../../store/coverletter';
 import './CoverLetterDetails.css'
 
-export default function CoverLetterDetails({ coverLetter, selectedSide }) {
+export default function CoverLetterDetails({ coverLetter, selectedSide, onDelete }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { applicationId } = useParams();
@@ -28,9 +28,10 @@ export default function CoverLetterDetails({ coverLetter, selectedSide }) {
       setNotFound(true);
     } else {
       setDeleted(true);
+      // Call the onDelete function passed as a prop
+      onDelete(e);
     }
   };
-  
 
   return (
     <>

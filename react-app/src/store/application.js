@@ -1,3 +1,4 @@
+import { fetchSingleCoverLetterThunk } from "./coverletter";
 import { fetchSingleResumeThunk } from "./resume";
 
 // constants
@@ -71,7 +72,8 @@ export const fetchSingleApplicationThunk = (applicationId) => async (dispatch) =
   if (response.ok) {
     const application = await response.json();
     await dispatch(readSingleApplication(application));
-    await dispatch(fetchSingleResumeThunk(application.resume_id))
+    await dispatch(fetchSingleResumeThunk(application.resume_id));
+    await dispatch(fetchSingleCoverLetterThunk(application.cover_letter_id));
     return application;
   } else {
     return { error: 'Error fetching single application' };

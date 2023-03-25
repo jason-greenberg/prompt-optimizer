@@ -1,0 +1,9 @@
+.letter-text {
+  margin: 0;
+  max-width: 700px;
+}
+
+.del-cov {
+  top: 0;
+  right: 100px
+}

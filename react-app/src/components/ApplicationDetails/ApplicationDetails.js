@@ -69,6 +69,9 @@ export default function ApplicationDetails() {
                     setSelectedSide('job details')
                   }}
                 >Job Details
+                  { selectedSide === 'job details' && (
+                    <div className="purple-bar"></div>
+                  )}
                 </div>
                 <div 
                   className={"app-link correspondence-link" + (selectedSide === 'correspondence' ? ' side-select': '')}
@@ -76,6 +79,9 @@ export default function ApplicationDetails() {
                     setSelectedSide('correspondence')
                   }}
                 >Correspondence
+                  { selectedSide === 'correspondence' && (
+                    <div className="purple-bar"></div>
+                  )}
                 </div>
                 <div 
                   className={"app-link cover-letter-link" + (selectedSide === 'cover letter' ? ' side-select': '')}
@@ -83,6 +89,9 @@ export default function ApplicationDetails() {
                     setSelectedSide('cover letter')
                   }}
                 >Cover Letter
+                  { selectedSide === 'cover letter' && (
+                    <div className="purple-bar"></div>
+                  )}
                 </div>
                 <div 
                   className={"app-link resume-link" + (selectedSide === 'resume' ? ' side-select': '')}
@@ -90,6 +99,9 @@ export default function ApplicationDetails() {
                     setSelectedSide('resume')
                   }}
                 >Resume
+                  { selectedSide === 'resume' && (
+                    <div className="purple-bar"></div>
+                  )}
                 </div>
               </div>
               <div className="materials-right"></div>

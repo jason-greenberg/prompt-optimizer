@@ -91,8 +91,18 @@
 }
 
 .app-link {
-  margin-bottom: 20px;
-  width: 70%;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  padding: 10px 20px;
+  position: relative;
+  width: 150px;
+}
+
+.app-link:hover {
+  background-color: #f5f6f7;
 }
 
 .down {
@@ -130,6 +140,15 @@
   margin-right: 10px;
 }
 
+.purple-bar {
+  height: 44px;
+  background-color: #594FEA;
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 2px;
+}
+
 .resume-name {
   color: rgb(94, 107,  150);
   font-size: 14px;
@@ -137,6 +156,11 @@
 }
 
 .side-select {
+  background-color: #F1F6FF;
+  border-radius: 6px;
+}
+
+.side-select:hover {
   background-color: #F1F6FF;
 }
 

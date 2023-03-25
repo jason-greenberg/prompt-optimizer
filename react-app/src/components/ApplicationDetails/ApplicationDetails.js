@@ -43,6 +43,12 @@ useEffect(() => {
   fetchAsync();
 }, [applicationId, dispatch, history, selectedSide]);
 
+const onDelete = (e) => {
+  e.preventDefault();
+
+  // Clear the current cover letter from the Redux store
+  dispatch(clearCurrentCoverLetter());
+};
 
   return (
     <>
@@ -117,7 +123,11 @@ useEffect(() => {
               </div>
               <div className="materials-right">
                 { selectedSide === 'cover letter' && (
-                  <CoverLetterDetails coverLetter={coverLetter} selectedSide={selectedSide}/>
+                  <CoverLetterDetails 
+                    coverLetter={coverLetter} 
+                    selectedSide={selectedSide}
+                    onDelete={onDelete}
+                  />
                 )}
               </div>
             </div>

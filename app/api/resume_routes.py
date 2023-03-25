@@ -83,6 +83,7 @@ def create_new_cover_letter(id):
         resume_id=resume.id,
         cover_letter_id=new_cover_letter.id,
         job_title=job_title,
+        position_type=resume.position_type,
         created_at=datetime.utcnow()
     )
     db.session.add(new_application)

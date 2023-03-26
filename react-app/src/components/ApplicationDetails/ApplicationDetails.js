@@ -20,35 +20,29 @@ export default function ApplicationDetails() {
   const resume = useSelector(state => state.resumes.currentResume)
   const allResumes = useSelector(state => state.resumes.allResumes)
   const allResumesArray = Object.values(allResumes);
-  const coverLetter = useSelector(state => state.coverletters.currentCoverLetter)
   const { selectedSide, setSelectedSide } = useMenuSelector();
+  const [loadingCoverLetter, setLoadingCoverLetter] = useState(true)
 
-useEffect(() => {
-  const fetchAsync = async () => {
-    const response = await dispatch(fetchSingleApplicationThunk(applicationId));
-    if (response.error) {
-      setState({ isLoaded: true, error: true });
-    } else {
-      await dispatch(fetchAllResumesThunk());
-      
-      // Fetch the cover letter and handle the 404 case
-      const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(applicationId));
-      if (coverLetterResponse.error) {
-        dispatch(clearCurrentCoverLetter());
+  useEffect(() => {
+    const fetchAsync = async () => {
+      const response = await dispatch(fetchSingleApplicationThunk(applicationId));
+      if (response.error) {
+        setState({ isLoaded: true, error: true });
+      } else {
+        await dispatch(fetchAllResumesThunk());
+        
+        // Fetch the cover letter and handle the 404 case
+        const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(applicationId));
+        if (coverLetterResponse.error) {
+          dispatch(clearCurrentCoverLetter());
+        }
+        
+        setState({ isLoaded: true, error: false });
+        setLoadingCoverLetter(false)
       }
-      
-      setState({ isLoaded: true, error: false });
-    }
-  };
-  fetchAsync();
-}, [applicationId, dispatch, history, selectedSide]);
-
-const onDelete = (e) => {
-  e.preventDefault();
-
-  // Clear the current cover letter from the Redux store
-  dispatch(clearCurrentCoverLetter());
-};
+    };
+    fetchAsync();
+  }, [applicationId, dispatch, history, selectedSide]);
 
   return (
     <>
@@ -124,9 +118,7 @@ const onDelete = (e) => {
               <div className="materials-right">
                 { selectedSide === 'cover letter' && (
                   <CoverLetterDetails 
-                    coverLetter={coverLetter} 
                     selectedSide={selectedSide}
-                    onDelete={onDelete}
                   />
                 )}
               </div>

@@ -12,6 +12,7 @@ import EditResume from "./components/Resumes/EditResume/EditResume";
 import AllResumes from "./components/Resumes/AllResumes/AllResumes";
 import CreateCoverLetter from "./components/CoverLetters/CreateCoverLetter/CreateCoverLetter";
 import ApplicationDetails from "./components/ApplicationDetails/ApplicationDetails";
+import CreateCoverLetterExistingApp from "./components/CoverLetters/CreateCoverLetter/CreateCoverLetterExistingApp";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
           <Route path="/resumes/:resumeId/edit" component={EditResume} />
           <Route path="/resumes/:resumeId" component={ResumeDetails} />
           <Route path="/resumes" component={AllResumes} />
+          <Route path="/coverletters/add/:applicationId" component={CreateCoverLetterExistingApp} />
           <Route path="/coverletters/new" component={CreateCoverLetter} />
           <Route exact path = '/' component={SplashPage} />
         </Switch>

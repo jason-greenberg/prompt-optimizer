@@ -90,7 +90,7 @@ export default function CreateCoverLetter() {
   return (
     <>
       <Navigation />
-      { loading && <LoadingDefault />}
+      { loading && <LoadingDefault /> }
       { state.isLoaded && !state.error && !loading && (
         <>
           { (selectedResume !== '') && (

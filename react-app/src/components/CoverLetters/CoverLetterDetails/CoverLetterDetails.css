@@ -7,3 +7,9 @@
   top: 0;
   right: 100px
 }
+
+.edit-cover {
+  position: absolute;
+  top: 20px;
+  right: 90px;
+}

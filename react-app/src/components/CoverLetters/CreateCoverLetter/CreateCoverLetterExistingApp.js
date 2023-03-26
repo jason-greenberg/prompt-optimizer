@@ -9,6 +9,7 @@ import './CreateCoverLetter.css'
 import linkIcon from './assets/link-icon.png'
 import { updateCoverLetterWithApplicationThunk } from '../../../store/coverletter';
 import { fetchSingleApplicationThunk } from '../../../store/application';
+import LoadingDefault from '../../Loading/LoadingDefault';
 
 export default function CreateCoverLetterExistingApp() {
   const dispatch = useDispatch();
@@ -56,7 +57,6 @@ export default function CreateCoverLetterExistingApp() {
 
     await setSelectedResume(resumeId);
     await dispatch(fetchSingleResumeThunk(resumeId))
-    await setLoading(true);
   }
 
   const validate = () => {
@@ -75,6 +75,7 @@ export default function CreateCoverLetterExistingApp() {
 
     // If no validation errors, submit resume
     if (!Object.keys(validationErrors).length > 0) {
+      setLoading(true)
       const response = await dispatch(
         updateCoverLetterWithApplicationThunk(
           resume.id, // resume id
@@ -94,8 +95,8 @@ export default function CreateCoverLetterExistingApp() {
   return (
     <>
       <Navigation />
-      {/* { loading && <LoadingDefault />} */}
-      { state.isLoaded && !state.error && (
+      { loading && <LoadingDefault />}
+      { state.isLoaded && !state.error && !loading && (
         <>
           { (selectedResume !== '') && (
           <div 
@@ -214,7 +215,7 @@ export default function CreateCoverLetterExistingApp() {
           )}
         </>
       )}
-      { state.isLoaded && state.error && (
+      { state.isLoaded && state.error && !loading && (
         <div className="all-resumes-container">
           <div className="all-resumes-body">
             <h3>No cover letters found, please try again momentarily</h3>

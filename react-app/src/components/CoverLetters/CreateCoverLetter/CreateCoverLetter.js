@@ -53,8 +53,7 @@ export default function CreateCoverLetter() {
     e.stopPropagation();
 
     await setSelectedResume(resumeId);
-    await dispatch(fetchSingleResumeThunk(resumeId))
-    await setLoading(true);
+    await dispatch(fetchSingleResumeThunk(resumeId));
   }
 
   const validate = () => {
@@ -74,6 +73,7 @@ export default function CreateCoverLetter() {
 
     // If no validation errors, submit resume
     if (!Object.keys(validationErrors).length > 0) {
+      setLoading(true)
       const response = await dispatch(
         createCoverLetterThunk(
           resume.id, // resume id
@@ -90,8 +90,8 @@ export default function CreateCoverLetter() {
   return (
     <>
       <Navigation />
-      {/* { loading && <LoadingDefault />} */}
-      { state.isLoaded && !state.error && (
+      { loading && <LoadingDefault />}
+      { state.isLoaded && !state.error && !loading && (
         <>
           { (selectedResume !== '') && (
           <div 
@@ -212,7 +212,7 @@ export default function CreateCoverLetter() {
           )}
         </>
       )}
-      { state.isLoaded && state.error && (
+      { state.isLoaded && state.error && !loading && (
         <div className="all-resumes-container">
           <div className="all-resumes-body">
             <h3>No resumes found, please try again momentarily</h3>

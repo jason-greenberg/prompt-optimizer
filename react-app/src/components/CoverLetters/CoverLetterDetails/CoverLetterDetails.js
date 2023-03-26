@@ -79,7 +79,7 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
           </div>
         </div>
       )}
-      {coverLetterArray.length < 1 && (
+      { !coverLetterArray.length > 0 && (
         <div className="not-found">
           <h3>This application does not have an associated cover letter</h3>
           <button 

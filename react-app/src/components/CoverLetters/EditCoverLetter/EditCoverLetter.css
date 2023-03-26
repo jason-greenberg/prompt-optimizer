@@ -8,3 +8,17 @@
   min-height: 350px;
   height: fit-content;
 }
+
+.save-button {
+  border: none;
+  background-color: #8a97ef;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 5px 10px;
+}
+
+.save-button:hover {
+  background-color: #6f81f6;
+}

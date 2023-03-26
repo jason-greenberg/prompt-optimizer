@@ -1,6 +1,6 @@
 import Navigation from '../Navigation'
 import './LoadingDefault.css'
-import loadingGif from './assets/loading.gif'
+import loadingGif from './assets/loading-bars.gif'
 
 export default function LoadingDefault() {
   return (

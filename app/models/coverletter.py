@@ -13,7 +13,7 @@ class CoverLetter(db.Model):
     engine = db.Column(db.String, nullable=False)
     job_description = db.Column(db.Text, nullable=False)
 
-    application = db.relationship('Application', uselist=False, back_populates='cover_letter', cascade='all, delete')
+    application = db.relationship('Application', uselist=False, back_populates='cover_letter')
     user = db.relationship('User', back_populates='cover_letters')
 
     def to_dict(self):

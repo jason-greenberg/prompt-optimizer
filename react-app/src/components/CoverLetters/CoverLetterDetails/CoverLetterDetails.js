@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter } from '../../../store/coverletter';
+import EditCoverLetter from '../EditCoverLetter/EditCoverLetter';
 import './CoverLetterDetails.css';
 
-export default function CoverLetterDetails({ selectedSide, loading }) {
+export default function CoverLetterDetails({ selectedSide }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { applicationId } = useParams();
@@ -12,6 +13,7 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
   const [notFound, setNotFound] = useState(false);
   const coverLetter = useSelector(state => state.coverletters.currentCoverLetter);
   const hasCoverLetter = coverLetter && 'id' in coverLetter
+  const [editCover, setEditCover] = useState(false)
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -30,7 +32,10 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
 
   return (
     <>
-      { hasCoverLetter && (
+      { hasCoverLetter && editCover && (
+        <EditCoverLetter setEditCover={setEditCover} />
+      )}
+      { hasCoverLetter && !editCover && (
         <div 
           className="cover-letter-container"
           onClick={(e) => {
@@ -42,6 +47,12 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
           <div className="cover-letter-body">
           <div className="resume-text letter-text">
               {coverLetter?.letter_text}
+              <button 
+                className="skill-level-box edit-button edit-cover"
+                onClick={() => setEditCover(true)}
+              >
+                Edit
+              </button>
               <button 
                 className="skill-level-box remove-button"
                 onClick={(e) => {
@@ -90,7 +101,7 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
           </button>
         </div>
       )}
-      {notFound && (
+      { notFound && (
         <div className="not-found">
           <h1>Cover Letter Not Found</h1>
         </div>

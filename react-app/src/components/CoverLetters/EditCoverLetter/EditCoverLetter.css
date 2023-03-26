@@ -1,0 +1,10 @@
+.cover-letter-body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.edit-letter {
+  border: none ;
+  min-height: 350px;
+  height: fit-content;
+}

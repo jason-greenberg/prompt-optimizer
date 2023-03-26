@@ -21,7 +21,7 @@ export default function ApplicationDetails() {
   const allResumes = useSelector(state => state.resumes.allResumes)
   const allResumesArray = Object.values(allResumes);
   const { selectedSide, setSelectedSide } = useMenuSelector();
-  const [loadingCoverLetter, setLoadingCoverLetter] = useState(true)
+  const [showManageDropdown, setShowManageDropdown] = useState(false)
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -38,7 +38,6 @@ export default function ApplicationDetails() {
         }
         
         setState({ isLoaded: true, error: false });
-        setLoadingCoverLetter(false)
       }
     };
     fetchAsync();
@@ -61,9 +60,22 @@ export default function ApplicationDetails() {
                   </div>
                 </div>
                 <div className="app-info-right">
-                  <div className="manage-menu">
+                  <div 
+                    className="manage-menu"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      e.preventDefault()
+                      setShowManageDropdown(prev => !prev)
+                    }}
+                  >
                     <div>Manage</div>
                     <img className="down" src={downArrow} alt="" />
+                    { showManageDropdown && (
+                      <div className="manage-app-dropdown">
+                        <div className="edit-app">Edit</div>
+                        <div className="delete-app">Delete</div>
+                      </div>
+                    )}
                   </div>
                   <button className="create-button message-recruiter">Message Recruiter</button>
                 </div>

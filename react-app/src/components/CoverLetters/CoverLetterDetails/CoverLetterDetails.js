@@ -11,7 +11,7 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const coverLetter = useSelector(state => state.coverletters.currentCoverLetter);
-  const coverLetterArray = Object.values(coverLetter)
+  const hasCoverLetter = coverLetter && 'id' in coverLetter
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
 
   return (
     <>
-      { coverLetterArray.length > 0 && (
+      { hasCoverLetter && (
         <div 
           className="cover-letter-container"
           onClick={(e) => {
@@ -79,7 +79,7 @@ export default function CoverLetterDetails({ selectedSide, loading }) {
           </div>
         </div>
       )}
-      { !coverLetterArray.length > 0 && (
+      { !hasCoverLetter && (
         <div className="not-found">
           <h3>This application does not have an associated cover letter</h3>
           <button 

@@ -8,11 +8,13 @@ import Navigation from '../../Navigation'
 import './CreateCoverLetter.css'
 import linkIcon from './assets/link-icon.png'
 import { updateCoverLetterWithApplicationThunk } from '../../../store/coverletter';
+import { fetchSingleApplicationThunk } from '../../../store/application';
 
 export default function CreateCoverLetterExistingApp() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { applicationId } = useParams();
+  const application = useSelector(state => state.applications.currentApplication);
   const { setSelectedLink, setSelectedSide } = useMenuSelector()
   const [state, setState] = useState({ isLoaded: false, error: false })
   const allResumes = useSelector(state => state.resumes?.allResumes)
@@ -23,7 +25,6 @@ export default function CreateCoverLetterExistingApp() {
   const [errors, setErrors] = useState([]);
   const [jobDescription, setJobDescription] = useState('');
   const [companyDetails, setCompanyDetails] = useState('');
-  const [jobTitle, setJobTitle] = useState('');
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -31,6 +32,7 @@ export default function CreateCoverLetterExistingApp() {
       if (response.error) {
         setState({ isLoaded: true, error: true })
       } else {
+        await dispatch(fetchSingleApplicationThunk(applicationId));
         setState({ isLoaded: true, error: false })
       }
       await setSelectedLink('coverletters')
@@ -62,7 +64,6 @@ export default function CreateCoverLetterExistingApp() {
 
     if (!jobDescription) validationErrors.jobDescription = 'Job Description is required';
     if (!companyDetails) validationErrors.companyDetails = 'Company Details are required';
-    if (!jobTitle) validationErrors.jobTitle = 'Job title is required';
 
     return validationErrors;
   };
@@ -80,10 +81,12 @@ export default function CreateCoverLetterExistingApp() {
           jobDescription, // job description
           companyDetails, // company details
           'gpt-3.5-turbo', // engine
-          jobTitle, // job title
           applicationId // value needed from somewhere
         ));
       await setSelectedSide('cover letter'); // sets up view in application details
+      // Update selected resume in application:
+
+
       history.push(`/applications/${response.application.id}`);
     }
   };
@@ -99,24 +102,16 @@ export default function CreateCoverLetterExistingApp() {
               className="all-resumes-page-container"
             >
               <div className="all-resumes-body">
-                <h1><span className="form-action">Create a new</span> <span className="form-title">Cover Letter</span></h1>
+                <h1>
+                  <span className="form-action">Create a new </span> 
+                  <span className="form-title">Cover Letter </span>
+                  <span className="form-action">for </span>
+                  <span className="form-title">{application.job_title} </span>
+                  <span className="form-action">application</span>
+                </h1>
                   <div className="resume-name resume-format">
                     <div>{capitalizeResumeTitle(resume.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}</div>
                     <img className="link-icon" src={linkIcon} alt="link-icon" />
-                  </div>
-                  <div className={`position-type-box resume-input-box ${errors.jobTitle ? 'error' : ''}`}>
-                    <div className="input-msg">Job Title</div>
-                    <input 
-                      type="text" 
-                      className="position-type-input"
-                      placeholder='"Software Engineer I"'
-                      value={jobTitle}
-                      onChange={(e) => {
-                        setJobTitle(e.target.value)
-                        setErrors({...errors, jobTitle: null})
-                      }} 
-                    />
-                    {errors.jobTitle && <div className="error-message">{errors.jobTitle}</div>}
                   </div>
                   <div className={`resume-input-box ${errors.jobDescription ? 'error' : ''}`}>
                     <div className="input-msg">Paste Job Description</div>
@@ -169,7 +164,13 @@ export default function CreateCoverLetterExistingApp() {
               className="all-resumes-page-container"
             >
               <div className="all-resumes-body">
-                <h1><span className="form-action">Create a new</span> <span className="form-title">Cover Letter</span></h1>
+                <h1>
+                  <span className="form-action">Create a new </span> 
+                  <span className="form-title">Cover Letter </span>
+                  <span className="form-action">for </span>
+                  <span className="form-title">{application.job_title} </span>
+                  <span className="form-action">application</span>
+                </h1>
                 <div>Connect a resume to generate a cover letter</div>
                 <div className='resume-input-box'>
                   <div className="input-msg">Connect a resume</div>
@@ -216,7 +217,7 @@ export default function CreateCoverLetterExistingApp() {
       { state.isLoaded && state.error && (
         <div className="all-resumes-container">
           <div className="all-resumes-body">
-            <h3>No resumes found, please try again momentarily</h3>
+            <h3>No cover letters found, please try again momentarily</h3>
           </div>
         </div>
       )}

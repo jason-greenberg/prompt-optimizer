@@ -97,7 +97,7 @@ def create_new_cover_letter(id):
     }, 201
 
 # Create new cover letter by resume id (STANDALONE -- DOES NOT CREATE APPLICATION)
-@resume_routes.route('/<int:id>/coverletters', methods=['POST'])
+@resume_routes.route('/<int:id>/coverletters/standalone', methods=['POST'])
 @login_required
 def create_new_cover_letter_standalone(id):
     """
@@ -118,7 +118,6 @@ def create_new_cover_letter_standalone(id):
     job_description = data['job_description']
     company_details = data['company_details']
     engine=data['engine']
-    job_title=data['job_title']
     application_id=data['application_id']
 
     # Generate a cover letter using OpenAI's API

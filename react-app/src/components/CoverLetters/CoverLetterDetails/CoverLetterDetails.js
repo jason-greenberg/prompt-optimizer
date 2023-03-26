@@ -1,24 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk } from '../../../store/coverletter';
-import './CoverLetterDetails.css'
+import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter } from '../../../store/coverletter';
+import './CoverLetterDetails.css';
 
-export default function CoverLetterDetails({ coverLetter, selectedSide, onDelete }) {
+export default function CoverLetterDetails({ selectedSide, loading }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { applicationId } = useParams();
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [deleted, setDeleted] = useState(false);
-
-  useEffect(() => {
-    if (deleted) {
-      // Fetch the updated cover letter data after deletion
-      dispatch(fetchSingleCoverLetterThunk(applicationId));
-      setDeleted(false);
-    }
-  }, [deleted, applicationId, dispatch]);
+  const coverLetter = useSelector(state => state.coverletters.currentCoverLetter);
+  const coverLetterArray = Object.values(coverLetter)
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -27,15 +20,17 @@ export default function CoverLetterDetails({ coverLetter, selectedSide, onDelete
     if (response.notFound) {
       setNotFound(true);
     } else {
-      setDeleted(true);
-      // Call the onDelete function passed as a prop
-      onDelete(e);
+      // Clear the current cover letter from the Redux store
+      dispatch(clearCurrentCoverLetter());
+      
+      // Fetch the updated cover letter data after deletion
+      await dispatch(fetchSingleCoverLetterThunk(applicationId));
     }
   };
 
   return (
     <>
-      { coverLetter && (
+      { coverLetterArray.length > 0 && (
         <div 
           className="cover-letter-container"
           onClick={(e) => {
@@ -84,7 +79,7 @@ export default function CoverLetterDetails({ coverLetter, selectedSide, onDelete
           </div>
         </div>
       )}
-      {!coverLetter && !notFound && (
+      {coverLetterArray.length < 1 && (
         <div className="not-found">
           <h3>This application does not have an associated cover letter</h3>
           <button 

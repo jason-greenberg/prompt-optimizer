@@ -6,8 +6,9 @@ import './EditApplication.css';
 
 export default function EditApplication() {
   const dispatch = useDispatch();
-  const application = useSelector(state => state.applications.currentApplication)
-  const [jobTitle, setJobTitle] = useState(application.job_title)
+  const application = useSelector(state => state.applications?.currentApplication)
+  const allResumes = useSelector(state => state.resumes?.allResumes);
+  const [jobTitle, setJobTitle] = useState(application?.job_title)
   const { applicationId } = useParams();
 
   const handleSave = async () => {

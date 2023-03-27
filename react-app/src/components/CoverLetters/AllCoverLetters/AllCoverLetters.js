@@ -5,14 +5,17 @@ import { useHistory } from 'react-router-dom'
 import { useMenuSelector } from '../../../context/Menu'
 import Navigation from '../../Navigation'
 import { fetchAllCoverLettersThunk } from '../../../store/coverletter'
+import { capitalizeResumeTitle } from '../../../utils/format'
+import { fetchAllApplicationsThunk } from '../../../store/application'
 
 export default function AllCoverLetters() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [state, setState] = useState({ isLoaded: false, error: false });
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false);
-  const { setSelectedLink } = useMenuSelector()
+  const { setSelectedLink, setSelectedSide } = useMenuSelector()
   const allCoverLetters = useSelector(state => state.coverletters.allCoverLetters);
-  const allCoverLettersArray = Object.values(allCoverLetters)
+  const allApplications = useSelector(state => state.applications.allApplications)
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -20,6 +23,7 @@ export default function AllCoverLetters() {
       if (response.error) {
         setState({ isLoaded: true, error: true });
       } else {
+        await dispatch(fetchAllApplicationsThunk());
         setState({ isLoaded: true, error: false });
       }
 
@@ -27,6 +31,27 @@ export default function AllCoverLetters() {
     }
     fetchAsync();
   }, [dispatch])
+
+  const getJobTitleByCoverLetterId = (coverLetterId) => {
+    const application = Object.values(allApplications).find(
+      (application) => application.cover_letter_id === coverLetterId
+    );
+    return application ? application.job_title : 'Unassigned';
+  };
+
+  const getAppDateByCoverLetterId = (coverLetterId) => {
+    const application = Object.values(allApplications).find(
+      (application) => application.cover_letter_id === coverLetterId
+    );
+    return application ? application.created_at : 'N/A';
+  };
+
+  const getAppIdByCoverLetterId = (coverLetterId) => {
+    const application = Object.values(allApplications).find(
+      (application) => application.cover_letter_id === coverLetterId
+    );
+    return application ? application.id : '';
+  };
 
   return (
     <>
@@ -43,7 +68,33 @@ export default function AllCoverLetters() {
             </h1>
             <div>Select a cover letter to view</div>
             <div className="resume-input-box">
-              <div className="input-msg"></div>
+              <div className="input-msg">Choose a cover letter</div>
+              <div className="resumes-container">
+                { Object.values(allCoverLetters).map((coverLetter, index) => (
+                  <>
+                    <div key={coverLetter.id} className="resume-overview">
+                      <div className="resume-left">
+                        <div className="resume-name">
+                          {`${getJobTitleByCoverLetterId(coverLetter.id)} Cover Letter`}
+                        </div>
+                        <div className="dot">•</div>
+                        <div className="resume-date">{getAppDateByCoverLetterId(coverLetter.id)}</div>
+                      </div>
+                      <div className="resume-right">
+                        <button
+                          className="view-button"
+                          onClick={() => {
+                            setSelectedSide('cover letter')
+                            history.push(`/applications/${getAppIdByCoverLetterId(coverLetter.id)}`)
+                          }}
+                        >
+                          Manage
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )) }
+              </div>
             </div>
           </div>
         </div>

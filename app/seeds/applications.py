@@ -22,6 +22,7 @@ def seed_applications():
         resume_id=demo_resume.id,
         cover_letter_id=demo_coverletters[0].id,
         job_title='Software Engineer',
+        job_description=demo_coverletters[0].job_description,
         position_type=demo_resume.position_type,
         created_at=datetime.utcnow()
     )
@@ -31,6 +32,7 @@ def seed_applications():
         resume_id=marnie_resume.id,
         cover_letter_id=marnie_coverletter.id,
         job_title='Software Developer',
+        job_description=marnie_coverletter.job_description,
         position_type=marnie_resume.position_type,
         created_at=datetime.utcnow()
     )
@@ -40,17 +42,19 @@ def seed_applications():
         resume_id=bobbie_resume.id,
         cover_letter_id=bobbie_coverletter.id,
         job_title='Project Manager',
+        job_description=bobbie_coverletter.job_description,
         position_type=bobbie_resume.position_type,
         created_at=datetime.utcnow()
     )
 
     application1 = Application(
-    user_id=demo.id,
-    resume_id=demo_resumes[1].id,
-    cover_letter_id=demo_coverletters[0].id,
-    job_title='Software Engineer',
-    position_type=demo_resumes[1].position_type,
-    created_at=datetime.utcnow()
+        user_id=demo.id,
+        resume_id=demo_resumes[1].id,
+        cover_letter_id=demo_coverletters[0].id,
+        job_title='Software Engineer',
+        job_description=demo_coverletters[0].job_description,
+        position_type=demo_resumes[1].position_type,
+        created_at=datetime.utcnow()
     )
 
     application2 = Application(
@@ -58,6 +62,7 @@ def seed_applications():
         resume_id=demo_resumes[4].id,
         cover_letter_id=demo_coverletters[1].id,
         job_title='Frontend Developer',
+        job_description=demo_coverletters[1].job_description,
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
     )
@@ -67,6 +72,7 @@ def seed_applications():
         resume_id=demo_resumes[6].id,
         cover_letter_id=bobbie_coverletter.id,
         job_title='Project Manager',
+        job_description=bobbie_coverletter.job_description,
         position_type=demo_resumes[6].position_type,
         created_at=datetime.utcnow()
     )
@@ -76,6 +82,7 @@ def seed_applications():
         resume_id=demo_resumes[4].id,
         cover_letter_id=demo_coverletters[2].id,
         job_title='Software Engineer',
+        job_description=demo_coverletters[2].job_description,
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
     )
@@ -85,6 +92,7 @@ def seed_applications():
         resume_id=demo_resumes[4].id,
         cover_letter_id=demo_coverletters[3].id,
         job_title='Frontend Developer',
+        job_description=demo_coverletters[3].job_description,
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
     )
@@ -94,10 +102,10 @@ def seed_applications():
         resume_id=demo_resumes[0].id,
         cover_letter_id=demo_coverletters[0].id,
         job_title='Full Stack Developer',
+        job_description=demo_coverletters[0].job_description,
         position_type=demo_resumes[0].position_type,
         created_at=datetime.utcnow()
     )
-
 
     db.session.add(demo_application)
     db.session.add(marnie_application)

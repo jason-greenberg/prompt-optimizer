@@ -12,6 +12,7 @@ class Application(db.Model):
     resume_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('resumes.id'), ondelete='CASCADE'), nullable=True)
     cover_letter_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('coverletters.id')), nullable=True)
     job_title = db.Column(db.String, nullable=False)
+    job_description = db.Column(db.String, nullable=False)
     position_type = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
 
@@ -29,5 +30,5 @@ class Application(db.Model):
             'job_title': self.job_title,
             'position_type': self.position_type,
             'created_at': self.created_at,
-            'job_description': self.cover_letter.job_description
+            'job_description': self.job_description if self.job_description else None
         }

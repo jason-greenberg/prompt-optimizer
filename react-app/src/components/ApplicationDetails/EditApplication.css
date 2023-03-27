@@ -7,8 +7,8 @@
 }
 
 .edit-body {
-  align-items: center;
   display: flex;
+  flex-direction: column;
   width: 430px;
   position: relative;
 }
@@ -19,6 +19,20 @@
   width: 100%;
 }
 
+.edit-connected-resume {
+  max-width: 400px;
+  margin-bottom: 10px;
+}
+
+.edit-job-title {
+  align-items: center;
+  display: flex;
+  font-size: 13px;
+  margin-bottom: 20px;
+  position: relative;
+  width: 430px;
+}
+
 .job-title-in {
   border: 1px solid #E4E7EB;
   border-radius: 5px;
@@ -27,4 +41,11 @@
   padding: 2px 5px;
   height: 20px;
   width: 100%;
+}
+
+.set-resume-msg {
+  color: #465986;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }

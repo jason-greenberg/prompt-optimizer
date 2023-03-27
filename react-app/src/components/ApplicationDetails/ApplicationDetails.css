@@ -144,6 +144,7 @@
   right: -1px;
   top: 45px;
   width: 430px;
+  z-index: 100;
 }
 
 .manage-menu {
@@ -174,6 +175,7 @@
   border-bottom-right-radius: 6px;
   max-width: 100%;
   width: 100%;
+  z-index: 99;
 }
 
 .manage-selection {

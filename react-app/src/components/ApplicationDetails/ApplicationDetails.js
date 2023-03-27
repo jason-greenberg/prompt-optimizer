@@ -46,7 +46,7 @@ export default function ApplicationDetails() {
       }
     };
     fetchAsync();
-  }, [applicationId, dispatch, history, selectedSide]);
+  }, [applicationId, dispatch, history, selectedSide, application.resume_id]);
 
   return (
     <>

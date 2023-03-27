@@ -92,6 +92,7 @@ export default function AllCoverLetters() {
                         </button>
                       </div>
                     </div>
+                    <div className="break"></div>
                   </>
                 )) }
               </div>

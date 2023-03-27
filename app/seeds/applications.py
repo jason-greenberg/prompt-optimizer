@@ -13,14 +13,14 @@ def seed_applications():
     bobbie_resume = Resume.query.filter_by(user_id=bobbie.id).first()
     demo_resumes = Resume.query.filter_by(user_id=demo.id).all()
 
-    demo_coverletter = CoverLetter.query.filter_by(user_id=demo.id).first()
+    demo_coverletters = CoverLetter.query.filter_by(user_id=demo.id).all()
     marnie_coverletter = CoverLetter.query.filter_by(user_id=marnie.id).first()
     bobbie_coverletter = CoverLetter.query.filter_by(user_id=bobbie.id).first()
 
     demo_application = Application(
         user_id=demo.id, 
         resume_id=demo_resume.id,
-        cover_letter_id=demo_coverletter.id,
+        cover_letter_id=demo_coverletters[0].id,
         job_title='Software Engineer',
         position_type=demo_resume.position_type,
         created_at=datetime.utcnow()
@@ -47,7 +47,7 @@ def seed_applications():
     application1 = Application(
     user_id=demo.id,
     resume_id=demo_resumes[1].id,
-    cover_letter_id=demo_coverletter.id,
+    cover_letter_id=demo_coverletters[0].id,
     job_title='Software Engineer',
     position_type=demo_resumes[1].position_type,
     created_at=datetime.utcnow()
@@ -56,7 +56,7 @@ def seed_applications():
     application2 = Application(
         user_id=demo.id,
         resume_id=demo_resumes[4].id,
-        cover_letter_id=demo_coverletter.id,
+        cover_letter_id=demo_coverletters[1].id,
         job_title='Frontend Developer',
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
@@ -74,7 +74,7 @@ def seed_applications():
     application4 = Application(
         user_id=demo.id,
         resume_id=demo_resumes[4].id,
-        cover_letter_id=demo_coverletter.id,
+        cover_letter_id=demo_coverletters[2].id,
         job_title='Software Engineer',
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
@@ -83,7 +83,7 @@ def seed_applications():
     application5 = Application(
         user_id=demo.id,
         resume_id=demo_resumes[4].id,
-        cover_letter_id=demo_coverletter.id,
+        cover_letter_id=demo_coverletters[3].id,
         job_title='Frontend Developer',
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
@@ -92,7 +92,7 @@ def seed_applications():
     application6 = Application(
         user_id=demo.id,
         resume_id=demo_resumes[0].id,
-        cover_letter_id=demo_coverletter.id,
+        cover_letter_id=demo_coverletters[0].id,
         job_title='Full Stack Developer',
         position_type=demo_resumes[0].position_type,
         created_at=datetime.utcnow()

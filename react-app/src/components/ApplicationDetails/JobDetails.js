@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import { fetchSingleApplicationThunk } from "../../store/application";
+import './JobDetails.css';
 
 export default function JobDetails() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export default function JobDetails() {
   useEffect(() => {
     const fetchAsync = async () => {
       await dispatch(fetchSingleApplicationThunk(applicationId));
-      
+
     }
   }, [dispatch])
 
@@ -21,7 +22,7 @@ export default function JobDetails() {
       { !notFound && (
         <div className="job-description-container">
           <div className="job-description-body">
-            <div className="about">About the Position</div>
+            <div className="about">About</div>
             <div className="job-text">
               {application.job_description}
             </div>

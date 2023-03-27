@@ -53,7 +53,14 @@ export default function ApplicationDetails() {
       <Navigation />
       { state.isLoaded && !state.error && (
         <>
-          <div className="application-details-container">
+          <div 
+            className="application-details-container"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowManageDropdown(false)
+            }}
+          >
             <div className="application-details-body">
               <div className="app-info-box">
                 <div className="app-info-left">
@@ -123,8 +130,22 @@ export default function ApplicationDetails() {
               </div>
             </div>
           </div>
-          <div className="app-break"></div>
-          <div className="app-materials-container">
+          <div 
+            className="app-break"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowManageDropdown(false)
+            }}
+          ></div>
+          <div 
+            className="app-materials-container"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowManageDropdown(false)
+            }}    
+          >
             <div className="app-materials">
               <div className="materials-left">
                 <div 

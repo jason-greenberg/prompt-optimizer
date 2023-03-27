@@ -81,6 +81,7 @@ def create_application():
     resume_id = data.get('resume_id', None)
     cover_letter_id = data.get('cover_letter_id', None)
     job_title = data['job_title']
+    job_description = data['job_description']
 
     # Fetch the associated resume
     resume = Resume.query.get(resume_id)
@@ -91,6 +92,7 @@ def create_application():
         resume_id=resume_id,
         cover_letter_id=cover_letter_id,
         job_title=job_title,
+        job_description=job_description,
         position_type=resume.position_type if resume else None,
         created_at=datetime.utcnow()
     )
@@ -122,6 +124,7 @@ def update_application(id):
     resume_id = data.get('resume_id')
     cover_letter_id = data.get('cover_letter_id')
     job_title = data.get('job_title')
+    job_description = data.get('job_description')
 
     #Update application fields
     if resume_id is not None:
@@ -130,6 +133,8 @@ def update_application(id):
         application.cover_letter_id = cover_letter_id
     if job_title is not None:
         application.job_title = job_title
+    if job_description is not None:
+        application.job_description = job_description
     
     # Save changes to the database
     db.session.commit()

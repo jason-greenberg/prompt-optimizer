@@ -15,7 +15,9 @@ export default function Dashboard() {
   const history = useHistory()
   const location = useLocation();
   const resumeDeleted = location.state?.resumeDeleted;
+  const applicationDeleted = location.state?.applicationDeleted;
   const [showBanner, setShowBanner] = useState(resumeDeleted);
+  const [showAppBanner, setShowAppBanner] = useState(applicationDeleted);
   const { setSelectedLink } = useMenuSelector()
 
   const dispatch = useDispatch();
@@ -48,6 +50,15 @@ export default function Dashboard() {
     }
   }, [resumeDeleted]);
 
+  useEffect(() => {
+    if (applicationDeleted) {
+      const timer = setTimeout(() => {
+        setShowAppBanner(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [applicationDeleted]);
+
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
     return history.push(`/applications/${app.id}`)
@@ -62,6 +73,11 @@ export default function Dashboard() {
           {showBanner && (
             <div className="resume-deleted-banner">
               Resume successfully deleted.
+            </div>
+          )}
+          {showAppBanner && (
+            <div className="resume-deleted-banner">
+              Application successfully deleted.
             </div>
           )}
             <div className="current-apps-table">

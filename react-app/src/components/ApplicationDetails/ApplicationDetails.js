@@ -12,6 +12,8 @@ import './ApplicationDetails.css'
 import { clearCurrentCoverLetter, fetchSingleCoverLetterThunk } from '../../store/coverletter';
 import JobDetails from './JobDetails'
 import ResumeDetailAppView from '../Resumes/ResumeDetails/ResumeDetailAppView'
+import EditApplication from './EditApplication'
+import DeleteApplication from './DeleteApplication'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -24,6 +26,7 @@ export default function ApplicationDetails() {
   const allResumesArray = Object.values(allResumes);
   const { selectedSide, setSelectedSide } = useMenuSelector();
   const [showManageDropdown, setShowManageDropdown] = useState(false)
+  const [editSelected, setEditSelected] = useState(true)
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -73,9 +76,45 @@ export default function ApplicationDetails() {
                     <div>Manage</div>
                     <img className="down" src={downArrow} alt="" />
                     { showManageDropdown && (
-                      <div className="manage-app-dropdown">
-                        <div className="edit-app">Edit</div>
-                        <div className="delete-app">Delete</div>
+                      <div 
+                        className="manage-app-dropdown"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                        }}
+                      >
+                        <div className="manage-selection">
+                          <div 
+                            className={`edit-app ${editSelected ? 'selected-edit' : ''}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setEditSelected(true)
+                            }}
+                          >
+                            Edit
+                          </div>
+                          <div 
+                            className={`delete-app ${!editSelected ? 'selected-delete' : ''}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setEditSelected(false)
+                            }}
+                          >
+                            Delete
+                          </div>
+                        </div>
+                        <div className="manage-option">
+                          <div className="manage-inner">
+                            { editSelected && (
+                              <EditApplication />
+                            )}
+                            { !editSelected && (
+                              <DeleteApplication />
+                            )}
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>

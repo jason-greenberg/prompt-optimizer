@@ -112,6 +112,7 @@
 .edit-app,
 .delete-app {
   align-items: center;
+  border-bottom: 1px solid #D0DBF0;
   display: flex;
   justify-content: center;
   height: 100%;
@@ -212,6 +213,7 @@
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
   border-right: 1px solid #D0DBF0;
+  border-bottom: 1px solid white;
 }
 
 .selected-delete {
@@ -219,6 +221,7 @@
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
   border-left: 1px solid #D0DBF0;
+  border-bottom: 1px solid white;
 }
 
 .side-select {

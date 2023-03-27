@@ -76,7 +76,13 @@ export default function ApplicationDetails() {
                     <div>Manage</div>
                     <img className="down" src={downArrow} alt="" />
                     { showManageDropdown && (
-                      <div className="manage-app-dropdown">
+                      <div 
+                        className="manage-app-dropdown"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                        }}
+                      >
                         <div className="manage-selection">
                           <div 
                             className={`edit-app ${editSelected ? 'selected-edit' : ''}`}

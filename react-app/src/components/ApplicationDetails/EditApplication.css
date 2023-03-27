@@ -3,14 +3,22 @@
   display: flex;
   flex-direction: column;
   width: 430px;
+  position: relative;
 }
 
 .edit-body {
   align-items: center;
   display: flex;
   width: 430px;
+  position: relative;
 }
 /* ---------- */
+.del-app {
+  max-width: 200px;
+  margin-left: 95px;
+  width: 100%;
+}
+
 .job-title-in {
   border: 1px solid #E4E7EB;
   border-radius: 5px;

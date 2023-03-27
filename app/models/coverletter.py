@@ -23,5 +23,7 @@ class CoverLetter(db.Model):
             'letter_text': self.letter_text,
             'rating': self.rating,
             'engine': self.engine,
-            'job_description': self.job_description
+            'job_description': self.job_description,
+            'application_id': self.application.id,
+            'job_title': self.application.job_title
         }

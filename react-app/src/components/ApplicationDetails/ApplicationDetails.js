@@ -10,6 +10,7 @@ import Navigation from '../Navigation'
 import downArrow from '../Navigation/assets/down-arrow.png'
 import './ApplicationDetails.css'
 import { clearCurrentCoverLetter, fetchSingleCoverLetterThunk } from '../../store/coverletter';
+import JobDetails from './JobDetails'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -134,7 +135,7 @@ export default function ApplicationDetails() {
                   />
                 )}
                 { selectedSide === 'job details' && (
-                  
+                  <JobDetails />
                 )}
               </div>
             </div>

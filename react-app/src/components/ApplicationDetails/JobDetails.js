@@ -12,7 +12,7 @@ export default function JobDetails() {
   useEffect(() => {
     const fetchAsync = async () => {
       await dispatch(fetchSingleApplicationThunk(applicationId));
-
+      
     }
   }, [dispatch])
 
@@ -21,8 +21,9 @@ export default function JobDetails() {
       { !notFound && (
         <div className="job-description-container">
           <div className="job-description-body">
+            <div className="about">About the Position</div>
             <div className="job-text">
-
+              {application.job_description}
             </div>
           </div>
         </div>

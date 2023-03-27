@@ -24,6 +24,6 @@ class CoverLetter(db.Model):
             'rating': self.rating,
             'engine': self.engine,
             'job_description': self.job_description,
-            'application_id': self.application.id,
-            'job_title': self.application.job_title
+            'application_id': self.application.id if self.application else None,
+            'job_title': self.application.job_title if self.application else None
         }

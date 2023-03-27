@@ -119,9 +119,9 @@ def update_application(id):
     
     #Get updated data from request body
     data = request.json
-    resume_id = data['resume_id']
-    cover_letter_id = data['cover_letter_id']
-    job_title = data['job_title']
+    resume_id = data.get('resume_id')
+    cover_letter_id = data.get('cover_letter_id')
+    job_title = data.get('job_title')
 
     #Update application fields
     if resume_id is not None:

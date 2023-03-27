@@ -70,7 +70,9 @@ export default function AllCoverLetters() {
             <div className="resume-input-box">
               <div className="input-msg">Choose a cover letter</div>
               <div className="resumes-container">
-                { Object.values(allCoverLetters).map((coverLetter, index) => (
+                { Object.values(allCoverLetters)
+                  .filter((coverLetter) => getAppIdByCoverLetterId(coverLetter.id) !== '')
+                  .map((coverLetter, index) => (
                   <>
                     <div key={coverLetter.id} className="resume-overview">
                       <div className="resume-left">

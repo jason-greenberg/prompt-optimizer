@@ -1,10 +1,23 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { updateApplicationThunk } from '../../store/application';
 import './EditApplication.css';
 
 export default function EditApplication() {
-  const application = useSelector(state => state.applications.currentApplication)
-  const [jobTitle, setJobTitle] = useState(application.job_title)
+  const dispatch = useDispatch();
+  const application = useSelector(state => state.applications?.currentApplication)
+  const allResumes = useSelector(state => state.resumes?.allResumes);
+  const [jobTitle, setJobTitle] = useState(application?.job_title)
+  const { applicationId } = useParams();
+
+  const handleSave = async () => {
+    await dispatch(updateApplicationThunk({
+      id: applicationId,
+      job_title: jobTitle
+    }));
+  }
+
   return (
     <div className="edit-container">
       <div className="edit-body">
@@ -15,7 +28,12 @@ export default function EditApplication() {
           value={jobTitle} 
           onChange={(e) => setJobTitle(e.target.value)}
         />
-        <button className="save-button">Save</button>
+        <button 
+          className="save-button"
+          onClick={handleSave}
+        >
+          Save
+        </button>
       </div>
     </div>
   )

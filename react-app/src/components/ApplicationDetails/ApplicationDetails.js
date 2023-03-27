@@ -11,6 +11,7 @@ import downArrow from '../Navigation/assets/down-arrow.png'
 import './ApplicationDetails.css'
 import { clearCurrentCoverLetter, fetchSingleCoverLetterThunk } from '../../store/coverletter';
 import JobDetails from './JobDetails'
+import ResumeDetailAppView from '../Resumes/ResumeDetails/ResumeDetailAppView'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -31,7 +32,7 @@ export default function ApplicationDetails() {
         setState({ isLoaded: true, error: true });
       } else {
         await dispatch(fetchAllResumesThunk());
-        
+        await dispatch(fetchSingleResumeThunk(application.resume_id))
         // Fetch the cover letter and handle the 404 case
         const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(applicationId));
         if (coverLetterResponse.error) {
@@ -136,6 +137,9 @@ export default function ApplicationDetails() {
                 )}
                 { selectedSide === 'job details' && (
                   <JobDetails />
+                )}
+                { selectedSide === 'resume' && (
+                  <ResumeDetailAppView />
                 )}
               </div>
             </div>

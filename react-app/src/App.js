@@ -14,6 +14,7 @@ import CreateCoverLetter from "./components/CoverLetters/CreateCoverLetter/Creat
 import ApplicationDetails from "./components/ApplicationDetails/ApplicationDetails";
 import CreateCoverLetterExistingApp from "./components/CoverLetters/CreateCoverLetter/CreateCoverLetterExistingApp";
 import AllCoverLetters from "./components/CoverLetters/AllCoverLetters/AllCoverLetters";
+import CreateApplication from "./components/CreateApplication/CreateApplication";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
           <Route path="/login" component={LoginFormPage} />
           <Route path="/signup" component={SignupFormPage} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/applications/new" component={CreateApplication} />
           <Route path="/applications/:applicationId" component={ApplicationDetails} />
           <Route path="/resumes/new" component={CreateResumeForm} />
           <Route path="/resumes/:resumeId/edit" component={EditResume} />

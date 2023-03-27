@@ -133,6 +133,9 @@ export default function ApplicationDetails() {
                     selectedSide={selectedSide}
                   />
                 )}
+                { selectedSide === 'job details' && (
+                  
+                )}
               </div>
             </div>
           </div>

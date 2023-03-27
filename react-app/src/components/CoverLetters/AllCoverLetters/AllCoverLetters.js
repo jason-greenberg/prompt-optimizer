@@ -12,7 +12,7 @@ export default function AllCoverLetters() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [state, setState] = useState({ isLoaded: false, error: false });
-  const [showDeleteDropdown, setShowDeleteDropdown] = useState(false);
+  const [showDeleteDropdown, setShowDeleteDropdown] = useState([]);
   const { setSelectedLink, setSelectedSide } = useMenuSelector()
   const allCoverLetters = useSelector(state => state.coverletters.allCoverLetters);
   const allApplications = useSelector(state => state.applications.allApplications)

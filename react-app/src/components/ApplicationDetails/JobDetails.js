@@ -10,13 +10,6 @@ export default function JobDetails() {
   const application = useSelector(state => state.applications.currentApplication)
   const [notFound, setNotFound] = useState(false)
 
-  useEffect(() => {
-    const fetchAsync = async () => {
-      await dispatch(fetchSingleApplicationThunk(applicationId));
-
-    }
-  }, [dispatch])
-
   return (
     <>
       { !notFound && (

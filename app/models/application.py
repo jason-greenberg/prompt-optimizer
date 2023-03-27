@@ -28,5 +28,6 @@ class Application(db.Model):
             'cover_letter_id': self.cover_letter_id,
             'job_title': self.job_title,
             'position_type': self.position_type,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'job_description': self.cover_letter.job_description
         }

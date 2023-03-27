@@ -30,5 +30,5 @@ class Application(db.Model):
             'job_title': self.job_title,
             'position_type': self.position_type,
             'created_at': self.created_at,
-            'job_description': self.cover_letter.job_description if self.cover_letter else None
+            'job_description': self.job_description if self.job_description else None
         }

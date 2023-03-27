@@ -161,6 +161,12 @@
   position: relative;
 }
 
+.manage-inner {
+  padding: 15px 18px;
+  max-width: 430px;
+  width: 100%;
+}
+
 .manage-option {
   background-color: white;
   border-bottom-left-radius: 6px;

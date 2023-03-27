@@ -12,6 +12,8 @@ import './ApplicationDetails.css'
 import { clearCurrentCoverLetter, fetchSingleCoverLetterThunk } from '../../store/coverletter';
 import JobDetails from './JobDetails'
 import ResumeDetailAppView from '../Resumes/ResumeDetails/ResumeDetailAppView'
+import EditApplication from './EditApplication'
+import DeleteApplication from './DeleteApplication'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -98,7 +100,14 @@ export default function ApplicationDetails() {
                           </div>
                         </div>
                         <div className="manage-option">
-                          <div>Content</div>
+                          <div className="manage-inner">
+                            { editSelected && (
+                              <EditApplication />
+                            )}
+                            { !editSelected && (
+                              <DeleteApplication />
+                            )}
+                          </div>
                         </div>
                       </div>
                     )}

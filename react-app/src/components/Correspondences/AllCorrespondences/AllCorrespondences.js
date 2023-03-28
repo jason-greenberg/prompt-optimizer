@@ -32,11 +32,17 @@ export default function AllCorrespondences() {
               <div className="corr-w-break" key={index}>
                 <div className="individual-corr" onClick={() => handleClick(index)}>
                   <div className="corr-left">
-                    {corr.corr_type === 'LinkedIn' && (
+                    {corr.corr_type === 'application follow-up' && (
+                      <img src={liIcon} alt="linkedIn-icon" />
+                    )}
+                    {corr.corr_type === 'initial connection' && (
                       <img src={liIcon} alt="linkedIn-icon" />
                     )}
                     {corr.corr_type === 'Email' && (
                       <img src={emailIcon} alt="email-icon" />
+                    )}
+                    {corr.corr_type === 'informational interview' && (
+                      <img src={liIcon} alt="linkedIn-icon" />
                     )}
                   </div>
                   <div className="corr-right">

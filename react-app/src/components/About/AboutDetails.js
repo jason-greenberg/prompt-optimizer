@@ -12,6 +12,12 @@ export default function AboutDetails() {
 
   useEffect(() => {
     setSelectedLink('about')
+
+    document.body.classList.add('no-scroll');
+
+    return () => {
+      document.body.classList.remove('no-scroll');
+    }
   }, []);
 
   return (

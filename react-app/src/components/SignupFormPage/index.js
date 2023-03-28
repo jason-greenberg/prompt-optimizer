@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
+import background from './assets/signup-background.png'
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -28,7 +29,8 @@ function SignupFormPage() {
   };
 
   return (
-    <>
+    <div className="signup-container">
+      <img className="background" src={background} alt="background-img" />
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <ul>
@@ -72,7 +74,7 @@ function SignupFormPage() {
         </label>
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

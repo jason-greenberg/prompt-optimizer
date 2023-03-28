@@ -15,6 +15,7 @@ export default function CreateApplication() {
   const [jobTitle, setJobTitle] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllResumesThunk());
@@ -125,28 +126,57 @@ export default function CreateApplication() {
               <span className="form-action">Create a new</span>{" "}
               <span className="form-title">Application</span>
             </h1>
-            <div className="resume-selector">
-              <label htmlFor="resume">Select a Resume:</label>
-              <select
-                name="resume"
-                value={selectedResume}
-                onChange={(e) => selectResume(e.target.value)}
-              >
-                <option value="">-- Select a Resume --</option>
-                {allResumesArray.map((resume) => (
-                  <option key={resume.id} value={resume.id}>
-                    {capitalizeResumeTitle(resume.position_type)} Resume{" "}
-                    {numberToRoman(getRomanIndex(resume, allResumesArray))}
-                  </option>
-                ))}
-              </select>
-              {errors.resume && (
-                <div className="error-message">{errors.resume}</div>
-              )}
+            <div>Connect a resume to generate a cover letter</div>
+            <div className="resume-input-box">
+              <div className="input-msg">Connect a resume</div>
+              <div className="resumes-container">
+                {Object.values(allResumes).map((resume) => (
+                  <div key={resume.id}>
+                    <div
+                      key={resume.id}
+                      className={`resume-overview ${
+                        selectedResume === resume.id ? "selected" : ""
+                      }`}
+                    >
+                      <div className="resume-left">
+                        <div className="resume-name">
+                          {`${capitalizeResumeTitle(
+                            resume.position_type
+                          )} Resume ${numberToRoman(
+                            getRomanIndex(resume, allResumesArray)
+                          )}`}
+                        </div>
+                        <div className="dot">•</div>
+                        <div className="resume-date">
+                          {formatDate(resume.created_at)}
+                        </div>
+                      </div>
+                      <div className="resume-right">
+                        <button
+                          className={`create-button resume-connect ${
+                            selectedResume === resume.id ? "selected" : ""
+                          }`}
+                          onClick={(e) => selectResume(e, resume.id)}
+                        >
+                          {selectedResume === resume.id ? (
+                            <div className="connected">
+                              <img
+                                className="loading-icon" src={loading} alt="link-icon" />
+                                </div>
+                              ) : (
+                                <div>Connect</div>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-    </>
-  );  
-}  
+          )}
+        </>
+      );
+}      
+  

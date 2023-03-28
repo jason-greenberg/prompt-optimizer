@@ -2,3 +2,11 @@
   padding: 0;
   color: rgb(255, 106, 106);
 }
+
+.submit-demo {
+  box-sizing: border-box;
+  height: 44px;
+  margin-top: 20px;
+  max-width: 259px;
+  width: 100%;
+}

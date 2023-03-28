@@ -20,39 +20,44 @@ export default function Navigation() {
           <div className="nav-left">
 						<div className="logo">zipcover</div>
 						<div className="first-nav-links">
-							<div 
+							<NavLink 
 								className={"nav-link" + (selectedLink === "dashboard" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('dashboard')}
+								to="/dashboard"
 							>
-								<NavLink to="/dashboard">Dashboard</NavLink>
-							</div>
-							<div 
+								Dashboard
+							</NavLink>
+							<NavLink 
 								className={"nav-link" + (selectedLink === "resumes" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('resumes')}
+								to="/resumes"
 							>
-								<NavLink to="/resumes">Resumes</NavLink>
-							</div>
-							<div 
+								Resumes
+							</NavLink>
+							<NavLink 
 								className={"nav-link" + (selectedLink === "coverletters" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('coverletters')}
+								to="/coverletters"
 							>
-								<NavLink to="/coverletters">Cover Letters</NavLink>
-							</div>
+								Cover Letters
+							</NavLink>
 						</div>
 						<div className="vertical-divider"></div>
 						<div className="second-nav-links">
-							<div 
+							<NavLink 
 								className={"nav-link" + (selectedLink === "correspondences" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('correspondences')}
+								to="/correspondences"
 							>
-								<NavLink to='/correspondences'>Correspondences</NavLink>
-							</div>
-							<div 
-								className={"nav-link" + (selectedLink === "help" ? " selected-link" : "")}
-								onClick={() => changeSelectedLink('help')}
+								Correspondences
+							</NavLink>
+							<NavLink 
+								className={"nav-link" + (selectedLink === "about" ? " selected-link" : "")}
+								onClick={() => changeSelectedLink('about')}
+								to="/about"
 							>
-								Help
-							</div>
+								About
+							</NavLink>
 						</div>
 					</div>
           <div className="nav-right">

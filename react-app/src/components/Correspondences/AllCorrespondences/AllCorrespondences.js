@@ -27,7 +27,7 @@ export default function AllCorrespondences() {
           <div className="corr-container">
             {Object.values(correspondences).map((corr, index) => (
               <div className="corr-w-break" key={index}>
-                <div className="individual-corr">
+                <div className="individual-corr" onClick={() => handleClick(index)}>
                   <div className="corr-left">
                     {corr.corr_type === 'LinkedIn' && (
                       <img src={liIcon} alt="linkedIn-icon" />
@@ -37,7 +37,7 @@ export default function AllCorrespondences() {
                     )}
                   </div>
                   <div className="corr-right">
-                    <div className="corr-type" onClick={() => handleClick(index)}>
+                    <div className="corr-type">
                       <div className="corr-type-word">{corr.corr_type}:</div>
                       <div
                         className={`response ${expanded[index] ? 'expanded' : ''}`}

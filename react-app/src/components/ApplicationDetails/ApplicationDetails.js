@@ -16,6 +16,7 @@ import EditApplication from './EditApplication'
 import DeleteApplication from './DeleteApplication'
 import AllCorrespondences from '../Correspondences/AllCorrespondences/AllCorrespondences'
 import { fetchAllCorrespondencesThunk, fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
+import CorrespondenceDropdown from '../Correspondences/CorrespondenceDropdown/CorrespondenceDropdown'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -28,6 +29,7 @@ export default function ApplicationDetails() {
   const allResumesArray = Object.values(allResumes);
   const { selectedSide, setSelectedSide } = useMenuSelector();
   const [showManageDropdown, setShowManageDropdown] = useState(false)
+  const [showMessageDropdown, setShowMessageDropdown] = useState(false)
   const [editSelected, setEditSelected] = useState(true)
 
   useEffect(() => {
@@ -56,6 +58,12 @@ export default function ApplicationDetails() {
     };
     fetchAsync();
   }, [applicationId, dispatch, history, selectedSide, application.resume_id, application.cover_letter_id]);  
+
+  const handleMessage = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowMessageDropdown(prev => !prev);
+  }
 
   return (
     <>
@@ -134,7 +142,14 @@ export default function ApplicationDetails() {
                       </div>
                     )}
                   </div>
-                  <button className="create-button message-recruiter">Message Recruiter</button>
+                  <div className="create-button message-recruiter" onClick={handleMessage}>
+                    <div>Message Recruiter</div>
+                    {showMessageDropdown && (
+                      <div className="dropdown-wrapper">
+                        <CorrespondenceDropdown />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

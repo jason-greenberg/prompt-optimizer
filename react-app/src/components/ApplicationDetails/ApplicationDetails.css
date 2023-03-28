@@ -188,6 +188,13 @@
 .message-recruiter {
   font-size: 14px;
   padding: 9.5px 15px;
+  position: relative;
+  overflow: visible;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  z-index: 1000;
 }
 
 .position-type {

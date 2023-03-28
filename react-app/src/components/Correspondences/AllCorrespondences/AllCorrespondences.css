@@ -1,0 +1,43 @@
+/* CONTAINERS */
+.corr-container {
+  border: 1px solid #D0DBF0;
+  border-radius: 6px;
+  padding: 0px 1px 0px 0px;
+  width: 100%;
+}
+
+.corr-left {
+  margin-right: 15px;
+}
+
+.corr-right {
+  color: rgb(74, 93, 138);
+  display: flex;
+  font-size: 14px;
+  font-weight: 300;
+  flex-direction: column;
+}
+
+.individual-corr {
+  align-items: center;
+  display: flex;
+  padding: 24px 20px;
+}
+/* ---------- */
+.corr-date {
+  color: rgb(125, 136, 177);
+  font-size: 11.2px;
+}
+
+.corr-left > img {
+  height: 25px;
+}
+
+.corr-type {
+  align-items: center;
+  display: flex;
+}
+
+.corr-type-word {
+  color: #4f65f1;
+}

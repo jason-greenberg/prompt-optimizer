@@ -47,9 +47,8 @@ export default function AboutDetails() {
         <div className="about-details-body">
           <h2 className="about-me-title">About Me</h2>
           <p className="text-bio">
-            Hi, I'm Jason, a passionate fullstack python developer
-            with a strong interest in web development.
-            I enjoy building creative solutions to challenging problems and constantly learning new technologies.
+            Hi, I'm Jason. I'm a fullstack python developer and I love web development.
+            I enjoy tackling complex problems and coming up with creative solutions, as well as learning new technologies.
           </p>
           <h3 className="about-me-title">Skills</h3>
           <ul>

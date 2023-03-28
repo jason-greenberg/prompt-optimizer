@@ -73,7 +73,7 @@ export default function AllCoverLetters() {
                 { Object.values(allCoverLetters)
                   .filter((coverLetter) => getAppIdByCoverLetterId(coverLetter.id) !== '')
                   .map((coverLetter, index) => (
-                  <>
+                  <div className="cover-letter-wrapper" key={coverLetter.id}>
                     <div key={coverLetter.id} className="resume-overview">
                       <div className="resume-left">
                         <div className="resume-name">
@@ -95,7 +95,7 @@ export default function AllCoverLetters() {
                       </div>
                     </div>
                     <div className="break"></div>
-                  </>
+                  </div>
                 )) }
               </div>
             </div>

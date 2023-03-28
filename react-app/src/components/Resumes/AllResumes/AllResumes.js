@@ -52,7 +52,7 @@ export default function AllResumes() {
               <div className="input-msg">Choose a resume</div>
               <div className="resumes-container">
                 { Object.values(allResumes).map((resume, index) => (
-                  <>
+                  <div className="resume-wrapper" key={resume.id}>
                     <div key={resume.id} className="resume-overview">
                       <div className="resume-left">
                         <div className="resume-name">
@@ -119,7 +119,7 @@ export default function AllResumes() {
                       </div>
                     </div>
                     <div className="break"></div>
-                  </>
+                  </div>
                 ))}
               </div>
             </div>

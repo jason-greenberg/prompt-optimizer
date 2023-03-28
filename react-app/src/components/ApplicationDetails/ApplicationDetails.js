@@ -35,18 +35,24 @@ export default function ApplicationDetails() {
         setState({ isLoaded: true, error: true });
       } else {
         await dispatch(fetchAllResumesThunk());
-        await dispatch(fetchSingleResumeThunk(application.resume_id))
-        // Fetch the cover letter and handle the 404 case
-        const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(applicationId));
-        if (coverLetterResponse.error) {
+        await dispatch(fetchSingleResumeThunk(application?.resume_id))
+  
+        // Check if the application has an associated cover letter
+        if (application.cover_letter_id) {
+          const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
+          if (coverLetterResponse.error) {
+            dispatch(clearCurrentCoverLetter());
+          }
+        } else {
+          // Clear the cover letter in the store if no associated cover letter is found
           dispatch(clearCurrentCoverLetter());
         }
-        
+  
         setState({ isLoaded: true, error: false });
       }
     };
     fetchAsync();
-  }, [applicationId, dispatch, history, selectedSide, application.resume_id]);
+  }, [applicationId, dispatch, history, selectedSide, application.resume_id, application.cover_letter_id]);  
 
   return (
     <>

@@ -16,12 +16,15 @@
   font-size: 14px;
   font-weight: 300;
   flex-direction: column;
+  width: calc(100% - 40px);
 }
 
 .individual-corr {
   align-items: center;
   display: flex;
   padding: 24px 20px;
+  max-width: 94%;
+  width: 100%;
 }
 /* ---------- */
 .corr-date {
@@ -36,8 +39,31 @@
 .corr-type {
   align-items: center;
   display: flex;
+  margin-bottom: 10px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .corr-type-word {
   color: #4f65f1;
+  margin-right: 5px;
+}
+
+.response {
+  display: block;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 1.2em;
+  transition: max-height 0.3s ease;
+  cursor: pointer;
+}
+
+.response.expanded {
+  max-height: 100%;
+  text-overflow: initial;
+  white-space: normal;
 }

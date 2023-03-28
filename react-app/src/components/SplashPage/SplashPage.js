@@ -1,9 +1,19 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import './SplashPage.css';
 
 export default function SplashPage() {
   const user = useSelector(state => state.session.user)
+
+  // add no-scrolling styling to splash page only
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
   return (
     <div className="splash-page-container">

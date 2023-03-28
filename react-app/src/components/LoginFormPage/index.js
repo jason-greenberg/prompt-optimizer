@@ -1,56 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import './LoginForm.css';
+import background from './assets/signup-background.png';
 
 function LoginFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [serverErrors, setServerErrors] = useState([])
+
+  // add no-scrolling styling to login page only
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
   if (sessionUser) return <Redirect to="/" />;
 
+  const validate = () => {
+    const validationErrors = {};
+
+    if (!email) validationErrors.email = 'Email is required';
+    if (!password) validationErrors.password = 'Password is required';
+
+    return validationErrors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await dispatch(login(email, password));
-    if (data) {
-      setErrors(data);
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      const data = await dispatch(login(email, password));
+      if (data) {
+        setServerErrors('Invalid credentials');
+      } else {
+        setServerErrors([])
+      }
     }
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="signup-container">
+      <img className="background" src={background} alt="background-img" />
+      <h1 className="sign-up-title">Sign in to ZipCover</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
+        <ul className="server-errors">
+          {serverErrors}
         </ul>
         <label>
           Email
           <input
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            className="sign-up-input"
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setErrors({ ...errors, email: null });
+            }}
           />
+          {errors.email && <div className="error-message">{errors.email}</div>}
         </label>
         <label>
           Password
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            className="sign-up-input"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrors({ ...errors, password: null });
+            }}
           />
+          {errors.password && <div className="error-message">{errors.password}</div>}
         </label>
-        <button type="submit">Log In</button>
+        <button className="submit-sign-up" type="submit">SIGN IN</button>
       </form>
-    </>
+    </div>
   );
 }
 

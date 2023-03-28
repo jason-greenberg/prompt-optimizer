@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
@@ -14,6 +14,16 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [serverErrors, setServerErrors] = useState([]);
+
+  // add no-scrolling styling to sign-up page only
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
+
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -49,7 +59,7 @@ function SignupFormPage() {
       <img className="background" src={background} alt="background-img" />
       <h1 className="sign-up-title">Sign up for ZipCover</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
+        <ul className="server-errors">
           {serverErrors.map((error, idx) => <li key={idx}>{error.split(':')[1]}</li>)}
         </ul>
         <label>
@@ -58,6 +68,7 @@ function SignupFormPage() {
             type="text"
             value={email}
             placeholder="your@email.com"
+            className="sign-up-input"
             onChange={(e) => {
               setEmail(e.target.value);
               setErrors({...errors, email: null});
@@ -71,6 +82,7 @@ function SignupFormPage() {
             type="text"
             value={username}
             placeholder="yourusername"
+            className="sign-up-input"
             onChange={(e) => {
               setUsername(e.target.value);
               setErrors({...errors, username: null});
@@ -84,6 +96,7 @@ function SignupFormPage() {
             type="password"
             value={password}
             placeholder="correct horse battery staple"
+            className="sign-up-input"
             onChange={(e) => {
               setPassword(e.target.value);
               setErrors({...errors, password: null});
@@ -97,6 +110,7 @@ function SignupFormPage() {
             type="password"
             value={confirmPassword}
             placeholder="correct horse battery staple"
+            className="sign-up-input"
             onChange={(e) => {
               setConfirmPassword(e.target.value);
               setErrors({...errors, confirmPassword: null});

@@ -48,6 +48,19 @@ function LoginFormPage() {
     }
   };
 
+  // Login in as hardcoded demo user
+  const handleDemo = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const data = await dispatch(login('demo@aa.io', 'password'))
+    if (data) {
+      setServerErrors('Error logging in Demo User, please try again')
+    } else {
+      setServerErrors([]);
+    }
+  }
+
   return (
     <div className="signup-container">
       <img className="background" src={background} alt="background-img" />
@@ -84,6 +97,13 @@ function LoginFormPage() {
         </label>
         <button className="submit-sign-up" type="submit">SIGN IN</button>
       </form>
+      <button 
+        className="submit-demo" 
+        type="submit"
+        onClick={handleDemo}
+      >
+        DEMO USER
+      </button>
     </div>
   );
 }

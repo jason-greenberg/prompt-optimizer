@@ -52,11 +52,11 @@ export default function Navigation() {
 								Correspondences
 							</NavLink>
 							<NavLink 
-								className={"nav-link" + (selectedLink === "help" ? " selected-link" : "")}
-								onClick={() => changeSelectedLink('help')}
-								to="/help"
+								className={"nav-link" + (selectedLink === "about" ? " selected-link" : "")}
+								onClick={() => changeSelectedLink('about')}
+								to="/about"
 							>
-								Help
+								About
 							</NavLink>
 						</div>
 					</div>

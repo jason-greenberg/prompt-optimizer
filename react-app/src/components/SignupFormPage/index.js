@@ -13,6 +13,7 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [serverErrors, setServerErrors] = useState([]);
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -36,7 +37,9 @@ function SignupFormPage() {
     if (Object.keys(validationErrors).length === 0) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
-        setErrors(data);
+        setServerErrors(data);
+      } else {
+        setServerErrors([])
       }
     }
   };
@@ -47,7 +50,7 @@ function SignupFormPage() {
       <h1 className="sign-up-title">Sign up for ZipCover</h1>
       <form onSubmit={handleSubmit}>
         <ul>
-          {Object.values(errors).map((error, idx) => <li key={idx}>{error}</li>)}
+          {serverErrors.map((error, idx) => <li key={idx}>{error.split(':')[1]}</li>)}
         </ul>
         <label>
           Email

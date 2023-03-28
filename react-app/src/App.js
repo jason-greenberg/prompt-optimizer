@@ -15,6 +15,7 @@ import ApplicationDetails from "./components/ApplicationDetails/ApplicationDetai
 import CreateCoverLetterExistingApp from "./components/CoverLetters/CreateCoverLetter/CreateCoverLetterExistingApp";
 import AllCoverLetters from "./components/CoverLetters/AllCoverLetters/AllCoverLetters";
 import CreateApplication from "./components/CreateApplication/CreateApplication";
+import AboutDetails from "./components/About/AboutDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
           <Route path="/login" component={LoginFormPage} />
           <Route path="/signup" component={SignupFormPage} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/about" component={AboutDetails} />
           <Route path="/applications/new" component={CreateApplication} />
           <Route path="/applications/:applicationId" component={ApplicationDetails} />
           <Route path="/resumes/new" component={CreateResumeForm} />

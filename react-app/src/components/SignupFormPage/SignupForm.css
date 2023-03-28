@@ -26,6 +26,16 @@ form {
 
 }
 /* ----------- */
+/* BUTTONS */
+.submit-sign-up {
+  box-sizing: border-box;
+  max-width: 344px;
+  margin-top: 30px;
+  height: 44px;
+  font-weight: 200;
+  width: 100%;
+}
+/* ------- */
 .background {
   object-fit: cover;
   position: absolute;
@@ -47,17 +57,39 @@ label {
 }
 
 label > input {
-  border: 1px solid #A1A5BE;
+  border: 1px solid rgba(229, 231, 235, 0.6);
   border-radius: 6px;
+  box-sizing: border-box;
   background-color: transparent;
+  color: rgba(233, 237, 241, 0.6);
+  font-size: 16px;
+  font-weight: 400;
   margin-top: 5px;
-  max-width: 344px;
+  padding: 0px 10px;
   width: 100%;
-  max-height: 44px;
   height: 100%;
 }
 
+input::-webkit-input-placeholder {
+  color: rgba(233, 237, 241, 0.6);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+input::placeholder {
+  color: rgba(233, 237, 241, 0.6);
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .sign-up-title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   font-size: 32px;
   font-weight: 400;
+}
+
+ul {
+  list-style: none;
 }

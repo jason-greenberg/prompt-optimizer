@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import './AllCorrespondences.css';
 import liIcon from './assets/li-blue-icon.png';
@@ -8,10 +8,13 @@ export default function AllCorrespondences() {
   const correspondences = useSelector(
     (state) => state.correspondences.currentApplicationCorrespondences
   );
+  const correspondencesArray = Object.values(correspondences)
   const [notFound, setNotFound] = useState(false);
-
-  // Add a new state to store the expanded status of responses
   const [expanded, setExpanded] = useState({});
+
+  useEffect(() => {
+    setExpanded({}); // Reset the expanded state when correspondences change
+  }, [correspondencesArray.length]);
 
   const handleClick = (index) => {
     setExpanded((prevExpanded) => ({

@@ -9,16 +9,17 @@ export default function AllCorrespondences() {
     <>
       { !notFound && (
         <div className="job-description-container">
-          <div className="job-description-body">
-            <div className="about">About</div>
-            <div className="job-text">
-              { Object.values(correspondences).map((corr, index) => (
-                <div className="individual-corr" key={index}>
+          <div className="job-text">
+            { Object.values(correspondences).map((corr, index) => (
+              <div className="individual-corr" key={index}>
+                <div>logo</div>
+                <div className="corr-type">
                   <div>{corr.corr_type}</div>
                   <div>{corr.generated_response}</div>
                 </div>
-              ))}
-            </div>
+                <div className="corr-date">{corr.created_at}</div>
+              </div>
+            ))}
           </div>
         </div>
       )}

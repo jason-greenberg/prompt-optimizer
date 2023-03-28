@@ -59,7 +59,7 @@ function SignupFormPage() {
       <img className="background" src={background} alt="background-img" />
       <h1 className="sign-up-title">Sign up for ZipCover</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
+        <ul className="server-errors">
           {serverErrors.map((error, idx) => <li key={idx}>{error.split(':')[1]}</li>)}
         </ul>
         <label>

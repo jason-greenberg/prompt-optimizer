@@ -44,6 +44,10 @@
   width: 100vw;
 }
 /* ---------------- */
+.nav-but {
+  margin-left: 20px;
+}
+
 .splash-nav-left {
   padding: 0px 20px;
   font-family: "Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -66,8 +70,7 @@
   font-family: "Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
   font-weight: 500;
-  margin-right: 12px;
-  padding: 16px 12px;
+  padding: 16px 5px;
 }
 
 .splash-nav-right > a > button {

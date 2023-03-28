@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { useMenuSelector } from '../../context/Menu';
 import Navigation from '../Navigation';
 import './AboutDetails.css';
@@ -22,16 +23,32 @@ export default function AboutDetails() {
 
   return (
     <>
-      { user && (
+      { user ? (
         <Navigation />
+      ) : (
+        <div className="splash-nav-container">
+        <div className="splash-nav-bar">
+          <div className="splash-nav-left">zipcover</div>
+          <div className="splash-nav-right">
+            <NavLink to='/about'>About</NavLink>
+            { user ? (
+              <NavLink to='/dashboard'><button className="purple-button">DASHBOARD</button></NavLink>
+            ): (
+              <>
+                <NavLink to='/signup'><button className="purple-button">GET STARTED</button></NavLink>
+                <NavLink to='/login'><button className="white-button">SIGN IN</button></NavLink>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
       )}
       <div className="about-details-container">
         <div className="about-details-body">
           <h2 className="about-me-title">About Me</h2>
           <p className="text-bio">
-            Hi, I'm Jason, a passionate fullstack python developer
-            with a strong interest in web development.
-            I enjoy building creative solutions to challenging problems and constantly learning new technologies.
+            Hi, I'm Jason. I'm a fullstack python developer and I love web development.
+            I enjoy tackling complex problems and coming up with creative solutions, as well as learning new technologies.
           </p>
           <h3 className="about-me-title">Skills</h3>
           <ul>

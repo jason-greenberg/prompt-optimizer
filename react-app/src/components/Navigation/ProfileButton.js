@@ -58,9 +58,12 @@ function ProfileButton({ user }) {
               <div>{user.email}</div>
             </li>
             <li className="break"></li>
-            <li className="signout-container">
+            <li 
+              className="signout-container"
+              onClick={handleLogout}
+            >
               <img className="signout-icon" src={signOut} alt="sign-out-icon" />
-              <div onClick={handleLogout}>Sign Out</div>
+              <div>Sign Out</div>
             </li>
           </>
         ) : (

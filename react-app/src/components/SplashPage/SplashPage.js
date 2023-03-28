@@ -21,16 +21,12 @@ export default function SplashPage() {
         <div className="splash-nav-bar">
           <div className="splash-nav-left">zipcover</div>
           <div className="splash-nav-right">
-            <NavLink to='/coming-soon'>Product</NavLink>
-            <NavLink to='/coming-soon'>Pricing</NavLink>
-            <NavLink to='/coming-soon'>Blog</NavLink>
-            <NavLink to='/coming-soon'>Docs</NavLink>
-            <NavLink to='/coming-soon'>Careers</NavLink>
+            <NavLink to='/about'>About</NavLink>
             { user ? (
-              <NavLink to='/dashboard'><button className="purple-button">DASHBOARD</button></NavLink>
+              <NavLink className="nav-but" to='/dashboard'><button className="purple-button">DASHBOARD</button></NavLink>
             ): (
               <>
-                <NavLink to='/signup'><button className="purple-button">GET STARTED</button></NavLink>
+                <NavLink className="nav-but" to='/signup'><button className="purple-button">GET STARTED</button></NavLink>
                 <NavLink to='/login'><button className="white-button">SIGN IN</button></NavLink>
               </>
             )}

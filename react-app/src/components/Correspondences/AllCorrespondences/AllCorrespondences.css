@@ -67,3 +67,7 @@
   text-overflow: initial;
   white-space: normal;
 }
+
+.response:hover {
+  color: royalblue;
+}

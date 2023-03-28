@@ -51,7 +51,7 @@ export const createCorrespondenceThunk = (applicationId, correspondence) => asyn
     await dispatch(createCorrespondence(newCorrespondence));
     return newCorrespondence;
   } else {
-    throw new Error('Error creating correspondence');
+    return { error: 'Error creating correspondence' };
   }
 };
 
@@ -66,7 +66,7 @@ export const fetchAllCorrespondencesThunk = () => async (dispatch) => {
     await dispatch(readCorrespondences(normalizedCorrespondences));
     return normalizedCorrespondences;
   } else {
-    throw new Error('Error fetching correspondences');
+    return { error: 'Error fetching correspondences' };
   }
 };
 
@@ -81,7 +81,7 @@ export const fetchCorrespondencesByApplicationIdThunk = (applicationId) => async
     await dispatch(populateApplicationCorrespondences(normalizedCorrespondences));
     return normalizedCorrespondences;
   } else {
-    throw new Error('Error fetching correspondences by application id');
+    return { error: 'Error fetching correspondences by application id' };
   }
 };
 
@@ -93,7 +93,7 @@ export const fetchSingleCorrespondenceThunk = (correspondenceId) => async (dispa
     await dispatch(readSingleCorrespondence(correspondence));
     return correspondence;
   } else {
-    throw new Error('Error fetching single correspondence');
+    return { error: 'Error fetching single correspondence' };
   }
 };
 
@@ -110,7 +110,7 @@ export const updateCorrespondenceThunk = (correspondence) => async (dispatch) =>
     await dispatch(updateCorrespondence(updatedCorrespondence));
     await dispatch(readSingleCorrespondence(updatedCorrespondence));
   } else {
-    throw new Error('Error updating correspondence');
+    return { error: 'Error updating correspondence' };
   }
 };
 
@@ -122,7 +122,7 @@ export const deleteCorrespondenceThunk = (correspondenceId) => async (dispatch) 
     await dispatch(deleteCorrespondence(correspondenceId));
     return 'Successfully deleted';
   } else {
-    throw new Error('Error deleting correspondence');
+    return { error: 'Error deleting correspondence' };
   }
 }
 

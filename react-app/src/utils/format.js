@@ -32,8 +32,12 @@ export const numberToRoman = (num) => {
 }
 
 export const getRomanIndex = (currentResume, resumesArray) => {
+  if (!currentResume) return;
+  
   let count = 0;
   for (const resume of resumesArray) {
+    if (!resume) continue;
+    
     if (resume.position_type === currentResume.position_type) {
       count++;
       if (resume.id === currentResume.id) {
@@ -66,4 +70,3 @@ export const formatDate = (dateString) => {
   const days = Math.floor(hours / 24);
   return days === 1 ? 'a day ago' : `${days} days ago`;
 };
-

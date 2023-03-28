@@ -67,11 +67,11 @@ export default function EditApplication() {
                   className={`resume-overview ${selectedResume === resume.id ? 'selected': ''}`}
                 >
                   <div className="resume-left">
-                    <div className="resume-name">
+                    <div className="resume-name res-name">
                       {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
                     </div>
                     <div className="dot">•</div>
-                    <div className="resume-date">{formatDate(resume.created_at)}</div>
+                    <div className="resume-date res-date">{formatDate(resume.created_at)}</div>
                   </div>
                   <div className="resume-right">
                     <button 

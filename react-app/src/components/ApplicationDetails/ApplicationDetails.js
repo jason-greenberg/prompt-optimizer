@@ -14,6 +14,8 @@ import JobDetails from './JobDetails'
 import ResumeDetailAppView from '../Resumes/ResumeDetails/ResumeDetailAppView'
 import EditApplication from './EditApplication'
 import DeleteApplication from './DeleteApplication'
+import AllCorrespondences from '../Correspondences/AllCorrespondences/AllCorrespondences'
+import { fetchAllCorrespondencesThunk, fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -36,6 +38,7 @@ export default function ApplicationDetails() {
       } else {
         await dispatch(fetchAllResumesThunk());
         await dispatch(fetchSingleResumeThunk(application?.resume_id))
+        await dispatch(fetchCorrespondencesByApplicationIdThunk(application?.id))
   
         // Check if the application has an associated cover letter
         if (application.cover_letter_id) {
@@ -206,6 +209,9 @@ export default function ApplicationDetails() {
                 )}
                 { selectedSide === 'resume' && (
                   <ResumeDetailAppView />
+                )}
+                { selectedSide === 'correspondence' && (
+                  <AllCorrespondences />
                 )}
               </div>
             </div>

@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
-import { fetchSingleApplicationThunk } from "../../store/application";
 import './JobDetails.css';
 
 export default function JobDetails() {
-  const dispatch = useDispatch();
-  const { applicationId } = useParams();
   const application = useSelector(state => state.applications.currentApplication)
   const [notFound, setNotFound] = useState(false)
 

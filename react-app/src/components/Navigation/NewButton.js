@@ -9,7 +9,6 @@ export default function NewButton() {
   const history = useHistory()
 
   const toggleMenu = () => {
-    console.log('toggle')
     setShowCreateMenu(prev => !prev);
   }
 

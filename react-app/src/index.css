@@ -22,11 +22,19 @@ button {
   cursor: pointer;
 }
 
+.purple-button:hover {
+  background-color: #606be4;
+}
+
 .white-button {
   background-color: white;
-  border: 1px solid #4351e8;
+  border: 1px solid #BFC7FB;
   color: #4351e8;
   cursor: pointer;
+}
+
+.white-button:hover {
+  border: 1px solid #4351e8;
 }
 
 .break {

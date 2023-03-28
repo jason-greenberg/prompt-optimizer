@@ -31,7 +31,7 @@ function SignupFormPage() {
   return (
     <div className="signup-container">
       <img className="background" src={background} alt="background-img" />
-      <h1>Sign Up</h1>
+      <h1 className="sign-up-title">Sign up for ZipCover</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}

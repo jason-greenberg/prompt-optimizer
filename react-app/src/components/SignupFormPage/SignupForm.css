@@ -8,9 +8,22 @@ body {
 }
 
 .signup-container {
+  align-items: center;
+  color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+}
+
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
 }
 /* ----------- */
 .background {
@@ -22,4 +35,29 @@ body {
   left: -50px;
   overflow: hidden;
   scroll-behavior: none;
+  z-index: -1;
+}
+
+label {
+  max-width: 344px;
+  width: 100%;
+  max-height: 44px;
+  height: 100%;
+  margin-bottom: 40px;
+}
+
+label > input {
+  border: 1px solid #A1A5BE;
+  border-radius: 6px;
+  background-color: transparent;
+  margin-top: 5px;
+  max-width: 344px;
+  width: 100%;
+  max-height: 44px;
+  height: 100%;
+}
+
+.sign-up-title {
+  font-size: 32px;
+  font-weight: 400;
 }

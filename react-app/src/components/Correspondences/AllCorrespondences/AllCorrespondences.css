@@ -47,6 +47,7 @@
 .corr-type-word {
   color: #4f65f1;
   margin-right: 5px;
+  white-space: nowrap;
 }
 
 .response {

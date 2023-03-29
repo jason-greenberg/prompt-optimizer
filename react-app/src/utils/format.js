@@ -70,3 +70,30 @@ export const formatDate = (dateString) => {
   const days = Math.floor(hours / 24);
   return days === 1 ? 'a day ago' : `${days} days ago`;
 };
+
+export const formatCorrType = (corrType) => {
+  switch (corrType) {
+    case 'application follow-up':
+      return 'Follow-up';
+    case 'initial connection':
+      return 'Connect'
+    case 'informational interview':
+      return 'Info interview'
+    case 'thank you informational interview':
+      return 'TY info interview'
+    case 'thank you formal interview':
+      return 'TY formal interview'
+    case 'request feedback':
+      return 'Feedback'
+    case 'job offer follow-up':
+      return 'Offer follow-up'
+    case 'job offer accept':
+      return 'Accept offer'
+    case 'job offer decline':
+      return 'Decline offer'
+    case 'reconnection':
+      return 'Reconnect'
+    default:
+      return 'Correspondence';
+  }
+}

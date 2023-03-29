@@ -1,19 +1,27 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './AllCorrespondences.css';
 import liIcon from './assets/li-blue-icon.png';
 import emailIcon from './assets/gmail.png';
+import { fetchCorrespondencesByApplicationIdThunk } from '../../../store/correspondence';
+import { useParams } from 'react-router-dom';
 
 export default function AllCorrespondences() {
+  const dispatch = useDispatch()
   const correspondences = useSelector(
     (state) => state.correspondences.currentApplicationCorrespondences
   );
   const correspondencesArray = Object.values(correspondences)
   const [notFound, setNotFound] = useState(false);
   const [expanded, setExpanded] = useState({});
+  const { applicationId } = useParams()
 
   useEffect(() => {
-    setExpanded({}); // Reset the expanded state when correspondences change
+    const fetchAsync = async () => {
+      await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId))
+      setExpanded({}); // Reset the expanded state when correspondences change
+    }
+    fetchAsync()
   }, [correspondencesArray.length]);
 
   const handleClick = (index) => {
@@ -28,7 +36,7 @@ export default function AllCorrespondences() {
       {!notFound && (
         <div className="job-description-container">
           <div className="corr-container">
-            {Object.values(correspondences).map((corr, index) => (
+            {Object.values(correspondences).reverse().map((corr, index) => (
               <div className="corr-w-break" key={index}>
                 <div className="individual-corr" onClick={() => handleClick(index)}>
                   <div className="corr-left">

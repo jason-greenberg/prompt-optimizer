@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 from app.models import Correspondence, db
 from datetime import datetime
+from sqlalchemy import desc
 
 correspondence_routes = Blueprint('correspondences', __name__)
 
@@ -16,7 +17,7 @@ def get_correspondences():
     """
     Query for all correspondences and returns them in a list of correspondence dictionaries
     """
-    correspondences = Correspondence.query.filter_by(user_id=current_user.id).all()
+    correspondences = Correspondence.query.filter_by(user_id=current_user.id).order_by(Correspondence.created_at.desc()).all()
 
     return [c.to_dict() for c in correspondences]
 
@@ -47,6 +48,7 @@ def get_correspondences_by_application_id(application_id):
     Query for all correspondences related to a specific application and returns them in a list of correspondence dictionaries
     """
     correspondences = Correspondence.query.filter_by(application_id=application_id, user_id=current_user.id).all()
+        
 
     return jsonify([c.to_dict() for c in correspondences])
 

@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { createCorrespondenceThunk } from '../../../store/correspondence';
+import { createCorrespondenceThunk, fetchCorrespondencesByApplicationIdThunk } from '../../../store/correspondence';
 import './CorrespondenceDropdown.css';
 
 export default function CorrespondenceDropdown() {
@@ -8,6 +9,7 @@ export default function CorrespondenceDropdown() {
   const application = useSelector((state) => state.applications.currentApplication);
   const coverLetter = useSelector((state) => state.coverletters?.currentCoverLetter);
   const { applicationId } = useParams();
+  const [hasSubmitted, setHasSubmitted] = useState(false)
 
   const handleCorrespondence = async (e, corr_type) => {
     e.preventDefault();
@@ -15,10 +17,15 @@ export default function CorrespondenceDropdown() {
     const response = await dispatch(
       createCorrespondenceThunk(applicationId, {
         corr_type: corr_type,
-        context: coverLetter.letter_text,
+        context: coverLetter?.letter_text,
         engine: 'gpt-3.5-turbo',
       }),
     );
+    if (response.error) {
+      console.log('Error', response.error)
+    } else {
+      await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId))
+    }
   };
 
   return (

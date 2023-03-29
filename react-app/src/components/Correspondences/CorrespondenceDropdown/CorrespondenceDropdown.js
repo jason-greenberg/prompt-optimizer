@@ -4,6 +4,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMenuSelector } from '../../../context/Menu';
 import { createCorrespondenceThunk, fetchCorrespondencesByApplicationIdThunk } from '../../../store/correspondence';
 import './CorrespondenceDropdown.css';
+import loading from './assets/loading-circle.gif'
+import { correspondenceTypes } from '../../../utils/corr-images';
 
 export default function CorrespondenceDropdown() {
   const dispatch = useDispatch();
@@ -11,7 +13,7 @@ export default function CorrespondenceDropdown() {
   const application = useSelector((state) => state.applications.currentApplication);
   const coverLetter = useSelector((state) => state.coverletters?.currentCoverLetter);
   const { applicationId } = useParams();
-  const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [hasSubmitted, setHasSubmitted] = useState(null)
   const { setSelectedSide } = useMenuSelector();
 
   useEffect(() => {
@@ -21,6 +23,7 @@ export default function CorrespondenceDropdown() {
   const handleCorrespondence = async (e, corr_type) => {
     e.preventDefault();
     e.stopPropagation();
+    setHasSubmitted(corr_type);
     const response = await dispatch(
       createCorrespondenceThunk(applicationId, {
         corr_type: corr_type,
@@ -32,6 +35,7 @@ export default function CorrespondenceDropdown() {
       console.log('Error', response.error)
     } else {
       await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId))
+      await setHasSubmitted(null);
     }
   };
 
@@ -40,34 +44,64 @@ export default function CorrespondenceDropdown() {
       { coverLetter && (
         <div className="corr-drop-container">
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'application follow-up')}>
-            Application follow-up
+            <div className="corr-desc">Application follow-up</div>
+            { hasSubmitted === correspondenceTypes[0] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'initial connection')}>
-            Initial connection request
+            <div className="corr-desc">Initial connection request</div>
+            { hasSubmitted === correspondenceTypes[1] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'informational interview')}>
-            Informational interview request
+            <div className="corr-desc">Informational interview request</div>
+            { hasSubmitted === correspondenceTypes[2] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'thank you informational interview')}>
-            Thank you after informational interview
+            <div className="corr-desc">Thank you after informational interview</div>
+            { hasSubmitted === correspondenceTypes[3] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'thank you formal interview')}>
-            Thank you after formal job interview
+            <div className="corr-desc">Thank you after formal job interview</div>
+            { hasSubmitted === correspondenceTypes[4] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'request feedback')}>
-            Request for feedback after rejection
+            <div className="corr-desc">Request for feedback after rejection</div>
+            { hasSubmitted === correspondenceTypes[5] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'job offer follow-up')}>
-            Job offer follow-up
+            <div className="corr-desc">Job offer follow-up</div>
+            { hasSubmitted === correspondenceTypes[6] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'job offer accept')}>
-            Job offer acceptance
+            <div className="corr-desc">Job offer acceptance</div>
+            { hasSubmitted === correspondenceTypes[7] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'job offer decline')}>
-            Job offer decline
+            <div className="corr-desc">Job offer decline</div>
+            { hasSubmitted === correspondenceTypes[8] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
           <div className="corr-option" onClick={(e) => handleCorrespondence(e, 'reconnection')}>
-            Reconnection
+            <div className="corr-desc">Reconnection</div>
+            { hasSubmitted === correspondenceTypes[9] && (
+              <img src={loading} alt="loading-icon" className="loading-image" />
+            )}
           </div>
         </div>
       )}

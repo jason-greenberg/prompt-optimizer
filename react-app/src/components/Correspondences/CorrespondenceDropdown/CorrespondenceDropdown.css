@@ -8,7 +8,7 @@
   background-color: white;
   border: 1px solid #d0dbf0;
   border-radius: 5px;
-  width: 300px;
+  width: 350px;
   z-index: 100;
 }
 
@@ -19,13 +19,15 @@
   display: flex;
   font-size: 15px;
   padding: 10px 20px;
-  max-width: 300px;
+  position: relative;
+  max-width: 100%;
   width: 100%;
 }
 /* ---------- */
 .corr-option:hover {
   background-color: #d0dbf0;
   color: #4351e8;
+  font-weight: 500;
 }
 
 .corr-create-button {
@@ -33,6 +35,12 @@
   display: flex;
   justify-content: center;
   margin-top: 15px;
+  width: 100%;
+}
+
+.corr-desc {
+  max-width: fit-content;
+  position: relative;
   width: 100%;
 }
 
@@ -50,4 +58,15 @@
   padding: 10px 20px;
   max-width: 300px;
   width: 100%;
+}
+
+.loading-image {
+  box-sizing: border-box;
+  margin-left: 10px;
+  max-height: 80px;
+  padding-bottom: 10px;
+  position: absolute;
+  right: 1px;
+  top: -20px;
+  width: auto;
 }

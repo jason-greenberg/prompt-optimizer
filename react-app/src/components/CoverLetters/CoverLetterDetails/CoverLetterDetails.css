@@ -3,9 +3,9 @@
   max-width: 700px;
 }
 
-.copy-cover {
-  top: 20px;
-  right: 20px;
+.copy-icon.copy-cover {
+  top: 15px;
+  right: 15px;
   height: 23px;
 }
 
@@ -14,13 +14,13 @@
   right: 100px
 }
 
-.edit-cover {
+.edit-button.edit-cover {
   position: absolute;
-  top: 23px;
-  right: 60px;
+  top: 18px;
+  right: 50px;
 }
 
-.remove-cover {
-  top: 0px;
-  right: 170px;
+.remove-button.remove-cover {
+  top: 45%;
+  right: 130px;
 }

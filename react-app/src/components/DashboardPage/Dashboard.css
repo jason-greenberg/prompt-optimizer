@@ -75,6 +75,16 @@
   width: 100%;
 }
 
+.intro-instruct {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+}
+
+.intro-instruct > p {
+  margin: 0;
+}
+
 .resume-deleted-banner {
   background-color: #ff7d7d;
   border-radius: 5px;

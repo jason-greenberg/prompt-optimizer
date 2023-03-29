@@ -56,7 +56,7 @@ export default function AllCoverLetters() {
   return (
     <>
       <Navigation />
-      { state.isLoaded && !state.error && (
+      { state.isLoaded && !state.error && Object.values(allCoverLetters).length > 0 && (
         <div 
           className="all-resumes-page-container"
           onClick={() => setShowDeleteDropdown(prev => prev.map(() => false))}
@@ -102,8 +102,21 @@ export default function AllCoverLetters() {
           </div>
         </div>
       )}
-      { state.isLoaded && state.error && (
-        <div className="all-resumes-container">
+      { state.isLoaded && !state.error && !(Object.values(allCoverLetters).length > 0) && (
+        <div className="all-resumes-page-container">
+          <div className="all-resumes-body">
+          <h1>
+              <span className="form-action">Manage </span>
+              <span className="form-title">Cover Letters</span>
+            </h1>
+            <h4>To create your first cover letter:</h4>
+            <h4>1. Click the 'New' Button at the top of the screen</h4>
+            <h4>2. Selected 'Cover Letter' from the list</h4>
+          </div>
+        </div>
+      )}
+      { state.isLoaded && state.error && !Object.values(allCoverLetters).length > 0 && (
+        <div className="all-resumes-page-container">
           <div className="all-resumes-body">
             <h3>No cover letters found, please try again momentarily</h3>
           </div>

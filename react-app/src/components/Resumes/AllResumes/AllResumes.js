@@ -40,7 +40,7 @@ export default function AllResumes() {
   return (
     <>
       <Navigation />
-      { state.isLoaded && !state.error && (
+      { state.isLoaded && !state.error && allResumesArray.length > 0 && (
         <div 
           className="all-resumes-page-container"
           onClick={() => setShowDeleteDropdown(prev => prev.map(() => false))}
@@ -51,7 +51,7 @@ export default function AllResumes() {
             <div className='resume-input-box'>
               <div className="input-msg">Choose a resume</div>
               <div className="resumes-container">
-                { Object.values(allResumes).map((resume, index) => (
+                { Object.values(allResumes).reverse().map((resume, index) => (
                   <div className="resume-wrapper" key={resume.id}>
                     <div key={resume.id} className="resume-overview">
                       <div className="resume-left">
@@ -118,7 +118,9 @@ export default function AllResumes() {
                         )}
                       </div>
                     </div>
-                    <div className="break"></div>
+                    { index < Object.values(allResumes).length - 1 && (
+                      <div className="break"></div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -126,8 +128,18 @@ export default function AllResumes() {
           </div>
         </div>
       )}
+      { state.isLoaded && !state.error && !allResumesArray.length > 0 && (
+        <div className="all-resumes-page-container">
+          <div className="all-resumes-body">
+          <h1><span className="form-action">Manage</span> <span className="form-title">Resumes</span></h1>
+            <h4>To upload your first resume:</h4>
+            <h4>1. Click the 'New' Button at the top of the screen</h4>
+            <h4>2. Selected 'Resume Upload' from the list</h4>
+          </div>
+        </div>
+      )}
       { state.isLoaded && state.error && (
-        <div className="all-resumes-container">
+        <div className="all-resumes-page-container">
           <div className="all-resumes-body">
             <h3>No resumes found, please try again momentarily</h3>
           </div>

@@ -31,6 +31,33 @@ export default function AllCorrespondences() {
     }));
   };
 
+  const formatCorrType = (corrType) => {
+    switch (corrType) {
+      case 'application follow-up':
+        return 'Follow-up';
+      case 'initial connection':
+        return 'Connect'
+      case 'informational interview':
+        return 'Info interview'
+      case 'thank you informational interview':
+        return 'TY info interview'
+      case 'thank you formal interview':
+        return 'TY formal interview'
+      case 'request feedback':
+        return 'Feedback'
+      case 'job offer follow-up':
+        return 'Offer follow-up'
+      case 'job offer accept':
+        return 'Accept offer'
+      case 'job offer decline':
+        return 'Decline offer'
+      case 'reconnection':
+        return 'Reconnect'
+      default:
+        return 'Correspondence';
+    }
+  }
+
   return (
     <>
       {!notFound && (
@@ -55,7 +82,7 @@ export default function AllCorrespondences() {
                   </div>
                   <div className="corr-right">
                     <div className="corr-type">
-                      <div className="corr-type-word">{corr.corr_type}:</div>
+                      <div className="corr-type-word">{formatCorrType(corr.corr_type)}:</div>
                       <div
                         className={`response ${expanded[index] ? 'expanded' : ''}`}
                       >

@@ -1,6 +1,20 @@
 import gmail from './assets/gmail.png'
 import li from './assets/li-blue-icon.png'
 
+export const correspondenceTypes = [
+  'application follow-up',
+  'initial connection',
+  'informational interview',
+  'thank you informational interview',
+  'thank you formal interview',
+  'request feedback',
+  'job offer follow-up',
+  'job offer accept',
+  'job offer decline',
+  'reconnection'
+];
+
+
 export const chooseIcon = (corrType) => {
   switch (corrType) {
     case 'application follow-up':

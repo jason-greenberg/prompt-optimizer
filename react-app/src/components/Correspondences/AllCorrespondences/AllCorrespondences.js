@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './AllCorrespondences.css';
-import liIcon from './assets/li-blue-icon.png';
-import emailIcon from './assets/gmail.png';
+import copyIcon from './assets/copy-icon-grey.png';
+import copyIconWhite from './assets/copy-icon-white.png';
 import { fetchCorrespondencesByApplicationIdThunk } from '../../../store/correspondence';
 import { useParams } from 'react-router-dom';
 import { formatCorrType } from '../../../utils/format';
-import { chooseIcon } from '../../../utils/corr-images'
+import { chooseIcon } from '../../../utils/corr-images';
+import { handleCopyToClipboard } from '../../../utils/clipboard';
 
 export default function AllCorrespondences() {
   const dispatch = useDispatch()
@@ -16,6 +17,7 @@ export default function AllCorrespondences() {
   const correspondencesArray = Object.values(correspondences)
   const [notFound, setNotFound] = useState(false);
   const [expanded, setExpanded] = useState({});
+  const [copySelected, setCopySelected] = useState(false);
   const { applicationId } = useParams()
 
   useEffect(() => {
@@ -26,6 +28,16 @@ export default function AllCorrespondences() {
     fetchAsync()
   }, [correspondencesArray.length]);
 
+  useEffect(() => {
+    if (copySelected) {
+      const timer = setTimeout(() => {
+        setCopySelected(false);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [copySelected]);
+
+  // Toggle 'expanded' class to individual correspondence on click
   const handleClick = (index) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
@@ -52,11 +64,21 @@ export default function AllCorrespondences() {
                       >
                         {corr.generated_response}
                       </div>
+                      <img
+                        src={copyIcon}
+                        alt="Copy"
+                        className="copy-icon"
+                        onClick={(e) => {
+                          setCopySelected(true)
+                          e.stopPropagation();
+                          handleCopyToClipboard(corr.generated_response);
+                        }}
+                      />
                     </div>
                     <div className="corr-date">{corr.created_at}</div>
                   </div>
                 </div>
-                { index < Object.values(correspondences).length - 1 && (
+                {index < Object.values(correspondences).length - 1 && (
                   <div className="break"></div>
                 )}
               </div>

@@ -27,3 +27,27 @@
   background-color: #d0dbf0;
   color: #4351e8;
 }
+
+.corr-create-button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.corr-error {
+  width: 250px;
+}
+
+.corr-msg {
+  align-items: center;
+  box-sizing: border-box;
+  color: #4A5C8A;
+  display: flex;
+  font-size: 15px;
+  flex-direction: column;
+  padding: 10px 20px;
+  max-width: 300px;
+  width: 100%;
+}

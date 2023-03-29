@@ -76,6 +76,7 @@ export default function ApplicationDetails() {
               e.preventDefault();
               e.stopPropagation();
               setShowManageDropdown(false)
+              setShowMessageDropdown(false)
             }}
           >
             <div className="application-details-body">
@@ -160,6 +161,7 @@ export default function ApplicationDetails() {
               e.preventDefault();
               e.stopPropagation();
               setShowManageDropdown(false)
+              setShowMessageDropdown(false)
             }}
           ></div>
           <div 
@@ -168,6 +170,7 @@ export default function ApplicationDetails() {
               e.preventDefault();
               e.stopPropagation();
               setShowManageDropdown(false)
+              setShowMessageDropdown(false)
             }}    
           >
             <div className="app-materials">

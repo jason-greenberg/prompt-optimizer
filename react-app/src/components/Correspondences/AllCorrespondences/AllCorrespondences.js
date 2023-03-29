@@ -5,6 +5,8 @@ import liIcon from './assets/li-blue-icon.png';
 import emailIcon from './assets/gmail.png';
 import { fetchCorrespondencesByApplicationIdThunk } from '../../../store/correspondence';
 import { useParams } from 'react-router-dom';
+import { formatCorrType } from '../../../utils/format';
+import { chooseIcon } from '../../../utils/corr-images'
 
 export default function AllCorrespondences() {
   const dispatch = useDispatch()
@@ -31,33 +33,6 @@ export default function AllCorrespondences() {
     }));
   };
 
-  const formatCorrType = (corrType) => {
-    switch (corrType) {
-      case 'application follow-up':
-        return 'Follow-up';
-      case 'initial connection':
-        return 'Connect'
-      case 'informational interview':
-        return 'Info interview'
-      case 'thank you informational interview':
-        return 'TY info interview'
-      case 'thank you formal interview':
-        return 'TY formal interview'
-      case 'request feedback':
-        return 'Feedback'
-      case 'job offer follow-up':
-        return 'Offer follow-up'
-      case 'job offer accept':
-        return 'Accept offer'
-      case 'job offer decline':
-        return 'Decline offer'
-      case 'reconnection':
-        return 'Reconnect'
-      default:
-        return 'Correspondence';
-    }
-  }
-
   return (
     <>
       {!notFound && (
@@ -67,18 +42,7 @@ export default function AllCorrespondences() {
               <div className="corr-w-break" key={index}>
                 <div className="individual-corr" onClick={() => handleClick(index)}>
                   <div className="corr-left">
-                    {corr.corr_type === 'application follow-up' && (
-                      <img src={liIcon} alt="linkedIn-icon" />
-                    )}
-                    {corr.corr_type === 'initial connection' && (
-                      <img src={liIcon} alt="linkedIn-icon" />
-                    )}
-                    {corr.corr_type === 'Email' && (
-                      <img src={emailIcon} alt="email-icon" />
-                    )}
-                    {corr.corr_type === 'informational interview' && (
-                      <img src={liIcon} alt="linkedIn-icon" />
-                    )}
+                    {chooseIcon(corr.corr_type)}
                   </div>
                   <div className="corr-right">
                     <div className="corr-type">

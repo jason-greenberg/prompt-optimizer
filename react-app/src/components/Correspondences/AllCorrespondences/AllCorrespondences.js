@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './AllCorrespondences.css';
 import copyIcon from './assets/copy-icon-grey.png';
-import copyIconWhite from './assets/copy-icon-white.png';
 import { fetchCorrespondencesByApplicationIdThunk } from '../../../store/correspondence';
 import { useParams } from 'react-router-dom';
 import { formatCorrType } from '../../../utils/format';

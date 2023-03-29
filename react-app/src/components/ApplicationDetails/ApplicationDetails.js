@@ -17,6 +17,7 @@ import DeleteApplication from './DeleteApplication'
 import AllCorrespondences from '../Correspondences/AllCorrespondences/AllCorrespondences'
 import { fetchAllCorrespondencesThunk, fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
 import CorrespondenceDropdown from '../Correspondences/CorrespondenceDropdown/CorrespondenceDropdown'
+import { authenticate } from '../../store/session'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -34,6 +35,7 @@ export default function ApplicationDetails() {
 
   useEffect(() => {
     const fetchAsync = async () => {
+      await dispatch(authenticate());
       const response = await dispatch(fetchSingleApplicationThunk(applicationId));
       if (response.error) {
         setState({ isLoaded: true, error: true });

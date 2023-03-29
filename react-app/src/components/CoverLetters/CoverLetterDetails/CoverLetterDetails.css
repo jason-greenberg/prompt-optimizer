@@ -3,6 +3,12 @@
   max-width: 700px;
 }
 
+.copy-cover {
+  top: 20px;
+  right: 20px;
+  height: 23px;
+}
+
 .del-cov {
   top: 0;
   right: 100px
@@ -10,6 +16,11 @@
 
 .edit-cover {
   position: absolute;
-  top: 18px;
-  right: 90px;
+  top: 23px;
+  right: 60px;
+}
+
+.remove-cover {
+  top: 0px;
+  right: 170px;
 }

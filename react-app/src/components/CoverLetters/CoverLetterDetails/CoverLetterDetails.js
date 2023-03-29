@@ -4,6 +4,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter } from '../../../store/coverletter';
 import EditCoverLetter from '../EditCoverLetter/EditCoverLetter';
 import './CoverLetterDetails.css';
+import copyIcon from './assets/copy-icon-grey.png'
+import { handleCopyToClipboard } from '../../../utils/clipboard';
 
 export default function CoverLetterDetails({ selectedSide }) {
   const dispatch = useDispatch();
@@ -14,6 +16,7 @@ export default function CoverLetterDetails({ selectedSide }) {
   const coverLetter = useSelector(state => state.coverletters.currentCoverLetter);
   const hasCoverLetter = coverLetter && 'id' in coverLetter
   const [editCover, setEditCover] = useState(false)
+  const [copySelected, setCopySelected] = useState(false)
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -45,6 +48,16 @@ export default function CoverLetterDetails({ selectedSide }) {
           }}
         >
           <div className="cover-letter-body">
+            <button 
+              className="skill-level-box remove-button remove-cover"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setShowDeleteDropdown(prev => !prev)
+              }}
+            >
+              X
+            </button>
           <div className="resume-text letter-text">
               {coverLetter?.letter_text}
               <button 
@@ -53,16 +66,16 @@ export default function CoverLetterDetails({ selectedSide }) {
               >
                 Edit
               </button>
-              <button 
-                className="skill-level-box remove-button"
+              <img
+                src={copyIcon}
+                alt="Copy"
+                className="copy-icon copy-cover"
                 onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  setShowDeleteDropdown(prev => !prev)
+                  setCopySelected(true)
+                  e.stopPropagation();
+                  handleCopyToClipboard(coverLetter.letter_text);
                 }}
-              >
-                Remove
-              </button>
+              />
               { showDeleteDropdown && (
                   <div className="delete-dropdown del-cov">
                     <div>Confirm delete?</div>

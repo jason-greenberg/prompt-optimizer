@@ -17,6 +17,7 @@ export default function AllCorrespondences() {
   const [notFound, setNotFound] = useState(false);
   const [expanded, setExpanded] = useState({});
   const [copySelected, setCopySelected] = useState(false);
+  const [editVisible, setEditVisible] = useState({});
   const { applicationId } = useParams()
 
   useEffect(() => {
@@ -36,17 +37,22 @@ export default function AllCorrespondences() {
     }
   }, [copySelected]);
 
-  // Toggle 'expanded' class to individual correspondence on click
+  // Toggle 'expanded' class and 'editVisible' state to individual correspondence on click
   const handleClick = (index) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
       [index]: !prevExpanded[index],
     }));
+    setEditVisible((prevEditVisible) => ({
+      ...prevEditVisible,
+      [index]: !prevEditVisible[index],
+    }));
   };
+
 
   return (
     <>
-      {!notFound && (
+      {!notFound && correspondencesArray.length > 0 && (
         <div className="job-description-container">
           <div className="corr-container">
             {Object.values(correspondences).reverse().map((corr, index) => (
@@ -58,6 +64,14 @@ export default function AllCorrespondences() {
                   <div className="corr-right">
                     <div className="corr-type">
                       <div className="corr-type-word">{formatCorrType(corr.corr_type)}:</div>
+                      {editVisible[index] && (
+                        <button className="edit-button edit-corr" onClick={(e) => {
+                          e.stopPropagation();
+                          // Your edit functionality goes here
+                        }}>
+                          Edit
+                        </button>
+                      )}
                       <div
                         className={`response ${expanded[index] ? 'expanded' : ''}`}
                       >
@@ -85,9 +99,14 @@ export default function AllCorrespondences() {
           </div>
         </div>
       )}
-      {notFound && (
+      {!notFound && !(correspondencesArray.length > 0) && (
         <div className="not-found">
-          <h1>Job Description Not Found</h1>
+          <h3>You have no correspondences for this job application yet.</h3>
+          <h4>Generate a new correspondence:</h4>
+          <div className="intro-instruct">
+            <p>1. Click the 'Message Recruiter' button</p>
+            <p>2. Select the type of correspondence you would like to create.</p>
+          </div>
         </div>
       )}
     </>

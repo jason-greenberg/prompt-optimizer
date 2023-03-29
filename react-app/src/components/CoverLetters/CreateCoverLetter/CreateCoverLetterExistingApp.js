@@ -176,7 +176,7 @@ export default function CreateCoverLetterExistingApp() {
                 <div className='resume-input-box'>
                   <div className="input-msg">Connect a resume</div>
                   <div className="resumes-container">
-                    { Object.values(allResumes).map((resume) => (
+                    { Object.values(allResumes).map((resume, index) => (
                       <div key={resume.id}>
                         <div 
                           key={resume.id} 
@@ -205,7 +205,9 @@ export default function CreateCoverLetterExistingApp() {
 
                           </div>
                         </div>
-                        <div className="break"></div>
+                        { index < Object.values(allResumes).length - 1 && (
+                          <div className="break"></div>
+                        )}
                       </div>
                     ))}
                   </div>

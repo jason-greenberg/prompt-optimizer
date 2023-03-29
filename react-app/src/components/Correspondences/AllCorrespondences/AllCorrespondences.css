@@ -58,8 +58,8 @@
   cursor: pointer;
   padding: 4px;
   position: absolute;
-  right: 0px;
-  top: 4px;
+  right: 5px;
+  top: 10px;
   height: 20px;
   z-index: 99;
 }
@@ -81,8 +81,21 @@
   text-overflow: ellipsis;
   overflow: hidden;
   max-height: 1.2em;
+  position: relative;
   transition: max-height 0.3s ease;
   cursor: pointer;
+}
+
+.response:hover {
+  color: royalblue;
+}
+
+.edit-button.edit-corr {
+  border-radius: 5px;
+  padding: 3px 8px;
+  position: absolute;
+  top: 13px;
+  right: 40px;
 }
 
 .expanded {
@@ -93,6 +106,6 @@
   white-space: pre-wrap;
 }
 
-.response:hover {
-  color: royalblue;
+.expanded:hover {
+  color: rgb(74, 93, 138);
 }

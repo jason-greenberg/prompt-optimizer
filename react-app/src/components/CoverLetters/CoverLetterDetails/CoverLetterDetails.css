@@ -3,13 +3,24 @@
   max-width: 700px;
 }
 
+.copy-icon.copy-cover {
+  top: 15px;
+  right: 15px;
+  height: 23px;
+}
+
 .del-cov {
   top: 0;
   right: 100px
 }
 
-.edit-cover {
+.edit-button.edit-cover {
   position: absolute;
   top: 18px;
-  right: 90px;
+  right: 50px;
+}
+
+.remove-button.remove-cover {
+  top: 45%;
+  right: 130px;
 }

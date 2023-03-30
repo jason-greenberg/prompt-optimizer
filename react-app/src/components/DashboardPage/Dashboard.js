@@ -67,7 +67,7 @@ export default function Dashboard() {
   return (
     <>
       <Navigation />
-      {isLoaded && (
+      {isLoaded && applicationsArray.length > 0 && (
         <div className="dashboard-container">
           <div className="dashboard-body">
           {showBanner && (
@@ -111,6 +111,35 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+      )}
+      { isLoaded && !(applicationsArray.length > 0) && (
+        <div className="dashboard-container">
+          <div className="dashboard-body">
+          <div className="current-apps-table">
+              <h3 className="table-title">Current Applications</h3>
+              <table className="applications-table">
+                <thead>
+                  <tr className="column-headings">
+                    <th className="column-name job-title">JOB TITLE</th>
+                    <th className="column-name">POSITION TYPE</th>
+                    <th className="column-name">DATE APPLIED</th>
+                    <th className="column-name">FOLLOW UP</th>
+                    <th className="column-name">ADDITIONAL INFO</th>
+                  </tr>
+                </thead>
+                <tbody className="applications-container">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <h4>Welcome! To create your first job application:</h4>
+          <div className="intro-instruct">
+            <p>1. Click the 'New' Button at the top of the screen</p>
+            <p>2. Upload a Resume</p>
+            <p>3. Once you've uploaded a resume, you can click 'New' and select 'Cover Letter' to create a Cover Letter and Job Application simultaneously</p>
+            <p>4. Optionally, select 'Job Application' from the 'New' menu to create a Job Application without a Cover Letter</p>
           </div>
         </div>
       )}

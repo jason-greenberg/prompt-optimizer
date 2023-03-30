@@ -16,6 +16,7 @@ import CreateCoverLetterExistingApp from "./components/CoverLetters/CreateCoverL
 import AllCoverLetters from "./components/CoverLetters/AllCoverLetters/AllCoverLetters";
 import CreateApplication from "./components/CreateApplication/CreateApplication";
 import AboutDetails from "./components/About/AboutDetails";
+import ManageCorrespondences from "./components/Correspondences/ManageCorrespondences/ManageCorrespondences";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
           <Route path="/coverletters/add/:applicationId" component={CreateCoverLetterExistingApp} />
           <Route path="/coverletters/new" component={CreateCoverLetter} />
           <Route path="/coverletters" component={AllCoverLetters} />
+          <Route path="/correspondences" component={ManageCorrespondences} />
           <Route exact path = '/' component={SplashPage} />
         </Switch>
       )}

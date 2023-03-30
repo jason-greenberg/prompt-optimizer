@@ -14,7 +14,7 @@ export default function ManageCorrespondences() {
   const [state, setState] = useState({ isLoaded: false, error: false });
   const allCorrespondences = useSelector(state => state.correspondences.allCorrespondences);
   const allApplications = useSelector(state => state.applications.allApplications);
-  const { setSelectedSide } = useMenuSelector();
+  const { setSelectedSide, setSelectedLink } = useMenuSelector();
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -23,6 +23,7 @@ export default function ManageCorrespondences() {
         setState({ isLoaded: true, error: true });
       } else {
         await dispatch(fetchAllApplicationsThunk());
+        setSelectedLink('correspondences')
         setState({ isLoaded: true, error: false });
       }
     };

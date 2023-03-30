@@ -24,8 +24,8 @@ export default function CreateCoverLetterExistingApp() {
   const [selectedResume, setSelectedResume] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [jobDescription, setJobDescription] = useState('');
-  const [companyDetails, setCompanyDetails] = useState('');
+  const [jobDescription, setJobDescription] = useState(application.job_description);
+  const [companyDetails, setCompanyDetails] = useState(application.company_details);
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -40,16 +40,6 @@ export default function CreateCoverLetterExistingApp() {
     }
     fetchAsync()
   }, [dispatch])
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoading(false)
-  //   }, 300);
-
-  //   return () => {
-  //     clearTimeout(timer)
-  //   }
-  // }, [selectedResume])
 
   const selectResume = async (e, resumeId) => {
     e.preventDefault();

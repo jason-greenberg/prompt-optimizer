@@ -53,12 +53,15 @@ export default function AllCorrespondences() {
 
   const handleSaveChanges = async (index, correspondence) => {
     const updatedCorrespondence = { ...correspondence, generated_response: editedResponse[index] };
+    await setEditting({ ...editVisible, [index]: false })
     await dispatch(updateCorrespondenceThunk(updatedCorrespondence));
-    setEditting({ ...editting, [index]: false });
+    await setEditVisible({ ...editVisible, [index]: true})
   };
 
   const handleDelete = async (e, index, correspondenceId) => {
     e.stopPropagation();
+    await setEditting({});
+    await setEditVisible({});
     const response = await dispatch(deleteCorrespondenceThunk(correspondenceId));
     if (response === 'Successfully deleted') {
       // Fetch the updated correspondence data after deletion
@@ -84,6 +87,7 @@ export default function AllCorrespondences() {
                     X
                   </button>
                   <div className="corr-left">
+
                     {chooseIcon(corr.corr_type)}
                   </div>
                   <div className="corr-right">
@@ -105,7 +109,14 @@ export default function AllCorrespondences() {
                               value={editedResponse[index] || corr.generated_response}
                               onChange={(e) => setEditedResponse({ ...editedResponse, [index]: e.target.value })}
                             />
-                            <button className="save-button save-corr" onClick={() => handleSaveChanges(index, corr)}>Save Changes</button>
+                            <button 
+                              className="save-button save-corr" 
+                              onClick={() => {
+                                handleSaveChanges(index, corr)
+                              }}
+                            >
+                              Save Changes
+                            </button>
                           </div>
                         ) : (
                           <div

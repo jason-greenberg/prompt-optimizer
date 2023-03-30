@@ -6,6 +6,7 @@ import Navigation from '../../Navigation';
 import { fetchAllCorrespondencesThunk } from '../../../store/correspondence';
 import { fetchAllApplicationsThunk } from '../../../store/application';
 import { useMenuSelector } from '../../../context/Menu';
+import { formatCorrType } from '../../../utils/format';
 
 export default function ManageCorrespondences() {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ export default function ManageCorrespondences() {
                     <div key={correspondence.id} className="resume-overview">
                       <div className="resume-left">
                         <div className="resume-name">
-                          {`${correspondence.corr_type} Correspondence`}
+                          {`${formatCorrType(correspondence.corr_type)} ${allApplications[correspondence.application_id].job_title}`}
                         </div>
                         <div className="dot">•</div>
                         <div className="resume-date">{correspondence.created_at}</div>
@@ -78,12 +79,13 @@ export default function ManageCorrespondences() {
         <div className="all-resumes-page-container">
           <div className="all-resumes-body">
             <h1>
-              <span className="form-action">Manage </span>
+              <span className="form-action">Manage</span>
               <span className="form-title">Correspondences</span>
             </h1>
             <h4>To create your first correspondence:</h4>
-            <h4>1. Click the 'New' Button at the top of the screen</h4>
-            <h4>2. Select 'Correspondence' from the list</h4>
+            <h4>1. Create a Cover Letter or Job Application</h4>
+            <h4>2. Select a Job Application, then click on the 'Message Recruiter' button</h4>
+            <h4>3. Select one of the options from the dropdown menu, like 'Application follow-up'.</h4>
           </div>
         </div>
       )}

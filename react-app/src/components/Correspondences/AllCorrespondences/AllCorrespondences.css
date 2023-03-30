@@ -92,10 +92,12 @@
 
 .edit-button.edit-corr {
   border-radius: 5px;
-  padding: 3px 8px;
+  cursor: pointer;
+  padding: 5px 8px;
   position: absolute;
   top: 13px;
   right: 40px;
+  z-index: 98;
 }
 
 .expanded {
@@ -111,13 +113,19 @@
 }
 
 .editting-response {
-  min-height: 200px;
-  min-width: 200px;
-  max-width: 900px;
-  width: 100%;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  max-height: 100%;
+  border: 1px solid #D0DBF0;
+  border-radius: 5px;
+  color: #313d57;
+  font-family: 'Roboto', sans-serif;
+  min-width: 480px;
+  min-height: 400px;
+  margin-left: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
   text-overflow: initial;
   white-space: pre-wrap;
+}
+
+.save-button.save-corr {
+  margin-bottom: 10px;
 }

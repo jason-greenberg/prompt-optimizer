@@ -76,7 +76,7 @@ export default function AllCorrespondences() {
                           e.stopPropagation();
                           setEditting({ ...editting, [index]: true})
                         }}>
-                          Edit
+                          {`  Edit  `}
                         </button>
                       )}
                         {editting[index] ? (
@@ -87,7 +87,7 @@ export default function AllCorrespondences() {
                               value={editedResponse[index] || corr.generated_response}
                               onChange={(e) => setEditedResponse({ ...editedResponse, [index]: e.target.value })}
                             />
-                            <button onClick={() => handleSaveChanges(index, corr)}>Save Changes</button>
+                            <button className="save-button save-corr" onClick={() => handleSaveChanges(index, corr)}>Save Changes</button>
                           </div>
                         ) : (
                           <div

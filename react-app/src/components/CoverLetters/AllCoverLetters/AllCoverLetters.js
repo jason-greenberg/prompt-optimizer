@@ -94,11 +94,11 @@ export default function AllCoverLetters() {
                         </button>
                       </div>
                     </div>
-                    { index < Object.values(allCoverLetters).length - 1 && (
+                    { (index < Object.values(allCoverLetters).length - 2) && (
                       <div className="break"></div>
                     )}
                   </div>
-                )) }
+                ))}
               </div>
             </div>
           </div>

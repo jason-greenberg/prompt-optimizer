@@ -173,7 +173,7 @@ export default function CreateCoverLetter() {
                 <div className='resume-input-box'>
                   <div className="input-msg">Connect a resume</div>
                   <div className="resumes-container">
-                    { Object.values(allResumes).map((resume, index) => (
+                    { Object.values(allResumes).reverse().map((resume, index) => (
                       <div key={resume.id}>
                         <div 
                           key={resume.id} 

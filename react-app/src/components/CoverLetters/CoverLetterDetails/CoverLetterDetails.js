@@ -17,6 +17,7 @@ export default function CoverLetterDetails({ selectedSide }) {
   const hasCoverLetter = coverLetter && 'id' in coverLetter
   const [editCover, setEditCover] = useState(false)
   const [copySelected, setCopySelected] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleDelete = async (e) => {
     e.preventDefault();

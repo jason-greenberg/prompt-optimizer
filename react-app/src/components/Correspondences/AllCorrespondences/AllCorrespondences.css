@@ -129,3 +129,22 @@
 .save-button.save-corr {
   margin-bottom: 10px;
 }
+
+.remove-button.remove-corr {
+  position: absolute;
+  top: 41%;
+  right: -40px;
+  background: #ed8a83;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  font-size: 1rem;
+  line-height: 1rem;
+  z-index: 10;
+}
+
+.remove-button.remove-corr:hover {
+  background: #f0493d;
+}

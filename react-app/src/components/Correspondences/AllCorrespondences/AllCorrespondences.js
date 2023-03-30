@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './AllCorrespondences.css';
 import copyIcon from './assets/copy-icon-grey.png';
-import { fetchCorrespondencesByApplicationIdThunk, updateCorrespondenceThunk } from '../../../store/correspondence';
+import { fetchCorrespondencesByApplicationIdThunk, updateCorrespondenceThunk, deleteCorrespondenceThunk } from '../../../store/correspondence';
 import { useParams } from 'react-router-dom';
 import { formatCorrType } from '../../../utils/format';
 import { chooseIcon } from '../../../utils/corr-images';
@@ -57,6 +57,18 @@ export default function AllCorrespondences() {
     setEditting({ ...editting, [index]: false });
   };
 
+  const handleDelete = async (e, index, correspondenceId) => {
+    e.stopPropagation();
+    const response = await dispatch(deleteCorrespondenceThunk(correspondenceId));
+    if (response === 'Successfully deleted') {
+      // Fetch the updated correspondence data after deletion
+      await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId));
+    } else {
+      console.error(response.error);
+    }
+  };
+  
+
   return (
     <>
       {!notFound && correspondencesArray.length > 0 && (
@@ -65,6 +77,12 @@ export default function AllCorrespondences() {
             {Object.values(correspondences).reverse().map((corr, index) => (
               <div className="corr-w-break" key={index}>
                 <div className="individual-corr" onClick={() => handleClick(index)}>
+                  <button
+                    className="skill-level-box remove-button remove-corr"
+                    onClick={(e) => handleDelete(e, index, corr.id)}
+                  >
+                    X
+                  </button>
                   <div className="corr-left">
                     {chooseIcon(corr.corr_type)}
                   </div>
@@ -76,7 +94,7 @@ export default function AllCorrespondences() {
                           e.stopPropagation();
                           setEditting({ ...editting, [index]: true})
                         }}>
-                          {`  Edit  `}
+                          {`Edit`}
                         </button>
                       )}
                         {editting[index] ? (

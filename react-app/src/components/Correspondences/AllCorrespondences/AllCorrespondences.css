@@ -111,5 +111,13 @@
 }
 
 .editting-response {
-  
+  min-height: 200px;
+  min-width: 200px;
+  max-width: 900px;
+  width: 100%;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  max-height: 100%;
+  text-overflow: initial;
+  white-space: pre-wrap;
 }

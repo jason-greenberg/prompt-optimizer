@@ -79,12 +79,9 @@ export default function AllCorrespondences() {
                           Edit
                         </button>
                       )}
-                      <div
-                        className={`response ${expanded[index] ? 'expanded' : ''}`}
-                      >
                         {editting[index] ? (
                           <div>
-                            <input
+                            <textarea
                               type="text"
                               className="editting-response"
                               value={editedResponse[index] || corr.generated_response}
@@ -93,9 +90,12 @@ export default function AllCorrespondences() {
                             <button onClick={() => handleSaveChanges(index, corr)}>Save Changes</button>
                           </div>
                         ) : (
-                          corr.generated_response
+                          <div
+                            className={`response ${expanded[index] ? 'expanded' : ''}`}
+                          >
+                            {corr.generated_response}
+                          </div>
                         )}
-                      </div>
                       <img
                         src={copyIcon}
                         alt="Copy"

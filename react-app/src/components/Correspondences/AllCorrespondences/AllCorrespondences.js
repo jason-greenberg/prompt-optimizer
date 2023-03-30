@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './AllCorrespondences.css';
 import copyIcon from './assets/copy-icon-grey.png';
-import { fetchCorrespondencesByApplicationIdThunk } from '../../../store/correspondence';
+import { fetchCorrespondencesByApplicationIdThunk, updateCorrespondenceThunk } from '../../../store/correspondence';
 import { useParams } from 'react-router-dom';
 import { formatCorrType } from '../../../utils/format';
 import { chooseIcon } from '../../../utils/corr-images';
@@ -18,6 +18,8 @@ export default function AllCorrespondences() {
   const [expanded, setExpanded] = useState({});
   const [copySelected, setCopySelected] = useState(false);
   const [editVisible, setEditVisible] = useState({});
+  const [editting, setEditting] = useState({});
+  const [editedResponse, setEditedResponse] = useState({});
   const { applicationId } = useParams()
 
   useEffect(() => {
@@ -49,6 +51,11 @@ export default function AllCorrespondences() {
     }));
   };
 
+  const handleSaveChanges = async (index, correspondence) => {
+    const updatedCorrespondence = { ...correspondence, generated_response: editedResponse[index] };
+    await dispatch(updateCorrespondenceThunk(updatedCorrespondence));
+    setEditting({ ...editting, [index]: false });
+  };
 
   return (
     <>
@@ -67,7 +74,7 @@ export default function AllCorrespondences() {
                       {editVisible[index] && (
                         <button className="edit-button edit-corr" onClick={(e) => {
                           e.stopPropagation();
-                          // Your edit functionality goes here
+                          setEditting({ ...editting, [index]: true})
                         }}>
                           Edit
                         </button>
@@ -75,7 +82,19 @@ export default function AllCorrespondences() {
                       <div
                         className={`response ${expanded[index] ? 'expanded' : ''}`}
                       >
-                        {corr.generated_response}
+                        {editting[index] ? (
+                          <div>
+                            <input
+                              type="text"
+                              className="editting-response"
+                              value={editedResponse[index] || corr.generated_response}
+                              onChange={(e) => setEditedResponse({ ...editedResponse, [index]: e.target.value })}
+                            />
+                            <button onClick={() => handleSaveChanges(index, corr)}>Save Changes</button>
+                          </div>
+                        ) : (
+                          corr.generated_response
+                        )}
                       </div>
                       <img
                         src={copyIcon}

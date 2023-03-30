@@ -16,11 +16,7 @@ export const loadingMessages = [
   `The longer this takes, the stronger my case for being your next hire.`,
   `Maybe I should've used a faster language. But I can learn anything, especially if you hire me.`,
   `Waiting is hard, but finding the perfect developer is even harder. Good news: I'm right here.`,
-  `Fun fact: The time it takes to load this page is directly proportional to my desire to work for you.`,
   `Looking for a developer who can make this load faster? That's me!`,
-  `They say patience is a virtue...but so is having me on your team.`,
-  `As this page loads, I'm perfecting my coding skills. Can't wait to join your team!`,
-  `Just think, if I were on your team, you wouldn't have to wait so long.`,
   `Slow loading times build character. And so does hiring a great developer.`,
   `By the time this loads, you'll know that I'm the developer you've been searching for.`,
 ]

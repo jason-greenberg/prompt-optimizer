@@ -5,12 +5,12 @@ ZipCover is a tool designed to simplify the process of writing and editing cover
 [![My Skills](https://skillicons.dev/icons?i=py,flask,postgres,react,redux,js,css)](https://skillicons.dev)
 
 ## Live Site
-https://zipcover-vsd4.onrender.com
+https://zipcover.onrender.com
 
 ## Features
 - Generate cover letters from scratch based on your resume and job descriptions
 - Edit existing cover letters to make them more personalized and impactful
-- Track job applications and generate automatic follow-ups with recruiters
+- Track job applications and generate automatic correspondences with recruiters
 
 ## How it Works
 ZipCover makes use of the advanced language generation capabilities of GPT-3 to generate cover letters that are both relatable and tailored to your specific needs. All you need to do is provide your resume and a job description, and ZipCover will take care of the rest.

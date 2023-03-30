@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { useMenuSelector } from '../../context/Menu'
@@ -32,34 +32,41 @@ export default function ApplicationDetails() {
   const [showManageDropdown, setShowManageDropdown] = useState(false)
   const [showMessageDropdown, setShowMessageDropdown] = useState(false)
   const [editSelected, setEditSelected] = useState(true)
+  const [deletedCoverLetterId, setDeletedCoverLetterId] = useState(null);
 
-  useEffect(() => {
-    const fetchAsync = async () => {
-      await dispatch(authenticate());
-      const response = await dispatch(fetchSingleApplicationThunk(applicationId));
-      if (response.error) {
-        setState({ isLoaded: true, error: true });
-      } else {
-        await dispatch(fetchAllResumesThunk());
-        await dispatch(fetchSingleResumeThunk(application?.resume_id))
-        await dispatch(fetchCorrespondencesByApplicationIdThunk(application?.id))
+  const fetchAsync = useCallback(async () => {
+    await dispatch(authenticate());
+    const response = await dispatch(fetchSingleApplicationThunk(applicationId));
+    if (response.error) {
+      setState({ isLoaded: true, error: true });
+    } else {
+      await dispatch(fetchAllResumesThunk());
   
-        // Check if the application has an associated cover letter
-        if (application.cover_letter_id) {
-          const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
-          if (coverLetterResponse.error) {
+      // Check if the application object is loaded and has both resume_id and cover_letter_id
+      if (application && application.resume_id && application.cover_letter_id) {
+        await dispatch(fetchSingleResumeThunk(application.resume_id));
+        await dispatch(fetchCorrespondencesByApplicationIdThunk(application.id));
+  
+        // Check if the application has an associated cover letter and it hasn't been deleted
+        if (application.cover_letter_id && application.cover_letter_id !== deletedCoverLetterId) {
+          const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application.cover_letter_id));
+          if (coverLetterResponse.error || coverLetterResponse.notFound) {
             dispatch(clearCurrentCoverLetter());
           }
         } else {
-          // Clear the cover letter in the store if no associated cover letter is found
+          // Clear the cover letter in the store if no associated cover letter is found or it has been deleted
           dispatch(clearCurrentCoverLetter());
         }
-  
-        setState({ isLoaded: true, error: false });
       }
-    };
+  
+      setState({ isLoaded: true, error: false });
+    }
+  }, [applicationId, dispatch, deletedCoverLetterId, application]);
+  
+
+  useEffect(() => {
     fetchAsync();
-  }, [applicationId, dispatch, history, selectedSide, application.resume_id, application.cover_letter_id]);  
+  }, [fetchAsync]);  
 
   const handleMessage = (e) => {
     e.preventDefault();
@@ -222,6 +229,7 @@ export default function ApplicationDetails() {
                 { selectedSide === 'cover letter' && (
                   <CoverLetterDetails 
                     selectedSide={selectedSide}
+                    setDeletedCoverLetterId={setDeletedCoverLetterId}
                   />
                 )}
                 { selectedSide === 'job details' && (

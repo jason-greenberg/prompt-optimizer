@@ -1,8 +1,6 @@
 export const loadingMessages = [
   `Hire me and I'll speed up this loading page.`,
   `Cover letter taking too long? If you're a recruiter, send me a DM on LinkedIn and I'll speed it up.`,
-  `Hire me and I'll speed up this loading page.`,
-  `Cover letter taking too long? If you're a recruiter, send me a DM on LinkedIn and I'll speed it up.`,
   `Finding a new developer is hard work, just like loading this page.`,
   `Grab some coffee while you wait. Or better yet, hire me and I'll optimize this for you.`,
   `Loading this page is like finding a good developer -- it takes time.`,
@@ -14,4 +12,3 @@ export const loadingMessages = [
   `Just like this loading screen, finding the perfect candidate takes time. Lucky for you, I'm right here.`,
   `Good things come to those who wait, like this website and your next great hire (me).`
 ];
-

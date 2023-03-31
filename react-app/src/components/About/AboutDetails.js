@@ -69,7 +69,7 @@ export default function AboutDetails() {
             <li>Agile</li>
             {/* Add more skills as needed */}
           </ul>
-          <h3 className="about-me-title">Contact & Social</h3>
+          <h3 className="about-me-sub-heading">Contact</h3>
           <ul className="social-links">
             <li className="external-link">
               <a href="https://github.com/jason-greenberg" target="_blank" rel="noopener noreferrer">

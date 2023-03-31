@@ -21,6 +21,7 @@ export default function AllCorrespondences() {
   const [editting, setEditting] = useState({});
   const [editedResponse, setEditedResponse] = useState({});
   const { applicationId } = useParams()
+  const [showDeleteDropdown, setShowDeleteDropdown] = useState([]);
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -37,7 +38,7 @@ export default function AllCorrespondences() {
       }, 50);
       return () => clearTimeout(timer);
     }
-  }, [copySelected]);
+  }, [copySelected, correspondencesArray.length]);
 
   // Toggle 'expanded' class and 'editVisible' state to individual correspondence on click
   const handleClick = (index) => {
@@ -62,6 +63,11 @@ export default function AllCorrespondences() {
     e.stopPropagation();
     await setEditting({});
     await setEditVisible({});
+    await setShowDeleteDropdown(prev => {
+      const newState = [...prev];
+      newState[index] = false;
+      return newState;
+    })
     const response = await dispatch(deleteCorrespondenceThunk(correspondenceId));
     if (response === 'Successfully deleted') {
       // Fetch the updated correspondence data after deletion
@@ -82,12 +88,46 @@ export default function AllCorrespondences() {
                 <div className="individual-corr" onClick={() => handleClick(index)}>
                   <button
                     className="skill-level-box remove-button remove-corr"
-                    onClick={(e) => handleDelete(e, index, corr.id)}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setShowDeleteDropdown(prev => {
+                        const newState = [...prev];
+                        newState[index] = !newState[index];
+                        return newState;
+                      })
+                    }}
                   >
                     X
                   </button>
+                  { showDeleteDropdown[index] && (
+                    <div className="delete-dropdown del-corr" key={corr.id}>
+                      <div>Confirm delete?</div>
+                      <div className="delete-options">
+                        <button 
+                          className="delete-option-button delete-option-yes"
+                          onClick={(e) => handleDelete(e, index, corr.id)}
+                        >
+                          Yes
+                        </button>
+                        <button 
+                          className="delete-option-button delete-option-no"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            setShowDeleteDropdown(prev => {
+                              const newState = [...prev];
+                              newState[index] = false;
+                              return newState;
+                            })
+                          }}
+                        >
+                          No
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   <div className="corr-left">
-
                     {chooseIcon(corr.corr_type)}
                   </div>
                   <div className="corr-right">
@@ -98,7 +138,7 @@ export default function AllCorrespondences() {
                           e.stopPropagation();
                           setEditting({ ...editting, [index]: true})
                         }}>
-                          {`Edit`}
+                          Edit
                         </button>
                       )}
                         {editting[index] ? (

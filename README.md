@@ -12,7 +12,11 @@ https://zipcover.onrender.com
 - Edit existing cover letters to make them more personalized and impactful
 - Track job applications and generate automatic correspondences with recruiters
 
+### Create a Cover Letter
 ![Cover Letter Demo](react-app/src/utils/assets/create-cover.gif)
+
+### Correspond with Recruiters & Network
+![Correspondence Demo](react-app/src/utils/assets/create-correspondence.gif)
 
 ## How it Works
 ZipCover makes use of the advanced language generation capabilities of GPT-3 to generate cover letters that are both relatable and tailored to your specific needs. All you need to do is provide your resume and a job description, and ZipCover will take care of the rest.

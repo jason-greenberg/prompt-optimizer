@@ -17,15 +17,19 @@ def get_cover_letters():
     """
     cover_letters = CoverLetter.query.filter_by(user_id=current_user.id).all()
 
-    return [c.to_dict() for c in cover_letters]
+    return [c.to_dict() for c in cover_letters] 
 
 # Get cover letter by id
-@cover_letter_routes.route('/<int:id>')
+@cover_letter_routes.route('/<id>')
 @login_required
 def get_cover_by_id(id):
     """
     Query for a single cover letter by id
     """
+    if id is None or id == "null":
+    # Handle the case where the id is null buy sending an empty cover letter
+        return make_response(jsonify({}), 200)
+    
     cover_letter = CoverLetter.query.get(id)
     
     # Return 404 if cover letter not found

@@ -6,6 +6,7 @@ import EditCoverLetter from '../EditCoverLetter/EditCoverLetter';
 import './CoverLetterDetails.css';
 import copyIcon from './assets/copy-icon-grey.png'
 import { handleCopyToClipboard } from '../../../utils/clipboard';
+import { fetchSingleApplicationThunk } from '../../../store/application';
 
 export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
       dispatch(clearCurrentCoverLetter());
       
       // Fetch the updated cover letter data after deletion
-      await dispatch(fetchSingleCoverLetterThunk(applicationId));
+      await dispatch(fetchSingleApplicationThunk(applicationId));
   
       // Update the deletedCoverLetterId state in the ApplicationDetails component
       setDeletedCoverLetterId(coverLetter.id);

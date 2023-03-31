@@ -40,31 +40,32 @@ export default function ApplicationDetails() {
       setState({ isLoaded: true, error: true });
     } else {
       await dispatch(fetchAllResumesThunk());
+  
       if (application.resume_id) {
         await dispatch(fetchSingleResumeThunk(application.resume_id));
       }
+  
       if (application.id) {
         await dispatch(fetchCorrespondencesByApplicationIdThunk(application.id));
       }
-
-      // Check if the application has an associated cover letter and it hasn't been deleted
-      if (application.cover_letter_id && application.cover_letter_id !== deletedCoverLetterId) {
-        const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application.cover_letter_id));
+  
+      if (application.cover_letter_id) {
+        const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
         if (coverLetterResponse.error || coverLetterResponse.notFound) {
           dispatch(clearCurrentCoverLetter());
         }
       } else {
-        // Clear the cover letter in the store if no associated cover letter is found or it has been deleted
         dispatch(clearCurrentCoverLetter());
       }
-
+  
       setState({ isLoaded: true, error: false });
     }
-  }, [applicationId, dispatch, deletedCoverLetterId]);
-
+  }, [applicationId, dispatch, deletedCoverLetterId, application.cover_letter_id, application.resume_id]);
+  
   useEffect(() => {
     fetchAsync();
-  }, [fetchAsync]); 
+  }, [fetchAsync]);
+   
   
 
   const handleMessage = (e) => {

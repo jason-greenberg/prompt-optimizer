@@ -32,7 +32,7 @@ export default function CorrespondenceDropdown() {
       }),
     );
     if (response.error) {
-      console.log('Error', response.error)
+      return
     } else {
       await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId))
       await setHasSubmitted(null);

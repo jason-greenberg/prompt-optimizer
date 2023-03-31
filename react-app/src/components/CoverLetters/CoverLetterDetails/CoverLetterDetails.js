@@ -63,6 +63,29 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
             >
               X
             </button>
+            { showDeleteDropdown && (
+                <div className="delete-dropdown del-cov">
+                  <div>Confirm delete?</div>
+                  <div className="delete-options">
+                    <button 
+                      className="delete-option-button delete-option-yes"
+                      onClick={handleDelete}
+                    >
+                      Yes
+                    </button>
+                    <button 
+                      className="delete-option-button delete-option-no"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        setShowDeleteDropdown(false)
+                      }}
+                    > 
+                      No
+                    </button>
+                  </div>
+                </div>
+              )}
           <div className="resume-text letter-text">
               {coverLetter?.letter_text}
               <button 
@@ -81,29 +104,6 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                   handleCopyToClipboard(coverLetter.letter_text);
                 }}
               />
-              { showDeleteDropdown && (
-                  <div className="delete-dropdown del-cov">
-                    <div>Confirm delete?</div>
-                    <div className="delete-options">
-                      <button 
-                        className="delete-option-button delete-option-yes"
-                        onClick={handleDelete}
-                      >
-                        Yes
-                      </button>
-                      <button 
-                        className="delete-option-button delete-option-no"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          setShowDeleteDropdown(false)
-                        }}
-                      > 
-                        No
-                      </button>
-                    </div>
-                  </div>
-                )}
             </div>
           </div>
         </div>

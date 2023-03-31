@@ -48,9 +48,10 @@ export default function AboutDetails() {
           <h2 className="about-me-title">About Me</h2>
           <p className="text-bio">
             Hi, I'm Jason. I'm a fullstack python developer and I love web development.
-            I enjoy tackling complex problems and coming up with creative solutions, as well as learning new technologies.
+            I enjoy tackling complex problems and coming up with creative solutions.
+            I'm continually learning new technologies and have a knack for automating tasks to enhance efficiency.
           </p>
-          <h3 className="about-me-title">Skills</h3>
+          <h3 className="about-me-sub-heading">Skills</h3>
           <ul>
             <li>Javascript</li>
             <li>Python</li>
@@ -68,7 +69,7 @@ export default function AboutDetails() {
             <li>Agile</li>
             {/* Add more skills as needed */}
           </ul>
-          <h3 className="about-me-title">Contact & Social</h3>
+          <h3 className="about-me-sub-heading">Contact</h3>
           <ul className="social-links">
             <li className="external-link">
               <a href="https://github.com/jason-greenberg" target="_blank" rel="noopener noreferrer">

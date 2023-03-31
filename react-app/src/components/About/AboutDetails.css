@@ -4,20 +4,21 @@
 
 /* CONTAINERS */
 .about-details-container {
-  background-color: #FBFCFE;
+  background-color: #E9EDF1;
   color: #21232E;
   display: flex;
   font-family: 'Roboto', sans-serif;
   flex-direction: column;
   align-items: center;
-  margin: 60px 30px;
+  margin: 72px 0px;
   padding-top: 30px;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .about-details-body {
   align-items: flex-start;
-  color: rgb(33, 35, 46);
+  color: #373F47;
   display: flex;
   flex-direction: column;
   font-family: 'Roboto', sans-serif;
@@ -57,7 +58,14 @@ ul {
 }
 
 .about-me-title {
-  color: #21232E;
+  font-size: 48px;
+  color: #373F47;
+  margin-bottom: 0;
+}
+
+.about-me-sub-heading {
+  font-size: 48px;
+  margin: 10px 0px 0px 0px;
 }
 
 .social-links {
@@ -76,6 +84,7 @@ ul {
 }
 
 .text-bio {
+  margin-bottom: 20px;
   max-width: 700px;
   width: 100%;
 }

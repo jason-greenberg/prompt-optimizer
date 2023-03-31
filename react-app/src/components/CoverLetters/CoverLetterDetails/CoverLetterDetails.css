@@ -10,8 +10,8 @@
 }
 
 .del-cov {
-  top: 0;
-  right: 100px
+  top: 35%;
+  right: 80px
 }
 
 .edit-button.edit-cover {
@@ -21,6 +21,20 @@
 }
 
 .remove-button.remove-cover {
+  position: absolute;
   top: 45%;
-  right: 130px;
+  right: 170px;
+  background: #ed8a83;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  font-size: 1rem;
+  line-height: 1rem;
+  z-index: 10;
+}
+
+.remove-button.remove-cover:hover {
+  background: #f0493d;
 }

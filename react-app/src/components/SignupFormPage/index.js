@@ -29,15 +29,18 @@ function SignupFormPage() {
 
   const validate = () => {
     const validationErrors = {};
-
+  
     if (!email) validationErrors.email = 'Email is required';
+    else if (!/^\S+@\S+\.\S+$/.test(email)) validationErrors.email = 'Invalid email address';
+  
     if (!username) validationErrors.username = 'Username is required';
     if (!password) validationErrors.password = 'Password is required';
     if (!confirmPassword) validationErrors.confirmPassword = 'Confirm password is required';
     if (password !== confirmPassword) validationErrors.confirmPassword = 'Passwords must match';
-
+  
     return validationErrors;
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

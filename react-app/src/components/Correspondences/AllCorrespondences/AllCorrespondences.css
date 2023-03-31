@@ -90,6 +90,11 @@
   color: royalblue;
 }
 
+.delete-dropdown.del-corr {
+  top: 0;
+  right: -140px;
+}
+
 .edit-button.edit-corr {
   border-radius: 5px;
   cursor: pointer;

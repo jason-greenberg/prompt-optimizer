@@ -11,6 +11,7 @@ from .api.resume_routes import resume_routes
 from .api.cover_letter_routes import cover_letter_routes
 from .api.application_routes import application_routes
 from .api.correspondence_routes import correspondence_routes
+from .api.payment_routes import payment_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -36,6 +37,7 @@ app.register_blueprint(resume_routes, url_prefix='/api/resumes')
 app.register_blueprint(cover_letter_routes, url_prefix='/api/coverletters')
 app.register_blueprint(application_routes, url_prefix='/api/applications')
 app.register_blueprint(correspondence_routes, url_prefix='/api/correspondences')
+app.register_blueprint(payment_routes, url_prefix='/api/payments')
 db.init_app(app)
 Migrate(app, db)
 

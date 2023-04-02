@@ -13,7 +13,7 @@ const createResume = (resume) => ({
 })
 
 export const clearCurrentResume = () => ({
-  type: CLEAR_CURRENT_COVER_LETTER,
+  type: CLEAR_CURRENT_RESUME,
 });
 
 const readResumes = (resumes) => ({
@@ -139,7 +139,7 @@ export default function resumesReducer(state = initialState, action) {
       newState.allResumes = { ...state.allResumes };
       delete newState.allResumes[action.resumeId];
       return newState;
-    case CLEAR_CURRENT_COVER_LETTER:
+    case CLEAR_CURRENT_RESUME:
       return {
         ...state,
         currentResume: null,

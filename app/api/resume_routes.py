@@ -22,12 +22,16 @@ def get_resumes():
     return [r.to_dict() for r in resumes]
 
 # Get resume by id
-@resume_routes.route('/<int:id>')
+@resume_routes.route('/<id>')
 @login_required
 def get_resume_by_id(id):
     """
     Query for a single resume by id
     """
+    if id is None or id == "null":
+    # Handle the case where the id is null buy sending an empty resume
+        return make_response(jsonify({}), 200)
+
     resume = Resume.query.get(id)
     
     # Return 404 if cover letter not found

@@ -11,9 +11,9 @@ export default function ResumeDetailAppView() {
   const { applicationId } = useParams()
   const dispatch = useDispatch()
   const history = useHistory()
-  const [state, setState] = useState({ isLoaded: false, error: false });
   const resume = useSelector(state => state.resumes.currentResume);
   const allResumes = useSelector(state => state.resumes.allResumes);
+  const hasResume = resume && 'id' in resume
   const allResumesArray = Object.values(allResumes);
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false)
   const { setSelectedSide } = useMenuSelector();
@@ -37,21 +37,10 @@ export default function ResumeDetailAppView() {
 
     history.push(`/resumes/${resume.id}/edit`)
   }
-  
-
-  if (!resume.id) {
-    return (
-      <div className="cover-letter-container">
-          <div className="cover-letter-body">
-            <h1>Resume Not Found</h1>
-          </div>
-        </div>
-    )
-  }
 
   return (
     <>
-      {state.isLoaded && !state.error && (
+      {hasResume && (
         <div 
           className="cover-letter-container"
           onClick={(e) => {
@@ -73,9 +62,9 @@ export default function ResumeDetailAppView() {
           </div>
         </div>
       )}
-      {state.isLoaded && state.error && (
-        <div className="resume-details-container">
-          <div className="resume-details-body">
+      {!hasResume && (
+        <div className="cover-letter-container">
+          <div className="cover-letter-body">
             <h1>Resume Not Found</h1>
           </div>
         </div>

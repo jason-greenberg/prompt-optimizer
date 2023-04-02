@@ -41,7 +41,7 @@ export default function ApplicationDetails() {
     } else {
       await dispatch(fetchAllResumesThunk());
   
-      if (application.resume_id) {
+      if (application.resume_id && application.resume_id !== null) {
         const resumeResponse = await dispatch(fetchSingleResumeThunk(application?.resume_id));
         if (resumeResponse.error || resumeResponse.notFound) {
           dispatch(clearCurrentResume());

@@ -74,7 +74,9 @@ export const fetchSingleResumeThunk = (resumeId) => async (dispatch) => {
   if (response.ok) {
     const resume = await response.json();
     await dispatch(readSingleResume(resume));
-    return resume
+    return resume;
+  } else if (response.status === 404) {
+    return { notFound: true }
   } else {
     return {'error': 'Error fetching single resume'};
   }

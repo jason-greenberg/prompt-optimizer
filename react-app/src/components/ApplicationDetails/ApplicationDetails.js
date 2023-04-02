@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { useMenuSelector } from '../../context/Menu'
 import { fetchSingleApplicationThunk } from '../../store/application'
-import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../store/resume'
+import { clearCurrentResume, fetchAllResumesThunk, fetchSingleResumeThunk } from '../../store/resume'
 import { capitalizeResumeTitle, getRomanIndex, numberToRoman } from '../../utils/format'
 import CoverLetterDetails from '../CoverLetters/CoverLetterDetails/CoverLetterDetails'
 import Navigation from '../Navigation'
@@ -42,7 +42,12 @@ export default function ApplicationDetails() {
       await dispatch(fetchAllResumesThunk());
   
       if (application.resume_id) {
-        await dispatch(fetchSingleResumeThunk(application.resume_id));
+        const resumeResponse = await dispatch(fetchSingleResumeThunk(application?.resume_id));
+        if (resumeResponse.error || resumeResponse.notFound) {
+          dispatch(clearCurrentResume());
+        }
+      } else {
+        dispatch(clearCurrentResume());
       }
   
       if (application.id) {

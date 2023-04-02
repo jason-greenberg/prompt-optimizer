@@ -64,8 +64,12 @@ export default function ResumeDetailAppView() {
       )}
       {!hasResume && (
         <div className="cover-letter-container">
-          <div className="cover-letter-body">
+          <div className="resume-details-body">
             <h1>Resume Not Found</h1>
+            <p>The resume associated with this job application has been deleted.</p>
+            <p>To connect a new resume to this job application:</p>
+            <p>1. If there are no resumes uploaded to your account, you will need to upload a resume.</p>
+            <p>2. Select 'Manage' and choose from the list of available resumes.</p>
           </div>
         </div>
       )}

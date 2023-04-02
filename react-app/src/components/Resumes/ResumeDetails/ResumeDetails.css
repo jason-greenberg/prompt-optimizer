@@ -94,6 +94,10 @@
   height: 87px;
 }
 
+.resume-details-body > p {
+  margin-bottom: 0;
+}
+
 .resume-header {
   align-items: center;
   display: flex;

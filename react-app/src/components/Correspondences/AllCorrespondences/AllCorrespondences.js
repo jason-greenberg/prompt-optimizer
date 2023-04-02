@@ -27,6 +27,8 @@ export default function AllCorrespondences() {
     const fetchAsync = async () => {
       await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId))
       setExpanded({}); // Reset the expanded state when correspondences change
+      setEditting({});
+      setEditVisible({});
     }
     fetchAsync()
   }, [correspondencesArray.length]);

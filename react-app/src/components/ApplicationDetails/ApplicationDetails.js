@@ -15,9 +15,8 @@ import ResumeDetailAppView from '../Resumes/ResumeDetails/ResumeDetailAppView'
 import EditApplication from './EditApplication'
 import DeleteApplication from './DeleteApplication'
 import AllCorrespondences from '../Correspondences/AllCorrespondences/AllCorrespondences'
-import { fetchAllCorrespondencesThunk, fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
+import { fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
 import CorrespondenceDropdown from '../Correspondences/CorrespondenceDropdown/CorrespondenceDropdown'
-import { authenticate } from '../../store/session'
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -28,6 +27,10 @@ export default function ApplicationDetails() {
   const resume = useSelector(state => state.resumes.currentResume)
   const allResumes = useSelector(state => state.resumes.allResumes)
   const allResumesArray = Object.values(allResumes);
+  const coverLettersState = useSelector(state => state.coverletters);
+  const allCoverLetters = coverLettersState.allCoverLetters;
+  const allCoverLettersArray = Object.values(allCoverLetters);
+
   const { selectedSide, setSelectedSide } = useMenuSelector();
   const [showManageDropdown, setShowManageDropdown] = useState(false)
   const [showMessageDropdown, setShowMessageDropdown] = useState(false)
@@ -54,9 +57,16 @@ export default function ApplicationDetails() {
         await dispatch(fetchCorrespondencesByApplicationIdThunk(application.id));
       }
   
-      if (application.cover_letter_id) {
-        const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
-        if (coverLetterResponse.error || coverLetterResponse.notFound) {
+      // Check if the cover letter exists before fetching it
+      if (application.cover_letter_id && application.cover_letter_id !== null) {
+        const coverLetterExists = allCoverLetters[application.cover_letter_id];
+  
+        if (coverLetterExists) {
+          const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
+          if (coverLetterResponse.error || coverLetterResponse.notFound) {
+            dispatch(clearCurrentCoverLetter());
+          }
+        } else {
           dispatch(clearCurrentCoverLetter());
         }
       } else {
@@ -65,7 +75,14 @@ export default function ApplicationDetails() {
   
       setState({ isLoaded: true, error: false });
     }
-  }, [applicationId, dispatch, deletedCoverLetterId, application.cover_letter_id, application.resume_id]);
+  }, [
+    applicationId,
+    dispatch,
+    deletedCoverLetterId,
+    application.cover_letter_id,
+    application.resume_id,
+    allCoverLettersArray.length,
+  ]);   
   
   useEffect(() => {
     fetchAsync();

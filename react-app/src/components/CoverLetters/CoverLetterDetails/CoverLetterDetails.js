@@ -23,19 +23,19 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const handleDelete = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const response = await dispatch(deleteCoverLetterThunk(coverLetter.id));
+    const response = await dispatch(deleteCoverLetterThunk(coverLetter.id, applicationId));
     if (response.notFound) {
       setNotFound(true);
     } else {
       // Clear the current cover letter from the Redux store
       dispatch(clearCurrentCoverLetter());
       
-      // Fetch the updated cover letter data after deletion
-      await dispatch(fetchSingleApplicationThunk(applicationId));
-  
+      
       // Update the deletedCoverLetterId state in the ApplicationDetails component
       setDeletedCoverLetterId(coverLetter.id);
     }
+    // Fetch the updated cover letter data after deletion
+    await dispatch(fetchSingleApplicationThunk(applicationId));
   };  
 
   return (

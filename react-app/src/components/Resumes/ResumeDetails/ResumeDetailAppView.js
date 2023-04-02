@@ -18,20 +18,6 @@ export default function ResumeDetailAppView() {
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false)
   const { setSelectedSide } = useMenuSelector();
   const [editResume, setEditResume] = useState(false)
-  
-  useEffect(() => {
-    const fetchAsync = async () => {
-      const response = await dispatch(fetchSingleResumeThunk(resume.id));
-      if (response.error) {
-        setState({ isLoaded: true, error: true });
-      } else {
-        setState({ isLoaded: true, error: false });
-      }
-      await dispatch(fetchAllResumesThunk())
-      await setSelectedSide('resume')
-    };
-    fetchAsync();
-  }, [resume.id, dispatch]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -53,7 +39,7 @@ export default function ResumeDetailAppView() {
   }
   
 
-  if (!resume) {
+  if (!resume.id) {
     return (
       <div className="cover-letter-container">
           <div className="cover-letter-body">

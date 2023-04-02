@@ -97,10 +97,23 @@ export default function ApplicationDetails() {
               <div className="app-info-box">
                 <div className="app-info-left">
                   <div className="job-name">{application?.job_title}</div>
-                  <div className="skill-level-box skill">{resume?.skill_level}</div>
-                  <div className="skill-level-box position-type">{resume?.position_type}</div>
+                  {resume && (
+                    <>
+                      <div className="skill-level-box skill">{resume?.skill_level}</div>
+                      <div className="skill-level-box position-type">{resume?.position_type}</div>
+                    </>
+                  )}
                   <div className="resume-name">
-                    {capitalizeResumeTitle(resume?.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                    {resume && (
+                      <>
+                        {capitalizeResumeTitle(resume?.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                      </>
+                    )}
+                    {!resume && (
+                      <>
+                        No Associated Resume
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="app-info-right">

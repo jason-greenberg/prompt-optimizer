@@ -7,6 +7,7 @@ const POPULATE = 'application/POPULATE_USER_APPLICATIONS';
 const READ = 'application/READ_SINGLE_APPLICATION';
 const UPDATE = 'application/UPDATE_APPLICATION';
 const DELETE = 'application/DELETE_APPLICATION';
+const REMOVE_COVER_LETTER_ID = 'application/REMOVE_COVER_LETTER_ID';
 
 // -------- ACTIONS ---------
 const createApplication = (application) => ({
@@ -33,6 +34,12 @@ const deleteApplication = (applicationId) => ({
   type: DELETE,
   applicationId,
 });
+
+export const removeCoverLetterId = (applicationId) => ({
+  type: REMOVE_COVER_LETTER_ID,
+  applicationId,
+});
+
 
 // ----- THUNK ACTIONS ------
 export const createApplicationThunk = (application) => async (dispatch) => {
@@ -138,6 +145,13 @@ export default function applicationsReducer(state = initialState, action) {
     case DELETE:
       newState.allApplications = { ...state.allApplications };
       delete newState.allApplications[action.applicationId];
+      return newState;
+    case REMOVE_COVER_LETTER_ID:
+      newState.allApplications = { ...state.allApplications };
+      newState.allApplications[action.applicationId] = {
+        ...state.allApplications[action.applicationId],
+        cover_letter_id: null,
+      };
       return newState;
     default:
       return state;

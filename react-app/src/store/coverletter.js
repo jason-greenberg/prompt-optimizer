@@ -1,3 +1,5 @@
+import { removeCoverLetterId } from './application';
+
 // constants
 const CREATE = 'coverLetter/CREATE_COVER_LETTER';
 const POPULATE = 'coverLetter/POPULATE_USER_COVER_LETTERS';
@@ -129,17 +131,24 @@ export const updateCoverLetterThunk = (coverLetter) => async (dispatch) => {
   }
 };
 
-export const deleteCoverLetterThunk = (coverLetterId) => async (dispatch) => {
+export const deleteCoverLetterThunk = (coverLetterId, applicationId) => async (dispatch) => {
   const response = await fetch(`/api/coverletters/${coverLetterId}`, {
     method: 'DELETE',
   });
   if (response.ok) {
     await dispatch(deleteCoverLetter(coverLetterId));
+
+    // If an applicationId is provided, dispatch the removeCoverLetterId action
+    if (applicationId) {
+      await dispatch(removeCoverLetterId(applicationId));
+    }
+
     return 'Successfully deleted';
   } else {
     return { error: 'Error deleting cover letter' };
   }
 };
+
 
 // -------- REDUCER ---------
 const initialState = {

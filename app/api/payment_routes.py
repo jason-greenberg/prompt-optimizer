@@ -8,7 +8,7 @@ payment_routes = Blueprint('payments', __name__)
 
 stripe.api_key = os.getenv('STRIPE_API_KEY')
 
-YOUR_DOMAIN = 'http://localhost:8000'
+YOUR_DOMAIN = 'http://localhost:3000'
 
 # Create checkout session
 @payment_routes.route('/create', methods=['POST'])
@@ -19,8 +19,8 @@ def create_checkout_session():
     """
     try:
         checkout_session = stripe.checkout.Session.create(
-            line_items = [
-                { 
+            line_items=[
+                {
                     'price': 'price_1MrqDSAshXPLTdi40vKdNhfZ',
                     'quantity': 1
                 }
@@ -31,5 +31,5 @@ def create_checkout_session():
         )
     except Exception as e:
         return str(e)
-    
-    return { 'message': 'success' }
+
+    return jsonify({'id': checkout_session.id, 'message': 'success'})

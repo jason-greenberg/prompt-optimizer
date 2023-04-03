@@ -68,6 +68,11 @@
   font-weight: 300;
 }
 
+.header-row {
+  display: contents;
+}
+
+
 .individual-app {
   color: #4a5d8a;
   font-size: 14px;

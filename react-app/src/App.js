@@ -17,7 +17,7 @@ import AllCoverLetters from "./components/CoverLetters/AllCoverLetters/AllCoverL
 import CreateApplication from "./components/CreateApplication/CreateApplication";
 import AboutDetails from "./components/About/AboutDetails";
 import ManageCorrespondences from "./components/Correspondences/ManageCorrespondences/ManageCorrespondences";
-import Test from "./components/Payments/Test";
+import CheckoutPage from "./components/Payments/CheckoutPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function App() {
     <>
       {isLoaded && (
         <Switch>
-          <Route path="/checkout" component={Test} />
+          <Route path="/checkout" component={CheckoutPage} />
           <Route path="/login" component={LoginFormPage} />
           <Route path="/signup" component={SignupFormPage} />
           <Route path="/dashboard" component={Dashboard} />

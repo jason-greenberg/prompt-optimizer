@@ -33,6 +33,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  margin-bottom: 5px;
+  padding-left: 48px;
+}
+
+.checkout-button {
+  margin-top: 20px;
 }
 
 .checkout-table-title {
@@ -40,6 +46,12 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
+}
+
+.checkbox {
+  position: absolute;
+  left: 30px;
+  top: 31%;
 }
 
 .col-detail {
@@ -51,8 +63,9 @@
 }
 
 .col-name {
-  text-align: left;
+  font-weight: 500;
   padding: 4px;
+  text-align: left;
 }
 
 .column-headings.checkout-headings {
@@ -60,6 +73,10 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
+}
+
+.gens {
+  font-weight: 400;
 }
 
 .indiv-package {
@@ -70,8 +87,15 @@
   border: 1px solid #D0DBF0;
   border-radius: 6px;
   padding: 10px;
+  padding-left: 48px;
+  position: relative;
 }
 
 .package-title {
   padding-left: 20px;
+}
+
+.selected-package {
+  border: 1px solid #5A50EB;
+  background-color: #F7F9FD;
 }

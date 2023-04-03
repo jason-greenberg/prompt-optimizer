@@ -24,7 +24,7 @@ export default function LoadingDefault() {
       <div className="loading-page-container">
         <div className="loading-page-body">
           <h1 className="loading-message">{message}</h1>
-          <img className="loading-gif" src={loadingGif} alt="loading-gif" />
+          <img className="loading-gif" src="https://i.imgur.com/rCp5v53.gif" alt="loading-gif" />
         </div>
       </div>
     </>

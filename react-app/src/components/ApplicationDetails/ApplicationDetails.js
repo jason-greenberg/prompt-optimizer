@@ -9,7 +9,7 @@ import CoverLetterDetails from '../CoverLetters/CoverLetterDetails/CoverLetterDe
 import Navigation from '../Navigation'
 import downArrow from '../Navigation/assets/down-arrow.png'
 import './ApplicationDetails.css'
-import { clearCurrentCoverLetter, fetchSingleCoverLetterThunk } from '../../store/coverletter';
+import { clearCurrentCoverLetter, fetchAllCoverLettersThunk, fetchSingleCoverLetterThunk } from '../../store/coverletter';
 import JobDetails from './JobDetails'
 import ResumeDetailAppView from '../Resumes/ResumeDetails/ResumeDetailAppView'
 import EditApplication from './EditApplication'
@@ -43,6 +43,7 @@ export default function ApplicationDetails() {
       setState({ isLoaded: true, error: true });
     } else {
       await dispatch(fetchAllResumesThunk());
+      await dispatch(fetchAllCoverLettersThunk());
   
       if (application.resume_id && application.resume_id !== null) {
         const resumeResponse = await dispatch(fetchSingleResumeThunk(application?.resume_id));
@@ -59,7 +60,7 @@ export default function ApplicationDetails() {
   
       // Check if the cover letter exists before fetching it
       if (application.cover_letter_id && application.cover_letter_id !== null) {
-        const coverLetterExists = allCoverLetters[application.cover_letter_id];
+        const coverLetterExists = allCoverLetters[application.cover_letter_id] 
   
         if (coverLetterExists) {
           const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
@@ -78,7 +79,6 @@ export default function ApplicationDetails() {
   }, [
     applicationId,
     dispatch,
-    deletedCoverLetterId,
     application.cover_letter_id,
     application.resume_id,
     allCoverLettersArray.length,

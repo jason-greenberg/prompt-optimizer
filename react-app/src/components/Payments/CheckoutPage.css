@@ -1,0 +1,122 @@
+/* CONTAINERS */
+.checkout-page-container {
+  color: #21232E;
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  flex-direction: column;
+  align-items: center;
+  margin: 90px 0px;
+  width: 100%;
+}
+
+.checkout-page-body {
+  align-items: flex-start;
+  color: rgb(33, 35, 46);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  justify-content: flex-start;
+  max-width: 1250px;
+  min-width: 1065px;
+  overflow-x: auto;
+  width: 100%;
+}
+/* ---------- */
+.packages-grid {
+  display: flex;
+  flex-direction: column;
+  width: 79%;
+}
+
+.purchase-desc {
+  max-width: 1050px;
+  width: 100%;
+  color: rgb(94, 107, 150);
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+.header-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 5px;
+  padding-left: 48px;
+}
+
+.checkout-button {
+  margin-top: 20px;
+}
+
+.checkout-table-title {
+  color: rgb(52, 56, 72);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.checkbox {
+  position: absolute;
+  left: 28px;
+  top: 34%;
+}
+
+.col-detail {
+  color: rgb(33, 35, 46);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  padding: 4px;
+  text-align: right;
+  margin-right: 15em;
+}
+
+.col-name {
+  font-weight: 500;
+  padding: 4px;
+  text-align: left;
+}
+
+.column-headings.checkout-headings {
+  color: rgb(33, 35, 46);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.gens {
+  font-weight: 400;
+}
+
+.loading-checkout {
+  height: 20px;
+  padding: 0px 20px;
+}
+
+.price-head {
+  padding-left: 45px;
+}
+
+.indiv-package {
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  border: 1px solid #D0DBF0;
+  border-radius: 6px;
+  padding: 10px;
+  padding-left: 48px;
+  position: relative;
+}
+
+.package-title {
+  padding-left: 20px;
+  text-align: left;
+}
+
+.selected-package {
+  border: 1px solid #5A50EB;
+  background-color: #F7F9FD;
+}

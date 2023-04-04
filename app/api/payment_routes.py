@@ -1,8 +1,14 @@
-from flask import Blueprint, jsonify, make_response, request
+from flask import Blueprint, jsonify, make_response, request, redirect
 from flask_login import login_required, current_user
 from app.models import db
+import stripe
+import os
 
 payment_routes = Blueprint('payments', __name__)
+
+stripe.api_key = os.getenv('STRIPE_API_KEY')
+
+YOUR_DOMAIN = 'http://localhost:3000'
 
 # Create checkout session
 @payment_routes.route('/create', methods=['POST'])
@@ -11,3 +17,23 @@ def create_checkout_session():
     """
     Create a new checkout session with stripe
     """
+    data = request.json
+    api_id = data['api_id']
+
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    'price': api_id,
+                    'quantity': 1
+                }
+            ],
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success',
+            cancel_url=YOUR_DOMAIN + '/cancel',
+            allow_promotion_codes=True
+        )
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+    return jsonify({'id': checkout_session.id, 'message': 'success'})

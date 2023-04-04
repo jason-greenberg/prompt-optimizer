@@ -53,8 +53,13 @@
   padding: 0px 0px 0px 20px;
 }
 
+.gen-balance {
+  font-family: Menlo, monospace;
+  font-weight: 500;
+}
+
 .signout-container.gen-count-container {
-  padding: 0px 5px 0px 1px;
+  padding: 2px 5px 2px 1px;
 }
 
 .logo {

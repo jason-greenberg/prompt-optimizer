@@ -8,6 +8,7 @@ import Navigation from '../../Navigation'
 import './CreateCoverLetter.css'
 import LoadingDefault from '../../Loading/LoadingDefault';
 import linkIcon from './assets/link-icon.png'
+import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
 import { createCoverLetterThunk } from '../../../store/coverletter';
 
 export default function CreateCoverLetter() {
@@ -18,12 +19,16 @@ export default function CreateCoverLetter() {
   const allResumes = useSelector(state => state.resumes?.allResumes)
   const resume = useSelector(state => state.resumes?.currentResume)
   const allResumesArray = Object.values(allResumes)
+  const user = useSelector(state => state.session.user);
   const [selectedResume, setSelectedResume] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [jobDescription, setJobDescription] = useState('');
   const [companyDetails, setCompanyDetails] = useState('');
   const [jobTitle, setJobTitle] = useState('');
+  const outOfCredits = user.generation_balance < 11
+  const [showPopup, setShowPopup] = useState(false);
+
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -138,9 +143,9 @@ export default function CreateCoverLetter() {
                     className=""
                     placeholder={`The best coverletters are tailored specifically to a company. Here is what works best for this box:
     
-    1.  A recent news article or press release regarding company activities (this is ideal!)
+    1.  A detailed 'About' section from a company website or job site which talks about company values (this is ideal!)
     
-    2.  A detailed 'About' section from a company website or job site
+    2.  A recent news article or press release regarding company activities
                     `}
                     value={companyDetails}
                     onChange={(e) => {
@@ -152,10 +157,20 @@ export default function CreateCoverLetter() {
                   </textarea>
                   {errors.companyDetails && <div className="error-message">{errors.companyDetails}</div>}
                 </div>
-                <div className="submit-container">
+                <div 
+                  className="submit-container submit-cover"
+                  onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
+                  onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
+                >
+                  {showPopup && (
+                    <div className="popup">
+                      <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
+                      <div>You're out of credits</div>
+                    </div>
+                  )}
                   <button 
-                    className="submit-button"
-                    onClick={onSubmit}
+                    className={outOfCredits ? 'submit-button-disabled' : 'submit-button'}
+                    onClick={outOfCredits ? null : onSubmit}
                   >
                     Create Cover Letter
                   </button>

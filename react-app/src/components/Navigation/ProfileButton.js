@@ -71,7 +71,7 @@ function ProfileButton() {
             >
               <div className="signout-container">
                 <img className="option-icon" src={coverLetterIcon} alt="option-icon" />
-                <div>{user.generation_balance}</div>
+                <div className="gen-balance">{user.generation_balance}</div>
               </div>
               <button 
                 className="create-button buy-button"

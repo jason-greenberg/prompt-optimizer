@@ -28,7 +28,7 @@ export default function CheckoutPage() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ api_id: apiId })
+        body: JSON.stringify({ api_id: apiId, amount_generations: checkoutObj[selectedPackage].calls })
        });
       const data = await response.json();
       const sessionId = data.id;

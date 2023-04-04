@@ -27,7 +27,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# Tell flask about our seed commands
+# Tell flask about seed commands
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
@@ -40,6 +40,11 @@ app.register_blueprint(correspondence_routes, url_prefix='/api/correspondences')
 app.register_blueprint(payment_routes, url_prefix='/api/payments')
 db.init_app(app)
 Migrate(app, db)
+
+# # Initialize CSRF protection and exempt webhook route
+# csrf = CSRFProtect(app)
+# csrf.exempt(payment_routes.view_functions['webhook_received'])
+
 
 # Application Security
 CORS(app)

@@ -71,27 +71,26 @@ def webhook_received():
         user_id = session["metadata"]["user_id"]
         amount_generations = int(session["metadata"]["amount_generations"])
 
-        # Extract the product_id and the corresponding cost
-        product_id = session["line_items"]["data"][0]["price"]["id"]
-        cost = session["line_items"]["data"][0]["price"]["unit_amount"] / 100
+        # Extract the corresponding cost
+        cost = session["amount_total"] / 100
 
         # Determine the purchased product
-        package = get_package_details(product_id)
+        package = get_package_details(amount_generations)
 
         # Update the user's generation balance and create a transaction record
         update_user_generation_balance_and_create_transaction(user_id, package, amount_generations, cost)
 
     return "Success", 200
 
-def get_package_details(product_id):
+def get_package_details(amount_generations):
     # Define product IDs and their corresponding package details
     product_mapping = {
-        "price_1MrqDSAshXPLTdi40vKdNhfZ": "basic",
-        "price_1MrqFlAshXPLTdi4SVZJZvqk": "starter",
-        "price_1MrqHhAshXPLTdi4XGFEtzGO": "pro",
-        "price_1Msvl3AshXPLTdi4erkeVUZU": "pro_plus"
+        20: "basic",
+        100: "starter",
+        500: "pro",
+        1000: "pro_plus"
     }
-    return product_mapping.get(product_id, None)
+    return product_mapping.get(amount_generations, None)
 
 
 def update_user_generation_balance_and_create_transaction(user_id, package, amount_generations, cost):

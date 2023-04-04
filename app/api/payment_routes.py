@@ -8,7 +8,7 @@ payment_routes = Blueprint('payments', __name__)
 
 stripe.api_key = os.getenv('STRIPE_API_KEY')
 environment = os.getenv("FLASK_ENV")
-url = os.getenv("REACT_BASE_URL")
+url = os.getenv("REACT_APP_BASE_URL")
 STRIPE_WEBHOOK_SECRET=os.getenv('STRIPE_WEBHOOK_SECRET')
 STRIPE_LOCAL_WEBHOOK=os.getenv('STRIPE_LOCAL_WEBHOOK')
 

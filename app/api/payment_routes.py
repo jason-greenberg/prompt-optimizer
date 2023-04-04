@@ -44,11 +44,11 @@ def create_checkout_session():
 @payment_routes.route("/webhook", methods=["POST"])
 def webhook_received():
     payload = request.data
-    sig_header = request.headers.get("STRIPE_SIGNATURE")
+    sig_header = request.headers.get("Stripe-Signature")
 
     try:
         event = stripe.Webhook.construct_event(
-            payload, sig_header, STRIPE_LOCAL_WEBHOOK
+            payload, sig_header, STRIPE_WEBHOOK_SECRET
         )
     except ValueError as e:
         # Invalid payload

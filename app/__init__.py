@@ -41,6 +41,11 @@ app.register_blueprint(payment_routes, url_prefix='/api/payments')
 db.init_app(app)
 Migrate(app, db)
 
+# # Initialize CSRF protection and exempt webhook route
+# csrf = CSRFProtect(app)
+# csrf.exempt(payment_routes.view_functions['webhook_received'])
+
+
 # Application Security
 CORS(app)
 

@@ -17,11 +17,14 @@ def create_checkout_session():
     """
     Create a new checkout session with stripe
     """
+    data = request.json
+    api_id = data['api_id']
+
     try:
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
-                    'price': 'price_1MrqDSAshXPLTdi40vKdNhfZ',
+                    'price': api_id,
                     'quantity': 1
                 }
             ],
@@ -31,6 +34,6 @@ def create_checkout_session():
             allow_promotion_codes=True
         )
     except Exception as e:
-        return str(e)
+        return jsonify({'error': str(e)}), 400
 
     return jsonify({'id': checkout_session.id, 'message': 'success'})

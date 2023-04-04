@@ -26,7 +26,16 @@
 .packages-grid {
   display: flex;
   flex-direction: column;
+  width: 79%;
+}
+
+.purchase-desc {
+  max-width: 1050px;
   width: 100%;
+  color: rgb(94, 107, 150);
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 20px;
 }
 
 .header-container {
@@ -50,8 +59,8 @@
 
 .checkbox {
   position: absolute;
-  left: 30px;
-  top: 31%;
+  left: 28px;
+  top: 34%;
 }
 
 .col-detail {
@@ -60,6 +69,8 @@
   font-weight: 500;
   line-height: 24px;
   padding: 4px;
+  text-align: right;
+  margin-right: 15em;
 }
 
 .col-name {
@@ -79,6 +90,10 @@
   font-weight: 400;
 }
 
+.price-head {
+  padding-left: 45px;
+}
+
 .indiv-package {
   margin-bottom: 10px;
   display: grid;
@@ -93,6 +108,7 @@
 
 .package-title {
   padding-left: 20px;
+  text-align: left;
 }
 
 .selected-package {

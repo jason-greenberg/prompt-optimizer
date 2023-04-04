@@ -53,6 +53,10 @@
   padding: 0px 0px 0px 20px;
 }
 
+.signout-container.gen-count-container {
+  padding: 0px 5px 0px 1px;
+}
+
 .logo {
   padding: 0px 20px;
   font-family: "Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;

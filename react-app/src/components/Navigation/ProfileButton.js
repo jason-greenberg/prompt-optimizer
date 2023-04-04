@@ -66,7 +66,12 @@ function ProfileButton({ user }) {
                 <img className="option-icon" src={coverLetterIcon} alt="option-icon" />
                 <div>{user.generation_balance}</div>
               </div>
-              <button className="create-button buy-button">Buy Credits</button>
+              <button 
+                className="create-button buy-button"
+                onClick={() => history.push('/checkout')}
+              >
+                Buy Credits
+              </button>
             </li>
             <li className="break"></li>
             <li 

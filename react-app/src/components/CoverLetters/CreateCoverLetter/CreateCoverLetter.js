@@ -26,7 +26,7 @@ export default function CreateCoverLetter() {
   const [jobDescription, setJobDescription] = useState('');
   const [companyDetails, setCompanyDetails] = useState('');
   const [jobTitle, setJobTitle] = useState('');
-  const outOfCredits = user.generation_balance < 11
+  const outOfCredits = user.generation_balance < 1
   const [showPopup, setShowPopup] = useState(false);
 
 

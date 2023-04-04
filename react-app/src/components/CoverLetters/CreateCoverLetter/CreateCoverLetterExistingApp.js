@@ -10,6 +10,7 @@ import linkIcon from './assets/link-icon.png'
 import { updateCoverLetterWithApplicationThunk } from '../../../store/coverletter';
 import { fetchSingleApplicationThunk } from '../../../store/application';
 import LoadingDefault from '../../Loading/LoadingDefault';
+import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
 
 export default function CreateCoverLetterExistingApp() {
   const dispatch = useDispatch();
@@ -20,12 +21,15 @@ export default function CreateCoverLetterExistingApp() {
   const [state, setState] = useState({ isLoaded: false, error: false })
   const allResumes = useSelector(state => state.resumes?.allResumes)
   const resume = useSelector(state => state.resumes?.currentResume)
+  const user = useSelector(state => state.session.user);
   const allResumesArray = Object.values(allResumes)
   const [selectedResume, setSelectedResume] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [jobDescription, setJobDescription] = useState(application.job_description);
   const [companyDetails, setCompanyDetails] = useState(application.company_details);
+  const outOfCredits = user.generation_balance < 1
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -139,10 +143,20 @@ export default function CreateCoverLetterExistingApp() {
                   </textarea>
                   {errors.companyDetails && <div className="error-message">{errors.companyDetails}</div>}
                 </div>
-                <div className="submit-container">
+                <div 
+                  className="submit-container submit-cover"
+                  onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
+                  onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
+                >
+                  {showPopup && (
+                    <div className="popup">
+                      <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
+                      <div>You're out of credits</div>
+                    </div>
+                  )}
                   <button 
-                    className="submit-button"
-                    onClick={onSubmit}
+                    className={outOfCredits ? 'submit-button-disabled' : 'submit-button'}
+                    onClick={outOfCredits ? null : onSubmit}
                   >
                     Create Cover Letter
                   </button>

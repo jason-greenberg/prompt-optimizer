@@ -13,12 +13,13 @@ from .prompts import (
     corr_job_offer_acceptance_decline,
     corr_reconnection
 )
+from ..models import db, User
 import os
 import openai
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-def call_gpt(messages, model='gpt-3.5-turbo'):
+def call_gpt(messages, user, model='gpt-3.5-turbo'):
     """
     Sends a request for chat completion to OpenAI
     messages parameter is a list of objects, each object containing 'role' and 'content' attributes
@@ -29,11 +30,17 @@ def call_gpt(messages, model='gpt-3.5-turbo'):
         messages=messages
     )
 
+    if response.choices[0].message.content is not None and user is not None:
+        current_user = User.query.get(user.id)
+        current_user.generation_balance -= 1
+        print('subtracting', current_user)
+        db.session.commit()
+
     print(response.choices[0].message.content)
     return response.choices[0].message.content
 
 
-def generate_gpt_cover_letter(resume, job_description, company_details, engine):
+def generate_gpt_cover_letter(resume, job_description, company_details, engine, user):
     """
     Generates a cover letter using OpenAI's chat completion api. Iterates through a succession of prompts to generate the best possible cover letter
     """
@@ -48,10 +55,10 @@ def generate_gpt_cover_letter(resume, job_description, company_details, engine):
         {"role": "assistant", "content": 'Assistant generates another revision, to include applicants qualifications for the job'}
     ]
 
-    return call_gpt(messages, engine)
+    return call_gpt(messages, user, engine)
 
 
-def generate_gpt_correspondence(context, corr_type, engine):
+def generate_gpt_correspondence(context, corr_type, engine, user):
     """
     Generates a correspondence using OpenAI's chat completion api.
     Dynamically generated according to passed in 'context' and 'corr_type'
@@ -95,4 +102,4 @@ def generate_gpt_correspondence(context, corr_type, engine):
         {"role": "assistant", "content": "Assistant generates a correspondences for LinkedIn or Email with user's context"}
     ]
 
-    return call_gpt(messages, engine)
+    return call_gpt(messages, user, engine)

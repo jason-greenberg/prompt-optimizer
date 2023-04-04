@@ -156,7 +156,7 @@ def create_correspondence(application_id):
     engine = data['engine']
     
     # GPT logic here
-    generated_response = generate_gpt_correspondence(context, corr_type, engine)
+    generated_response = generate_gpt_correspondence(context, corr_type, engine, current_user)
 
     # Create new correspondence in db
     new_correspondence = Correspondence(

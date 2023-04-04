@@ -122,7 +122,7 @@ def create_new_cover_letter_standalone(id):
     application_id=data['application_id']
 
     # Generate a cover letter using OpenAI's API
-    letter = generate_gpt_cover_letter(resume, job_description, company_details, engine)
+    letter = generate_gpt_cover_letter(resume, job_description, company_details, engine, current_user)
 
     # Create new cover letter in db
     new_cover_letter = CoverLetter(

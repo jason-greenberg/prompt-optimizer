@@ -7,8 +7,8 @@ import os
 payment_routes = Blueprint('payments', __name__)
 
 stripe.api_key = os.getenv('STRIPE_API_KEY')
-
-YOUR_DOMAIN = 'http://localhost:3000'
+environment = os.getenv("FLASK_ENV")
+url = os.getenv("REACT_BASE_URL")
 STRIPE_WEBHOOK_SECRET=os.getenv('STRIPE_WEBHOOK_SECRET')
 STRIPE_LOCAL_WEBHOOK=os.getenv('STRIPE_LOCAL_WEBHOOK')
 
@@ -29,8 +29,8 @@ def create_checkout_session():
                 }
             ],
             mode='payment',
-            success_url=YOUR_DOMAIN + '/success',
-            cancel_url=YOUR_DOMAIN + '/cancel',
+            success_url=url + '/success',
+            cancel_url=url + '/cancel',
             allow_promotion_codes=True,
             metadata={'user_id': str(current_user.id), 'amount_generations': str(amount_generations)}
         )
@@ -47,9 +47,14 @@ def webhook_received():
     sig_header = request.headers.get("Stripe-Signature")
 
     try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, STRIPE_WEBHOOK_SECRET
-        )
+        if environment == 'production':
+            event = stripe.Webhook.construct_event(
+                payload, sig_header, STRIPE_WEBHOOK_SECRET
+            )
+        elif environment == 'development':
+            event = stripe.Webhook.construct_event(
+                payload, sig_header, STRIPE_LOCAL_WEBHOOK
+            )
     except ValueError as e:
         # Invalid payload
         return "Invalid payload", 400
@@ -60,6 +65,7 @@ def webhook_received():
      # Handle the checkout.session.completed event
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
+        print('session', session)
 
         # Extract the necessary information from the session object
         user_id = session["metadata"]["user_id"]

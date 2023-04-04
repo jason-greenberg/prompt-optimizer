@@ -10,7 +10,7 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     package = db.Column(db.String, nullable=False)
-    amount_generations = db.Column(db.String, nullable=False)
+    amount_generations = db.Column(db.Integer, nullable=False)
     cost = db.Column(db.Float(asdecimal=True, decimal_return_scale=2), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
 

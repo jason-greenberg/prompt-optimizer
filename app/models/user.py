@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     cover_letters = db.relationship('CoverLetter', back_populates='user')
     resumes = db.relationship('Resume', back_populates='user')
     correspondences = db.relationship('Correspondence', back_populates='user')
+    transactions = db.relationship('Transaction', back_populates='user')
 
     @property
     def password(self):

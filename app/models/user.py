@@ -13,11 +13,13 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    generation_balance = db.Column(db.Integer, default=0, nullable=False)
 
     applications = db.relationship('Application', back_populates='user')
     cover_letters = db.relationship('CoverLetter', back_populates='user')
     resumes = db.relationship('Resume', back_populates='user')
     correspondences = db.relationship('Correspondence', back_populates='user')
+    transactions = db.relationship('Transaction', back_populates='user')
 
     @property
     def password(self):

@@ -43,7 +43,7 @@ ZipCover has been built using the following technologies:
 
 ![zipcover-dbschema]
 
-[zipcover-dbschema]: ./app/assets/zipcover-schema.png
+[zipcover-dbschema]: ./app/assets/zipcover-db-diagram.png
 
 ## Prerequisites
 Before you can start using ZipCover, you will need to set up the following environment variables using a .env file:

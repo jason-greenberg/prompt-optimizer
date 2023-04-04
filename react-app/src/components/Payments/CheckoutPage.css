@@ -90,6 +90,11 @@
   font-weight: 400;
 }
 
+.loading-checkout {
+  height: 20px;
+  padding: 0px 20px;
+}
+
 .price-head {
   padding-left: 45px;
 }

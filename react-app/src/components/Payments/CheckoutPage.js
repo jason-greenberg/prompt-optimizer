@@ -4,6 +4,7 @@ import './CheckoutPage.css'
 import Navigation from '../Navigation';
 import CustomCheckbox from '../Checkbox/CustomCheckbox';
 import LoadingNoMessages from '../Loading/LoadingWithoutMessages';
+import loadingGif from '../Loading/assets/loading.gif'
 
 export default function CheckoutPage() {
   
@@ -20,22 +21,24 @@ export default function CheckoutPage() {
   }
 
   async function redirectToCheckout() {
-    await setLoading(true);
-    const response = await fetch('/api/payments/create', { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ api_id: apiId })
-     });
-    const data = await response.json();
-    const sessionId = data.id;
-  
-    const stripe = await stripePromise;
-    const { error } = await stripe.redirectToCheckout({ sessionId });
-  
-    if (error) {
-      console.error('Error redirecting to Stripe Checkout:', error.message);
+    if (apiId !== null) {
+      await setLoading(true);
+      const response = await fetch('/api/payments/create', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ api_id: apiId })
+       });
+      const data = await response.json();
+      const sessionId = data.id;
+    
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+    
+      if (error) {
+        console.error('Error redirecting to Stripe Checkout:', error.message);
+      }
     }
   }
 
@@ -83,7 +86,16 @@ export default function CheckoutPage() {
             onClick={redirectToCheckout}
             className="create-button checkout-button"
           >
-            Checkout
+            { !loading && (
+              <>
+                Checkout
+              </>
+            )}
+            { loading && (
+              <>
+                <img src={loadingGif} className='loading-checkout' alt="loading-gif" />
+              </>
+            )}
           </button>
         </div>
       </div>

@@ -40,6 +40,12 @@
   transition: all 250ms ease 0s;
 }
 
+.create-button.buy-button {
+  font-size: 13px;
+  padding: 5px 10px;
+  min-width: fit-content;
+}
+
 .first-nav-links {
   align-items: center;
   display: flex;

@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import userImage from "./assets/default_gravatar.webp"
 import downArrow from "./assets/down-arrow.png";
 import signOut from "./assets/sign_out_icon.png";
+import coverLetterIcon from './assets/zipcover-logo.png'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -56,6 +57,16 @@ function ProfileButton({ user }) {
             <li className="user-email-container">
               <img className="user-icon-dropdown" src={userImage} alt="user-icon" />
               <div>{user.email}</div>
+            </li>
+            <li className="break"></li>
+            <li 
+              className="signout-container gen-count-container"
+            >
+              <div className="signout-container">
+                <img className="option-icon" src={coverLetterIcon} alt="option-icon" />
+                <div>{user.generation_balance}</div>
+              </div>
+              <button className="create-button buy-button">Buy Credits</button>
             </li>
             <li className="break"></li>
             <li 

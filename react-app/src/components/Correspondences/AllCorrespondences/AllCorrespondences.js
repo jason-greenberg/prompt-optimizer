@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { formatCorrType } from '../../../utils/format';
 import { chooseIcon } from '../../../utils/corr-images';
 import { handleCopyToClipboard } from '../../../utils/clipboard';
+import { authenticate } from '../../../store/session';
 
 export default function AllCorrespondences() {
   const dispatch = useDispatch()
@@ -27,6 +28,9 @@ export default function AllCorrespondences() {
     const fetchAsync = async () => {
       await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId))
       setExpanded({}); // Reset the expanded state when correspondences change
+      setEditedResponse({});
+      setEditting({});
+      await dispatch(authenticate());
     }
     fetchAsync()
   }, [correspondencesArray.length]);

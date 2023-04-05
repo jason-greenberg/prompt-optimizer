@@ -10,7 +10,7 @@ class Application(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     resume_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('resumes.id'), ondelete='CASCADE'), nullable=True)
-    cover_letter_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('coverletters.id')), nullable=True)
+    cover_letter_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('coverletters.id'), ondelete='SET NULL'), nullable=True)
     job_title = db.Column(db.String, nullable=False)
     job_description = db.Column(db.String, nullable=False)
     position_type = db.Column(db.String, nullable=True)

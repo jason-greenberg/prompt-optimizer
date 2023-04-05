@@ -70,7 +70,7 @@ def seed_applications():
     application3 = Application(
         user_id=demo.id,
         resume_id=demo_resumes[6].id,
-        cover_letter_id=bobbie_coverletter.id,
+        cover_letter_id=demo_coverletters[3].id,
         job_title='Project Manager',
         job_description=bobbie_coverletter.job_description,
         position_type=demo_resumes[6].position_type,

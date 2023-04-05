@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { useMenuSelector } from '../../context/Menu'
 import { fetchSingleApplicationThunk } from '../../store/application'
-import { fetchAllResumesThunk, fetchSingleResumeThunk } from '../../store/resume'
+import { clearCurrentResume, fetchAllResumesThunk, fetchSingleResumeThunk } from '../../store/resume'
 import { capitalizeResumeTitle, getRomanIndex, numberToRoman } from '../../utils/format'
 import CoverLetterDetails from '../CoverLetters/CoverLetterDetails/CoverLetterDetails'
 import Navigation from '../Navigation'
 import downArrow from '../Navigation/assets/down-arrow.png'
 import './ApplicationDetails.css'
-import { clearCurrentCoverLetter, fetchSingleCoverLetterThunk } from '../../store/coverletter';
+import { clearCurrentCoverLetter, fetchAllCoverLettersThunk, fetchSingleCoverLetterThunk } from '../../store/coverletter';
 import JobDetails from './JobDetails'
 import ResumeDetailAppView from '../Resumes/ResumeDetails/ResumeDetailAppView'
 import EditApplication from './EditApplication'
 import DeleteApplication from './DeleteApplication'
 import AllCorrespondences from '../Correspondences/AllCorrespondences/AllCorrespondences'
-import { fetchAllCorrespondencesThunk, fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
+import { fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
 import CorrespondenceDropdown from '../Correspondences/CorrespondenceDropdown/CorrespondenceDropdown'
 import { authenticate } from '../../store/session'
 import zipCoverLogo from '../Navigation/assets/zipcover-logo.png';
@@ -30,6 +30,10 @@ export default function ApplicationDetails() {
   const allResumes = useSelector(state => state.resumes.allResumes)
   const user = useSelector(state => state.session.user)
   const allResumesArray = Object.values(allResumes);
+  const coverLettersState = useSelector(state => state.coverletters);
+  const allCoverLetters = coverLettersState.allCoverLetters;
+  const allCoverLettersArray = Object.values(allCoverLetters);
+
   const { selectedSide, setSelectedSide } = useMenuSelector();
   const [showManageDropdown, setShowManageDropdown] = useState(false)
   const [showMessageDropdown, setShowMessageDropdown] = useState(false)
@@ -44,18 +48,31 @@ export default function ApplicationDetails() {
       setState({ isLoaded: true, error: true });
     } else {
       await dispatch(fetchAllResumesThunk());
+      await dispatch(fetchAllCoverLettersThunk());
   
-      if (application.resume_id) {
-        await dispatch(fetchSingleResumeThunk(application.resume_id));
+      if (application.resume_id && application.resume_id !== null) {
+        const resumeResponse = await dispatch(fetchSingleResumeThunk(application?.resume_id));
+        if (resumeResponse.error || resumeResponse.notFound) {
+          dispatch(clearCurrentResume());
+        }
+      } else {
+        dispatch(clearCurrentResume());
       }
   
       if (application.id) {
         await dispatch(fetchCorrespondencesByApplicationIdThunk(application.id));
       }
   
-      if (application.cover_letter_id) {
-        const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
-        if (coverLetterResponse.error || coverLetterResponse.notFound) {
+      // Check if the cover letter exists before fetching it
+      if (application.cover_letter_id && application.cover_letter_id !== null) {
+        const coverLetterExists = allCoverLetters[application.cover_letter_id] 
+  
+        if (coverLetterExists) {
+          const coverLetterResponse = await dispatch(fetchSingleCoverLetterThunk(application?.cover_letter_id));
+          if (coverLetterResponse.error || coverLetterResponse.notFound) {
+            dispatch(clearCurrentCoverLetter());
+          }
+        } else {
           dispatch(clearCurrentCoverLetter());
         }
       } else {
@@ -64,7 +81,13 @@ export default function ApplicationDetails() {
   
       setState({ isLoaded: true, error: false });
     }
-  }, [applicationId, dispatch, deletedCoverLetterId, application.cover_letter_id, application.resume_id]);
+  }, [
+    applicationId,
+    dispatch,
+    application.cover_letter_id,
+    application.resume_id,
+    allCoverLettersArray.length,
+  ]);   
   
   useEffect(() => {
     fetchAsync();
@@ -100,10 +123,23 @@ export default function ApplicationDetails() {
               <div className="app-info-box">
                 <div className="app-info-left">
                   <div className="job-name">{application?.job_title}</div>
-                  <div className="skill-level-box skill">{resume?.skill_level}</div>
-                  <div className="skill-level-box position-type">{resume?.position_type}</div>
+                  {resume && (
+                    <>
+                      <div className="skill-level-box skill">{resume?.skill_level}</div>
+                      <div className="skill-level-box position-type">{resume?.position_type}</div>
+                    </>
+                  )}
                   <div className="resume-name">
-                    {capitalizeResumeTitle(resume?.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                    {resume && (
+                      <>
+                        {capitalizeResumeTitle(resume?.position_type) + ` Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
+                      </>
+                    )}
+                    {!resume && (
+                      <>
+                        No Associated Resume
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="app-info-right">

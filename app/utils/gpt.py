@@ -27,7 +27,7 @@ def call_gpt(messages, user, model='gpt-3.5-turbo'):
     """
     try:
         response = openai.ChatCompletion.create(
-            engine=model,
+            model=model,
             messages=messages
         )
     except openai.error.APIConnectionError as e:

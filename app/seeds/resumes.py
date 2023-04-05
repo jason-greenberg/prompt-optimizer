@@ -5,8 +5,6 @@ from datetime import datetime
 # Adds resume seed data
 def seed_resumes():
     demo = User.query.get(1)
-    marnie = User.query.get(2)
-    bobbie = User.query.get(3)
 
     demo_resume = Resume(
         user_id=demo.id, 
@@ -68,105 +66,6 @@ Bachelor of Science in Brain and Psychological Sciences, Applied Psychology Mino
 Study Abroad Program, City, Country                                  2018
 Language immersion, Medieval history, and Ancient history""",
         position_type='Fullstack',
-        skill_level='Senior',
-        created_at=datetime.utcnow()
-    )
-
-    marnie_resume = Resume(
-        user_id=marnie.id,
-        resume_text="""Full Name
-City, State ॱ Phone Number ॱ Email Address ॱ GitHub URL
-
-SKILLS
-
-HTML, CSS, JavaScript, React, Node.js, Express, PostgreSQL
-
-PROJECTS
-
-Project A
-• Collaborated with a team to build a fully responsive website using HTML, CSS, and JavaScript
-• Created dynamic web pages using React and Node.js
-• Implemented database functionality using PostgreSQL
-
-Project B
-• Built a full-stack application using React, Node.js, and Express
-• Designed and implemented a database schema using PostgreSQL
-• Utilized Redux for efficient state management
-
-Project C
-• Created a RESTful API using Node.js and Express
-• Implemented secure authentication and authorization with JSON Web Tokens
-• Utilized Sequelize ORM to interact with a PostgreSQL database
-
-WORK EXPERIENCE
-
-Software Development Intern | Company Name                      Summer 2022
-• Contributed to the development of a web-based application using React and Node.js
-• Assisted in the implementation of database functionality using PostgreSQL
-• Participated in Agile development methodologies
-
-University A | Research Assistant                                 Jun 2021 - Aug 2021
-• Conducted meta-analyses and literature reviews on human and animal trauma in the Psychophysiology Lab
-• Contributed to the design and implementation of emotion regulation interventions
-• Participated in meetings and discussions with experts in the field of emotion regulation research
-
-EDUCATION
-
-Bachelor of Science in Computer Science | University Name              GPA: 3.8
-City, State                                                                   May 2022
-
-Study Abroad Program, City, Country                                          Summer 2020
-Language immersion, Medieval history, and Ancient history""",
-        position_type='Frontend',
-        skill_level='Entry-Level',
-        created_at=datetime.utcnow()
-    )
-
-    bobbie_resume = Resume(
-        user_id=bobbie.id,
-        resume_text="""Full Name
-City, State ॱ Phone Number ॱ Email Address ॱ GitHub URL
-
-SKILLS
-
-Project Management, Agile Methodologies, Scrum, Jira, Trello, Microsoft Project, Leadership, Communication, Problem-Solving
-
-PROJECTS
-
-Project A
-• Led a team of developers to build a mobile application using React Native and Node.js
-• Utilized Agile methodologies to plan and execute project milestones
-• Managed project budget and timeline using Microsoft Project
-
-Project B
-• Oversaw the development of a web application using React and Node.js
-• Coordinated with cross-functional teams to ensure successful project delivery
-• Utilized Jira and Trello for project management and tracking
-
-Project C
-• Managed a team of developers to build a full-stack application using React, Node.js, and PostgreSQL
-• Utilized Scrum methodologies to facilitate team communication and collaboration
-• Oversaw project budget and timeline using Microsoft Project
-
-WORK EXPERIENCE
-
-Project Manager | Company Name                      Jun 2021 - Present
-• Led cross-functional teams to deliver successful projects on time and within budget
-• Utilized Agile methodologies to plan and execute project milestones
-• Managed project budget and timeline using Jira and Trello
-
-Project Coordinator | Company Name                      Jan 2020 - Jun 2021
-• Assisted Project Managers in the delivery of successful projects
-• Coordinated project meetings and tracked project progress using Jira and Trello
-
-EDUCATION
-
-Master of Business Administration | University Name                          GPA: 3.9
-City, State                                                                   May 2022
-
-Bachelor of Science in Management | University Name                            GPA: 3.8
-City, State                                                                   May 2020""",
-        position_type='Backend',
         skill_level='Senior',
         created_at=datetime.utcnow()
     )
@@ -424,8 +323,6 @@ City, State                                                                   Ma
     )
 
     db.session.add(demo_resume)
-    db.session.add(marnie_resume)
-    db.session.add(bobbie_resume)
     db.session.add(resume1)
     db.session.add(resume2)
     db.session.add(resume3)

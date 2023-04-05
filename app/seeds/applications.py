@@ -5,17 +5,11 @@ from datetime import datetime
 # Adds application seed data
 def seed_applications():
     demo = User.query.get(1)
-    marnie = User.query.get(2)
-    bobbie = User.query.get(3)
 
     demo_resume = Resume.query.filter_by(user_id=demo.id).first()
-    marnie_resume = Resume.query.filter_by(user_id=marnie.id).first()
-    bobbie_resume = Resume.query.filter_by(user_id=bobbie.id).first()
     demo_resumes = Resume.query.filter_by(user_id=demo.id).all()
 
     demo_coverletters = CoverLetter.query.filter_by(user_id=demo.id).all()
-    marnie_coverletter = CoverLetter.query.filter_by(user_id=marnie.id).first()
-    bobbie_coverletter = CoverLetter.query.filter_by(user_id=bobbie.id).first()
 
     demo_application = Application(
         user_id=demo.id, 
@@ -24,26 +18,6 @@ def seed_applications():
         job_title='Software Engineer',
         job_description=demo_coverletters[0].job_description,
         position_type=demo_resume.position_type,
-        created_at=datetime.utcnow()
-    )
-
-    marnie_application = Application(
-        user_id=marnie.id,
-        resume_id=marnie_resume.id,
-        cover_letter_id=marnie_coverletter.id,
-        job_title='Software Developer',
-        job_description=marnie_coverletter.job_description,
-        position_type=marnie_resume.position_type,
-        created_at=datetime.utcnow()
-    )
-
-    bobbie_application = Application(
-        user_id=bobbie.id,
-        resume_id=bobbie_resume.id,
-        cover_letter_id=bobbie_coverletter.id,
-        job_title='Project Manager',
-        job_description=bobbie_coverletter.job_description,
-        position_type=bobbie_resume.position_type,
         created_at=datetime.utcnow()
     )
 
@@ -108,8 +82,6 @@ def seed_applications():
     )
 
     db.session.add(demo_application)
-    db.session.add(marnie_application)
-    db.session.add(bobbie_application)
     db.session.add(application1)
     db.session.add(application2)
     db.session.add(application3)

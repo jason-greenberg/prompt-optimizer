@@ -4,8 +4,6 @@ from sqlalchemy.sql import text
 # Adds cover letter seed data
 def seed_coverletters():
     demo = User.query.get(1)
-    marnie = User.query.get(2)
-    bobbie = User.query.get(3)
 
     demo_coverletter = CoverLetter(
         user_id=demo.id, 
@@ -13,22 +11,6 @@ def seed_coverletters():
         rating=4,
         engine='gpt-3.5-turbo',
         job_description='We are looking for a highly motivated software engineer to join our team. The ideal candidate has experience with full-stack web development and a passion for solving complex problems. This is a full-time position with competitive salary and benefits.'
-    )
-
-    marnie_coverletter = CoverLetter(
-        user_id=marnie.id,
-        letter_text='Dear Hiring Manager,\n\nI am writing to express my interest in the Software Developer position at your company. As a recent graduate with a degree in computer science and experience in software development internships, I am confident in my ability to contribute to your team. Thank you for your consideration.\n\nSincerely,\nMarnie',
-        rating=3,
-        engine='gpt-3.5-turbo',
-        job_description='We are seeking a software developer to join our team. The ideal candidate has a degree in computer science and experience with software development. This is a full-time position with competitive salary and benefits.'
-    )
-
-    bobbie_coverletter = CoverLetter(
-        user_id=bobbie.id,
-        letter_text='Dear Hiring Manager,\n\nI am excited to apply for the Project Manager position at your company. With my experience leading teams and delivering successful projects, I am confident in my ability to help your organization achieve its goals. Thank you for considering my application.\n\nSincerely,\nBobbie',
-        rating=5,
-        engine='gpt-3.5-turbo',
-        job_description='We are looking for a highly skilled project manager to join our team. The ideal candidate has experience leading teams and delivering successful projects. This is a full-time position with competitive salary and benefits.'
     )
 
     coverletter1 = CoverLetter(
@@ -56,8 +38,6 @@ def seed_coverletters():
     )
 
     db.session.add(demo_coverletter)
-    db.session.add(marnie_coverletter)
-    db.session.add(bobbie_coverletter)
     db.session.add(coverletter1)
     db.session.add(coverletter2)
     db.session.add(coverletter3)

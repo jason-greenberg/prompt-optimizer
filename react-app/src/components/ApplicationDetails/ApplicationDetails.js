@@ -18,6 +18,7 @@ import AllCorrespondences from '../Correspondences/AllCorrespondences/AllCorresp
 import { fetchAllCorrespondencesThunk, fetchCorrespondencesByApplicationIdThunk } from '../../store/correspondence'
 import CorrespondenceDropdown from '../Correspondences/CorrespondenceDropdown/CorrespondenceDropdown'
 import { authenticate } from '../../store/session'
+import zipCoverLogo from '../Navigation/assets/zipcover-logo.png';
 
 export default function ApplicationDetails() {
   const dispatch = useDispatch()
@@ -27,12 +28,15 @@ export default function ApplicationDetails() {
   const application = useSelector(state => state.applications.currentApplication)
   const resume = useSelector(state => state.resumes.currentResume)
   const allResumes = useSelector(state => state.resumes.allResumes)
+  const user = useSelector(state => state.session.user)
   const allResumesArray = Object.values(allResumes);
   const { selectedSide, setSelectedSide } = useMenuSelector();
   const [showManageDropdown, setShowManageDropdown] = useState(false)
   const [showMessageDropdown, setShowMessageDropdown] = useState(false)
   const [editSelected, setEditSelected] = useState(true)
   const [deletedCoverLetterId, setDeletedCoverLetterId] = useState(null);
+  const outOfCredits = user.generation_balance < 1
+  const [showPopup, setShowPopup] = useState(null);
 
   const fetchAsync = useCallback(async () => {
     const response = await dispatch(fetchSingleApplicationThunk(applicationId));
@@ -71,7 +75,11 @@ export default function ApplicationDetails() {
   const handleMessage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setShowMessageDropdown(prev => !prev);
+    if (!outOfCredits) {
+      setShowMessageDropdown(prev => !prev);
+    } else {
+      setShowPopup(true);
+    }
   }
 
   return (
@@ -152,7 +160,17 @@ export default function ApplicationDetails() {
                       </div>
                     )}
                   </div>
-                  <div className="create-button message-recruiter" onClick={handleMessage}>
+                  <div
+                    className={"create-button message-recruiter" + (outOfCredits ? ' disabled-message': '')}
+                    onClick={handleMessage}
+                    onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
+                  >
+                    {showPopup && (
+                      <div className="popup">
+                        <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
+                        <div>You're out of credits</div>
+                      </div>
+                    )}
                     <div>Message Recruiter</div>
                     {showMessageDropdown && (
                       <div className="dropdown-wrapper">

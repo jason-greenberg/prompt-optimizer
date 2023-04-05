@@ -192,6 +192,21 @@
   overflow: visible;
 }
 
+.disabled-message {
+  align-items: center;
+  background-color: #ccc;
+  background-image: linear-gradient(90deg, rgb(200, 200, 200) 0%, rgb(180, 180, 180) 33%, rgb(150, 150, 150) 100%);
+  border: none;
+  border-radius: 6px;
+  color: #f8f8f8;
+  display: flex;
+  transition: all 250ms ease 0s;
+  position: relative;
+  transition: color 0.25s 0.08333333333333333s;
+  opacity: 0.7;
+  /* pointer-events: none; */
+}
+
 .dropdown-wrapper {
   position: relative;
   z-index: 1000;

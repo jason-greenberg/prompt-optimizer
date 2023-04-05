@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
@@ -9,12 +9,18 @@ import userImage from "./assets/default_gravatar.webp"
 import downArrow from "./assets/down-arrow.png";
 import signOut from "./assets/sign_out_icon.png";
 import coverLetterIcon from './assets/zipcover-logo.png'
+import { authenticate } from "../../store/session";
 
-function ProfileButton({ user }) {
+function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const history = useHistory()
+  const user = useSelector(state => state.session.user)
+  const coverletters = useSelector(state => state.coverletters.allCoverLetters)
+  const coverlettersArray = Object.values(coverletters)
+  const correspondences = useSelector(state => state.correspondences.currentApplicationCorrespondences)
+  const correspondencesArray = Object.values(correspondences)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -31,9 +37,10 @@ function ProfileButton({ user }) {
     };
 
     document.addEventListener("click", closeMenu);
+    dispatch(authenticate())
 
     return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  }, [showMenu, coverlettersArray.length, correspondencesArray.length]);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -64,7 +71,7 @@ function ProfileButton({ user }) {
             >
               <div className="signout-container">
                 <img className="option-icon" src={coverLetterIcon} alt="option-icon" />
-                <div>{user.generation_balance}</div>
+                <div className="gen-balance">{user.generation_balance}</div>
               </div>
               <button 
                 className="create-button buy-button"

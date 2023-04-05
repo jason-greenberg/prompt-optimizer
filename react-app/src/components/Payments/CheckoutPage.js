@@ -74,8 +74,8 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                   <div className="col-detail package-title">{plan.package}</div>
-                  <div className="col-detail">
-                    {plan.calls} <span className="gens">gens</span>
+                  <div className="col-detail pack-price">
+                    {plan.calls} <span className="gens">credits</span>
                   </div>
                   <div className="col-detail">{plan.price}</div>
                 </div>

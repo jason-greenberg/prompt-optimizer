@@ -73,6 +73,10 @@
   margin-right: 15em;
 }
 
+.col-detail.pack-price {
+  padding-left: 0px;
+}
+
 .col-name {
   font-weight: 500;
   padding: 4px;
@@ -88,6 +92,10 @@
 
 .gens {
   font-weight: 400;
+}
+
+.gens-head {
+  text-align: left;
 }
 
 .loading-checkout {

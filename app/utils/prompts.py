@@ -2,11 +2,9 @@
 def cl_prompt_one(resume, job_description):
     return f"""You will act as an expert in generating relatable cover letters for junior web developers. I will give you a resume and a job description to write the cover letter with. Avoid repeating any phrases given in your prompts verbatim. The letter should only be two paragraphs. Do not use the word 'junior'.
     ---
-
     Resume: 
     {resume}
     ---
-
     Job Description:
     {job_description}
     
@@ -20,13 +18,53 @@ def cl_prompt_two(company_details):
     ---
     Additional company details:
     {company_details}
-
     """
 
 
 def cl_prompt_three():
     return f"""Now, keep the interest and personal connection to the company in the next revision. This time, when you rewrite it, include toward the middle and a tasteful advertisement of my qualification match for the position, based on comparing my resume to the job description.
     
+    """
+
+# ------ Cover Letter Prompts V2 (In Testing) =======
+def cl_prompt_one_v2(resume, job_description):
+    return f"""You will act as an expert in generating engaging and relatable cover letters for junior web developers. I will give you a resume and a job description to write the cover letter with. Avoid repeating any phrases given in your prompts verbatim. The letter should only be two paragraphs. Do not use the word 'junior'.
+    ---
+
+    1. Resume (use specific text from this resume, and tell a story with it): 
+    {resume}
+    ---
+
+    2. Job Description (match skills mentioned in the resume to the job description):
+    {job_description}
+    
+    """
+
+
+def cl_prompt_two_v2(company_details):
+    return f"""Now using some new details about the company, and the resume I provided you with earlier, include a paragraph at the beginning of the cover letter that explains why, on a personal level I am a good fit for the company.
+    Be sure to avoid overly strong adjectives and avoid sounding cliche, or trite. This new paragraph should feel real. Explain why I want to work at this company in this paragraph.
+    
+    ---
+    Additional company details:
+    {company_details}
+
+    """
+
+
+def cl_prompt_three_v2(resume):
+    return f"""Go back and make sure the cover letter is ONLY mentioning skills and experiences from the provided resume. 
+    1. Avoid hallucinating experience the applicant does not have. 
+    2. The education on the resume, must match the education in described in this cover letter.
+    3. The second paragraph should be specific and informed by the provided resume.
+
+    Let's think this through step by step.
+    ---
+
+    Provided resume:
+
+    {resume}
+
     """
 
 

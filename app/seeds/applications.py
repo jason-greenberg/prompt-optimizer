@@ -46,7 +46,7 @@ def seed_applications():
         resume_id=demo_resumes[6].id,
         cover_letter_id=demo_coverletters[3].id,
         job_title='Project Manager',
-        job_description=bobbie_coverletter.job_description,
+        job_description=demo_coverletters[3].job_description,
         position_type=demo_resumes[6].position_type,
         created_at=datetime.utcnow()
     )

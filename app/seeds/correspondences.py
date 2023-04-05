@@ -5,12 +5,8 @@ from datetime import datetime
 # Adds correspondence seed data
 def seed_correspondences():
     demo = User.query.get(1)
-    marnie = User.query.get(2)
-    bobbie = User.query.get(3)
 
     demo_app = Application.query.filter_by(user_id=demo.id).first()
-    marnie_app = Application.query.filter_by(user_id=marnie.id).first()
-    bobbie_app = Application.query.filter_by(user_id=bobbie.id).first()
 
     demo_linkedin_corr = Correspondence(
         user_id=demo.id, 
@@ -30,48 +26,8 @@ def seed_correspondences():
         created_at=datetime.utcnow()
     )
 
-    marnie_linkedin_corr = Correspondence(
-        user_id=marnie.id, 
-        application_id=marnie_app.id,
-        corr_type='LinkedIn',
-        context='Sent LinkedIn message to hiring manager',
-        generated_response='Thank you for your message. We are currently reviewing applications and will be in touch soon.',
-        created_at=datetime.utcnow()
-    )
-
-    marnie_email_corr = Correspondence(
-        user_id=marnie.id, 
-        application_id=marnie_app.id,
-        corr_type='Email',
-        context='Sent follow-up email to hiring manager',
-        generated_response='Thank you for your email. I am still very interested in the opportunity and would love to discuss it further.',
-        created_at=datetime.utcnow()
-    )
-
-    bobbie_linkedin_corr = Correspondence(
-        user_id=bobbie.id, 
-        application_id=bobbie_app.id,
-        corr_type='LinkedIn',
-        context='Sent LinkedIn message to HR manager',
-        generated_response='Thank you for reaching out. I would be happy to discuss my qualifications and experience further with you.',
-        created_at=datetime.utcnow()
-    )
-
-    bobbie_email_corr = Correspondence(
-        user_id=bobbie.id, 
-        application_id=bobbie_app.id,
-        corr_type='Email',
-        context='Sent follow-up email to HR manager',
-        generated_response='Thank you for getting back to me. I would be excited to learn more about the opportunity and how I can contribute to the team.',
-        created_at=datetime.utcnow()
-    )
-
     db.session.add(demo_linkedin_corr)
     db.session.add(demo_email_corr)
-    db.session.add(marnie_linkedin_corr)
-    db.session.add(marnie_email_corr)
-    db.session.add(bobbie_linkedin_corr)
-    db.session.add(bobbie_email_corr)
     db.session.commit()
 
 # Uses a raw SQL query to TRUNCATE or DELETE the correspondences table. SQLAlchemy doesn't

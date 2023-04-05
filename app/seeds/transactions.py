@@ -23,24 +23,8 @@ def seed_transactions():
             cost=package["price"],
             created_at=datetime.utcnow()
         )
-        marnie_transaction = Transaction(
-            user_id=marnie.id,
-            package=package["name"],
-            amount_generations=package["requests"],
-            cost=package["price"],
-            created_at=datetime.utcnow()
-        )
-        bobbie_transaction = Transaction(
-            user_id=bobbie.id,
-            package=package["name"],
-            amount_generations=package["requests"],
-            cost=package["price"],
-            created_at=datetime.utcnow()
-        )
 
         db.session.add(demo_transaction)
-        db.session.add(marnie_transaction)
-        db.session.add(bobbie_transaction)
 
     # Additional transactions for demo user
     additional_demo_transactions = [

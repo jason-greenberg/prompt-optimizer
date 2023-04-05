@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter } from '../../../store/coverletter';
@@ -7,6 +7,7 @@ import './CoverLetterDetails.css';
 import copyIcon from './assets/copy-icon-grey.png'
 import { handleCopyToClipboard } from '../../../utils/clipboard';
 import { fetchSingleApplicationThunk } from '../../../store/application';
+import { authenticate } from '../../../store/session';
 
 export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const [editCover, setEditCover] = useState(false)
   const [copySelected, setCopySelected] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    dispatch(authenticate());
+  }, [coverLetter])
 
   const handleDelete = async (e) => {
     e.preventDefault();

@@ -71,6 +71,9 @@ def create_new_cover_letter(id):
     # Generate a cover letter using OpenAI's API
     letter = generate_gpt_cover_letter(resume, job_description, company_details, engine, current_user)
 
+    if isinstance(letter, dict) and "error" in letter:
+        return make_response(jsonify(letter), 503)  # Return a 503 Service Unavailable error
+
     # Create new cover letter in db
     new_cover_letter = CoverLetter(
         user_id=current_user.id,

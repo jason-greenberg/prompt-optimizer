@@ -81,7 +81,6 @@ export default function CreateCoverLetterExistingApp() {
       await setSelectedSide('cover letter'); // sets up view in application details
       // Update selected resume in application:
 
-
       history.push(`/applications/${response.application.id}`);
     }
   };

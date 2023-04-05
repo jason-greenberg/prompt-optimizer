@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
-from app.models import CoverLetter, db
+from app.models import CoverLetter, Application, db
 
 cover_letter_routes = Blueprint('coverletters', __name__)
 
@@ -98,6 +98,12 @@ def delete_cover_letter(id):
     # Return 403 if cover_letter does not belong to user
     if cover_letter.user_id != current_user.id:
         return make_response(jsonify({'error': 'Cover letter must belong to the current user'}), 403)
+    
+    # Set the associated applications' cover_letter_id to None
+    associated_applications = Application.query.filter(Application.cover_letter_id == cover_letter.id).all()
+    for application in associated_applications:
+        application.cover_letter_id = None
+        db.session.add(application)
     
     # Delete cover_letter
     db.session.delete(cover_letter)

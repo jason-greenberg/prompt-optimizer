@@ -60,7 +60,7 @@ export default function EditApplication() {
         <div className="edit-connected-resume">
           <div className="set-resume-msg">Set resume</div>
           <div className="resumes-container">
-            { Object.values(allResumes).reverse().map((resume) => (
+            { Object.values(allResumes).reverse().map((resume, index) => (
               <div key={resume.id}>
                 <div 
                   key={resume.id} 
@@ -89,7 +89,9 @@ export default function EditApplication() {
 
                   </div>
                 </div>
-                <div className="break"></div>
+                { index < Object.values(allResumes).length - 1 && (
+                  <div className="break"></div>
+                )}
               </div>
             ))}
           </div>

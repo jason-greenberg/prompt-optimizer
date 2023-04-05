@@ -24,7 +24,8 @@ export default function AllResumes() {
       } else {
         setState({ isLoaded: true, error: false })
       }
-      await setSelectedLink('resumes')
+      await setSelectedLink('resumes');
+      setShowDeleteDropdown([]);
     }
     fetchAsync()
   }, [dispatch])
@@ -32,9 +33,8 @@ export default function AllResumes() {
   const handleDelete = async (e, resume) => {
     e.preventDefault()
     e.stopPropagation()
-
+    setShowDeleteDropdown([]);
     await dispatch(deleteResumeThunk(resume.id));
-
   }
 
   return (
@@ -53,7 +53,7 @@ export default function AllResumes() {
               <div className="resumes-container">
                 { Object.values(allResumes).reverse().map((resume, index) => (
                   <div className="resume-wrapper" key={resume.id}>
-                    <div key={resume.id} className="resume-overview">
+                    <div key={`${resume.id}-${index}`} className="resume-overview">
                       <div className="resume-left">
                         <div className="resume-name">
                           {`${capitalizeResumeTitle(resume.position_type)} Resume ${numberToRoman(getRomanIndex(resume, allResumesArray))}`}
@@ -76,7 +76,6 @@ export default function AllResumes() {
                         </button>
                         <button
                           className="delete-button"
-                          key={resume.id}
                           onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
@@ -90,7 +89,7 @@ export default function AllResumes() {
                           Delete
                         </button>
                         { showDeleteDropdown[index] && (
-                          <div className="delete-dropdown" key={resume.id}>
+                          <div className="delete-dropdown">
                             <div>Confirm delete?</div>
                             <div className="delete-options">
                               <button 

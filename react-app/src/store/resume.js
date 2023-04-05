@@ -4,12 +4,17 @@ const POPULATE = 'resume/POPULATE_USER_RESUMES'
 const READ = 'resume/READ_SINGLE_RESUME'
 const UPDATE = 'resume/UPDATE_RESUME'
 const DELETE = 'resume/DELETE_RESUME'
+export const CLEAR_CURRENT_RESUME = 'resume/CLEAR_CURRENT_RESUME';
 
 // -------- ACTIONS ---------
 const createResume = (resume) => ({
   type: CREATE,
   resume
 })
+
+export const clearCurrentResume = () => ({
+  type: CLEAR_CURRENT_RESUME,
+});
 
 const readResumes = (resumes) => ({
   type: POPULATE,
@@ -69,7 +74,9 @@ export const fetchSingleResumeThunk = (resumeId) => async (dispatch) => {
   if (response.ok) {
     const resume = await response.json();
     await dispatch(readSingleResume(resume));
-    return resume
+    return resume;
+  } else if (response.status === 404) {
+    return { notFound: true }
   } else {
     return {'error': 'Error fetching single resume'};
   }
@@ -132,6 +139,11 @@ export default function resumesReducer(state = initialState, action) {
       newState.allResumes = { ...state.allResumes };
       delete newState.allResumes[action.resumeId];
       return newState;
+    case CLEAR_CURRENT_RESUME:
+      return {
+        ...state,
+        currentResume: null,
+      };
     default:
       return state;
   }

@@ -28,6 +28,7 @@ export default function CreateCoverLetter() {
   const [jobTitle, setJobTitle] = useState('');
   const outOfCredits = user.generation_balance < 1
   const [showPopup, setShowPopup] = useState(false);
+  const [apiError, setApiError] = useState('');
 
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export default function CreateCoverLetter() {
 
     // If no validation errors, submit resume
     if (!Object.keys(validationErrors).length > 0) {
-      setLoading(true)
+      setLoading(true);
       const response = await dispatch(
         createCoverLetterThunk(
           resume.id, // resume id
@@ -87,8 +88,15 @@ export default function CreateCoverLetter() {
           'gpt-3.5-turbo', // engine
           jobTitle // job title
         ));
-      await setSelectedSide('cover letter'); // sets up view in application details
-      history.push(`/applications/${response.application.id}`);
+
+      // Check for error in response
+      if (response.error) {
+        setApiError(response.error);
+        setLoading(false);
+      } else {
+        await setSelectedSide('cover letter'); // sets up view in application details
+        history.push(`/applications/${response.application.id}`);
+      }
     }
   };
 
@@ -157,6 +165,7 @@ export default function CreateCoverLetter() {
                   </textarea>
                   {errors.companyDetails && <div className="error-message">{errors.companyDetails}</div>}
                 </div>
+                {apiError && <div className="error-message">{apiError}</div>}
                 <div 
                   className="submit-container submit-cover"
                   onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}

@@ -25,10 +25,13 @@ def call_gpt(messages, user, model='gpt-3.5-turbo'):
     messages parameter is a list of objects, each object containing 'role' and 'content' attributes
     specific model can be specified in params, defaulting to 'gpt-3.5-turbo'
     """
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages
-    )
+    try:
+        response = openai.ChatCompletion.create(
+            engine=model,
+            messages=messages
+        )
+    except openai.error.APIConnectionError as e:
+        return {"error": "OpenAI API connection error", "details": str(e)}
 
     if response.choices[0].message.content is not None and user is not None:
         current_user = User.query.get(user.id)

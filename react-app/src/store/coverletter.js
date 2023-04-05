@@ -57,10 +57,14 @@ export const createCoverLetterThunk = (resumeId, jobDescription, companyDetails,
     const newCoverLetter = await response.json();
     await dispatch(createCoverLetter(newCoverLetter));
     return newCoverLetter;
+  } else if (response.status === 503) {
+    const errorDetails = await response.json();
+    return { error: 'Error creating cover letter', details: errorDetails };
   } else {
     return { error: 'Error creating cover letter' };
   }
 };
+
 
 export const updateCoverLetterWithApplicationThunk = (resumeId, jobDescription, companyDetails, engine, applicationId) => async (dispatch) => {
   const response = await fetch(`/api/resumes/${resumeId}/coverletters/standalone`, {

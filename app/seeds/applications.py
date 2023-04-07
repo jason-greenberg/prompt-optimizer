@@ -17,6 +17,7 @@ def seed_applications():
         cover_letter_id=demo_coverletters[0].id,
         job_title='Software Engineer',
         job_description=demo_coverletters[0].job_description,
+        company_details=demo_coverletters[0].company_details,
         position_type=demo_resume.position_type,
         created_at=datetime.utcnow()
     )
@@ -27,6 +28,7 @@ def seed_applications():
         cover_letter_id=demo_coverletters[0].id,
         job_title='Software Engineer',
         job_description=demo_coverletters[0].job_description,
+        company_details=demo_coverletters[0].company_details,
         position_type=demo_resumes[1].position_type,
         created_at=datetime.utcnow()
     )
@@ -37,6 +39,7 @@ def seed_applications():
         cover_letter_id=demo_coverletters[1].id,
         job_title='Frontend Developer',
         job_description=demo_coverletters[1].job_description,
+        company_details=demo_coverletters[1].company_details,
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
     )
@@ -47,6 +50,7 @@ def seed_applications():
         cover_letter_id=demo_coverletters[3].id,
         job_title='Project Manager',
         job_description=demo_coverletters[3].job_description,
+        company_details=demo_coverletters[3].company_details,
         position_type=demo_resumes[6].position_type,
         created_at=datetime.utcnow()
     )
@@ -57,6 +61,7 @@ def seed_applications():
         cover_letter_id=demo_coverletters[2].id,
         job_title='Software Engineer',
         job_description=demo_coverletters[2].job_description,
+        company_details=demo_coverletters[2].company_details,
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
     )
@@ -67,6 +72,7 @@ def seed_applications():
         cover_letter_id=demo_coverletters[3].id,
         job_title='Frontend Developer',
         job_description=demo_coverletters[3].job_description,
+        company_details=demo_coverletters[3].company_details,
         position_type=demo_resumes[4].position_type,
         created_at=datetime.utcnow()
     )
@@ -77,6 +83,7 @@ def seed_applications():
         cover_letter_id=demo_coverletters[0].id,
         job_title='Full Stack Developer',
         job_description=demo_coverletters[0].job_description,
+        company_details=demo_coverletters[0].company_details,
         position_type=demo_resumes[0].position_type,
         created_at=datetime.utcnow()
     )

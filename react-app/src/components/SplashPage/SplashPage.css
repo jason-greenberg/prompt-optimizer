@@ -34,7 +34,7 @@
 }
 
 .splash-body-container {
-  background-image: url(./assets/splash-background.png);
+  background-image: url(./assets/splash.png);
   background-position: top center;
   display: flex;
   flex-direction: column;
@@ -82,14 +82,15 @@
 }
 
 .message {
-  font-family: neo-sans,"Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif;
+  /* font-family: neo-sans,"Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif; */
+  font-family: 'Oxygen';
   width: 100%;
 }
 
 .message-container {
   display: flex;
   justify-content: flex-start;
-  margin-left: 250px;
+  margin-left: 25%;
   font-size: 62px;
   font-weight: 700;
   width: 425px;

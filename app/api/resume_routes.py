@@ -92,6 +92,7 @@ def create_new_cover_letter(id):
         cover_letter_id=new_cover_letter.id,
         job_title=job_title,
         job_description=job_description,
+        company_details=company_details,
         position_type=resume.position_type,
         created_at=datetime.utcnow()
     )

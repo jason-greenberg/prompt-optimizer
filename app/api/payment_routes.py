@@ -29,7 +29,7 @@ def create_checkout_session():
                 }
             ],
             mode='payment',
-            success_url=url + '/success',
+            success_url=url + '/dashboard',
             cancel_url=url + '/cancel',
             allow_promotion_codes=True,
             metadata={'user_id': str(current_user.id), 'amount_generations': str(amount_generations)}

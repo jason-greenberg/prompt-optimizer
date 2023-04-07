@@ -5,8 +5,6 @@ from datetime import datetime
 # Adds transaction seed data
 def seed_transactions():
     demo = User.query.get(1)
-    marnie = User.query.get(2)
-    bobbie = User.query.get(3)
 
     packages = [
         {"name": "Basic", "requests": 20, "price": 0.99},

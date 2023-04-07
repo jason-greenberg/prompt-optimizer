@@ -18,6 +18,8 @@ import CreateApplication from "./components/CreateApplication/CreateApplication"
 import AboutDetails from "./components/About/AboutDetails";
 import ManageCorrespondences from "./components/Correspondences/ManageCorrespondences/ManageCorrespondences";
 import CheckoutPage from "./components/Payments/CheckoutPage";
+import NotFound from "./components/NotFound/NotFound";
+import Cancel from "./components/Payments/Cancel";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,7 +52,9 @@ function App() {
           <Route path="/coverletters/new" component={CreateCoverLetter} />
           <Route path="/coverletters" component={AllCoverLetters} />
           <Route path="/correspondences" component={ManageCorrespondences} />
+          <Route path="/cancel" component={Cancel} />
           <Route exact path = '/' component={SplashPage} />
+          <Route path = '*' component={NotFound} />
         </Switch>
       )}
     </>

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter } from '../../../store/coverletter';
+import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter, createCoverLetterThunk } from '../../../store/coverletter';
 import EditCoverLetter from '../EditCoverLetter/EditCoverLetter';
 import './CoverLetterDetails.css';
 import copyIcon from './assets/copy-icon-grey.png'
 import { handleCopyToClipboard } from '../../../utils/clipboard';
 import { fetchSingleApplicationThunk } from '../../../store/application';
 import { authenticate } from '../../../store/session';
+import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
 
 export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const dispatch = useDispatch();
@@ -16,14 +17,41 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const coverLetter = useSelector(state => state.coverletters.currentCoverLetter);
+  const application = useSelector(state => state.applications.currentApplication);
+  const user = useSelector(state => state.session.user);
   const hasCoverLetter = coverLetter && 'id' in coverLetter
   const [editCover, setEditCover] = useState(false)
   const [copySelected, setCopySelected] = useState(false)
   const [loading, setLoading] = useState(false)
+  const outOfCredits = user.generation_balance < 1
+  const [showPopup, setShowPopup] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   useEffect(() => {
     dispatch(authenticate());
   }, [coverLetter])
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+      const response = await dispatch(
+        createCoverLetterThunk(
+          application.resume_id, // resume id
+          application.job_description, // job description
+          application.company_details, // company details
+          'gpt-3.5-turbo', // engine
+          application.job_title // job title
+        ));
+
+      // Check for error in response
+      if (response.error) {
+        setApiError(response.error);
+        setLoading(false);
+      } else {
+        history.push(`/applications/${response.application.id}`);
+      }
+  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -58,6 +86,25 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
           }}
         >
           <div className="cover-letter-body">
+            {apiError && <div className="error-message">{apiError}</div>}
+              <div 
+                className="submit-container submit-cover"
+                onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
+                onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
+              >
+                {showPopup && (
+                  <div className="popup">
+                    <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
+                    <div>You're out of credits</div>
+                  </div>
+                )}
+                <button 
+                  className={outOfCredits ? 'submit-button-disabled' : 'submit-button'}
+                  onClick={outOfCredits ? null : onSubmit}
+                >
+                  Regenerate
+                </button>
+              </div>
             <button 
               className="skill-level-box remove-button remove-cover"
               onClick={(e) => {

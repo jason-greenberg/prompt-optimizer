@@ -34,7 +34,7 @@
 }
 
 .splash-body-container {
-  background-image: url(./assets/splash-background.png);
+  background-image: url(./assets/splash.png);
   background-position: top center;
   display: flex;
   flex-direction: column;

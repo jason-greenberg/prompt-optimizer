@@ -15,13 +15,12 @@
   }
 }
 .anim-border {
-    color: white;
+    /* color: white; */
     position: relative;
     z-index: 0;
     height: auto;
     border-radius: 10px;
     overflow: hidden;
-    padding: 2rem;
 }
 .anim-border::before {
     content: "";

@@ -13,6 +13,7 @@ class Application(db.Model):
     cover_letter_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('coverletters.id'), ondelete='SET NULL'), nullable=True)
     job_title = db.Column(db.String, nullable=False)
     job_description = db.Column(db.String, nullable=False)
+    company_details = db.Column(db.String, nullable=True)
     position_type = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
 
@@ -30,5 +31,6 @@ class Application(db.Model):
             'job_title': self.job_title,
             'position_type': self.position_type,
             'created_at': self.created_at,
-            'job_description': self.job_description if self.job_description else None
+            'job_description': self.job_description if self.job_description else None,
+            'company_details': self.company_details if self.company_details else None
         }

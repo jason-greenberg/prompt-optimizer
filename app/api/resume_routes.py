@@ -79,7 +79,8 @@ def create_new_cover_letter(id):
         user_id=current_user.id,
         letter_text=letter,
         engine=engine,
-        job_description=job_description
+        job_description=job_description,
+        company_details=company_details
     )
     db.session.add(new_cover_letter)
     db.session.commit()
@@ -91,6 +92,7 @@ def create_new_cover_letter(id):
         cover_letter_id=new_cover_letter.id,
         job_title=job_title,
         job_description=job_description,
+        company_details=company_details,
         position_type=resume.position_type,
         created_at=datetime.utcnow()
     )
@@ -136,7 +138,8 @@ def create_new_cover_letter_standalone(id):
         user_id=current_user.id,
         letter_text=letter,
         engine=engine,
-        job_description=job_description
+        job_description=job_description,
+        company_details=company_details
     )
     db.session.add(new_cover_letter)
     db.session.commit()

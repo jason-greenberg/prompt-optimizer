@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter, createCoverLetterThunk } from '../../../store/coverletter';
+import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverLetter, createCoverLetterThunk, updateCoverLetterWithApplicationThunk } from '../../../store/coverletter';
 import EditCoverLetter from '../EditCoverLetter/EditCoverLetter';
 import './CoverLetterDetails.css';
 import copyIcon from './assets/copy-icon-grey.png'
@@ -37,12 +37,13 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
 
     setLoading(true);
       const response = await dispatch(
-        createCoverLetterThunk(
+        // resumeId, jobDescription, companyDetails, engine, applicationId
+        updateCoverLetterWithApplicationThunk(
           application.resume_id, // resume id
           application.job_description, // job description
           application.company_details, // company details
           'gpt-3.5-turbo', // engine
-          application.job_title // job title
+          application.id // application id
         ));
 
       // Check for error in response

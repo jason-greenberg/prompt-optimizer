@@ -30,7 +30,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
 
   useEffect(() => {
     dispatch(authenticate());
-  }, [coverLetter])
+  }, [coverLetter?.id])
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -49,9 +49,9 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
       // Check for error in response
       if (response.error) {
         setApiError(response.error);
-        setLoading(false);
+        await setLoading(false);
       } else {
-        setLoading(false);
+        await setLoading(false);
       }
   };
 
@@ -140,10 +140,11 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                 </div>
               </div>
             )}
-          <div className="resume-text letter-text">
-                { loading ? (
+          <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
+                {/* { loading && (
                   <img src={loadingGif} alt="loading-icon" className="regen-loading" />
-                ) : (coverLetter?.letter_text)}
+                )} */}
+                {coverLetter?.letter_text}
               <button 
                 className="skill-level-box edit-button edit-cover"
                 onClick={() => setEditCover(true)}

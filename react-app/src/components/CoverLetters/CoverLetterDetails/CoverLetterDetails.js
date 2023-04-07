@@ -140,10 +140,11 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                 </div>
               </div>
             )}
-          <div className="resume-text letter-text">
-                { loading ? (
+          <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
+                { loading && (
                   <img src={loadingGif} alt="loading-icon" className="regen-loading" />
-                ) : (coverLetter?.letter_text)}
+                )}
+                {coverLetter?.letter_text}
               <button 
                 className="skill-level-box edit-button edit-cover"
                 onClick={() => setEditCover(true)}

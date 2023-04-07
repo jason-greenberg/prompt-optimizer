@@ -12,6 +12,7 @@ class CoverLetter(db.Model):
     rating = db.Column(db.Integer, nullable=True)
     engine = db.Column(db.String, nullable=False)
     job_description = db.Column(db.Text, nullable=False)
+    company_details = db.Column(db.Text, nullable=False)
 
     application = db.relationship('Application', uselist=False, back_populates='cover_letter')
     user = db.relationship('User', back_populates='cover_letters')
@@ -24,6 +25,7 @@ class CoverLetter(db.Model):
             'rating': self.rating,
             'engine': self.engine,
             'job_description': self.job_description,
+            'company_details': self.company_details,
             'application_id': self.application.id if self.application else None,
             'job_title': self.application.job_title if self.application else None
         }

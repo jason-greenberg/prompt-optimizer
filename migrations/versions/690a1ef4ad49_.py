@@ -42,6 +42,7 @@ def upgrade():
     sa.Column('rating', sa.Integer(), nullable=True),
     sa.Column('engine', sa.String(), nullable=False),
     sa.Column('job_description', sa.Text(), nullable=False),
+    sa.Column('company_details', sa.Text(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
@@ -69,7 +70,7 @@ def upgrade():
     sa.Column('resume_id', sa.Integer(), nullable=True),
     sa.Column('cover_letter_id', sa.Integer(), nullable=True),
     sa.Column('job_title', sa.String(), nullable=False),
-    sa.Column('job_description', sa.String(), nullable=False),
+    sa.Column('job_description', sa.Text(), nullable=False),
     sa.Column('position_type', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['cover_letter_id'], ['coverletters.id'], ondelete='SET NULL'),

@@ -9,6 +9,7 @@ import { handleCopyToClipboard } from '../../../utils/clipboard';
 import { fetchSingleApplicationThunk } from '../../../store/application';
 import { authenticate } from '../../../store/session';
 import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
+import loadingGif from '../../Loading/assets/loading-bars.gif'
 
 export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
         setApiError(response.error);
         setLoading(false);
       } else {
-        history.push(`/applications/${response.application.id}`);
+        setLoading(false);
       }
   };
 
@@ -87,24 +88,24 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
         >
           <div className="cover-letter-body">
             {apiError && <div className="error-message">{apiError}</div>}
-              <div 
-                className="submit-container submit-cover"
-                onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
-                onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
+            <div 
+              className="submit-container submit-cover regenerate-cover"
+              onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
+              onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
+            >
+              {showPopup && (
+                <div className="popup">
+                  <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
+                  <div>You're out of credits</div>
+                </div>
+              )}
+              <button 
+                className={outOfCredits ? 'submit-button-disabled regenerate-button' : 'submit-button regenerate-button'}
+                onClick={outOfCredits ? null : onSubmit}
               >
-                {showPopup && (
-                  <div className="popup">
-                    <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
-                    <div>You're out of credits</div>
-                  </div>
-                )}
-                <button 
-                  className={outOfCredits ? 'submit-button-disabled' : 'submit-button'}
-                  onClick={outOfCredits ? null : onSubmit}
-                >
-                  Regenerate
-                </button>
-              </div>
+                Regenerate
+              </button>
+            </div>
             <button 
               className="skill-level-box remove-button remove-cover"
               onClick={(e) => {
@@ -116,30 +117,32 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
               X
             </button>
             { showDeleteDropdown && (
-                <div className="delete-dropdown del-cov">
-                  <div>Confirm delete?</div>
-                  <div className="delete-options">
-                    <button 
-                      className="delete-option-button delete-option-yes"
-                      onClick={handleDelete}
-                    >
-                      Yes
-                    </button>
-                    <button 
-                      className="delete-option-button delete-option-no"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        setShowDeleteDropdown(false)
-                      }}
-                    > 
-                      No
-                    </button>
-                  </div>
+              <div className="delete-dropdown del-cov">
+                <div>Confirm delete?</div>
+                <div className="delete-options">
+                  <button 
+                    className="delete-option-button delete-option-yes"
+                    onClick={handleDelete}
+                  >
+                    Yes
+                  </button>
+                  <button 
+                    className="delete-option-button delete-option-no"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setShowDeleteDropdown(false)
+                    }}
+                  > 
+                    No
+                  </button>
                 </div>
-              )}
+              </div>
+            )}
           <div className="resume-text letter-text">
-              {coverLetter?.letter_text}
+                { loading ? (
+                  <img src={loadingGif} alt="loading-icon" className="regen-loading" />
+                ) : (coverLetter?.letter_text)}
               <button 
                 className="skill-level-box edit-button edit-cover"
                 onClick={() => setEditCover(true)}

@@ -1,6 +1,7 @@
 .letter-text {
   margin: 0;
   max-width: 700px;
+  min-height: 150px;
 }
 
 .copy-icon.copy-cover {
@@ -37,4 +38,25 @@
 
 .remove-button.remove-cover:hover {
   background: #f0493d;
+}
+
+.regenerate-cover {
+  position: absolute;
+  top: -25px;
+  right: -290px;
+  z-index: 10;
+}
+
+.regenerate-button {
+  font-size: 14px;
+  min-width: 150px;
+  height: 40px;
+  width: fit-content;
+}
+
+.regen-loading {
+  height: 150px;
+  position: absolute;
+  top: 15%;
+  left: 40%;
 }

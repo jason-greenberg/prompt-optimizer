@@ -106,3 +106,16 @@ def generate_gpt_correspondence(context, corr_type, engine, user):
     ]
 
     return call_gpt(messages, user, engine)
+
+def generate_gpt_optimized_resume(resume, job_description, engine, user):
+    """
+    Generates an optimized resume using OpenAI's chat completion API.
+    """
+
+    messages = [
+        {"role": "system", "content": "You are an expert ATS resume optimizer who will help to optimize a resume for a specific job without adding any new experiences or skills that the candidate doesn't already have."},
+        {"role": "user", "content": optimization_prompt(resume, job_description)},
+        {"role": "assistant", "content": 'Assistant generates an optimized resume here'}
+    ]
+
+    return call_gpt(messages, user, engine)

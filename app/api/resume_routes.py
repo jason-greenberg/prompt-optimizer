@@ -157,6 +157,32 @@ def create_new_cover_letter_standalone(id):
         'application': existing_application.to_dict()
     }, 201
 
+# Create new ATS optimized resume
+@resume_routes.route('/optimize', methods=['POST'])
+@login_required
+def create_resume():
+    """
+    Creates a new resume
+    Expects 'resume_text', 'position_type', and 'skill_level' in request body
+    """
+    data = request.json
+    resume_text = data['resume_text']
+    position_type = data['position_type']
+    skill_level = data['skill_level']
+
+    # Create new resume in db
+    new_resume = Resume(
+        user_id=current_user.id,
+        resume_text=resume_text,
+        position_type=position_type,
+        skill_level=skill_level,
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_resume)
+    db.session.commit()
+
+    return new_resume.to_dict(), 201
+
 # Create new resume
 @resume_routes.route('/', methods=['POST'])
 @login_required

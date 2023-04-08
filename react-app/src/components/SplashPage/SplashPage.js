@@ -11,7 +11,8 @@ export default function SplashPage() {
     'write a cover letter.',
     'network with recruiters.',
     'apply to a job.',
-    'track your applications.'
+    'track your applications.',
+    'optimize your resume.'
   ]
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,7 +22,7 @@ export default function SplashPage() {
       setCurrentIndex((currentIndex + 1) % messages.length);
     };
 
-    const interval = setInterval(cycle, 2000); // Adjust the duration based on the total time it takes for an SVG to finish typing
+    const interval = setInterval(cycle, 2500); // Adjust the duration based on the total time it takes for an SVG to finish typing
 
     return () => {
       clearInterval(interval);
@@ -60,7 +61,8 @@ export default function SplashPage() {
       <div className="splash-body-container">
         <div className="message-container">
           <div className="message">
-          The fastest way to {<TypingComponent text={messages[currentIndex]} />}
+            <div>{'The fastest way to '}</div>
+            {<TypingComponent text={messages[currentIndex]} />}
           </div>
         </div>
       </div>

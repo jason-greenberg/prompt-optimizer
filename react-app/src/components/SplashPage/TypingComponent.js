@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 
 export default function TypingComponent({
   text = "write a cover letter.",
-  interval = 50,
+  interval = 25,
   Markup = "span"
 }) {
   const [typedText, setTypedText] = useState("");
+  const [cursorVisible, setCursorVisible] = useState(true);
 
-  const typingRender = (text, updater, interval, setter, value) => {
+  const typingRender = (text, updater, interval) => {
     let localTypingIndex = 0;
     let localTyping = "";
     if (text) {
@@ -19,28 +20,34 @@ export default function TypingComponent({
           localTypingIndex = 0;
           localTyping = "";
           clearInterval(printer);
-          //  return setter && setter(value)
         }
       }, interval);
     }
   };
+
   useEffect(() => {
     typingRender(text, setTypedText, interval);
   }, [text, interval]);
 
-  //   const [showPrompt, setShowPrompt] = useState(true);
-  // useEffect(() => {
-  //     // Change the state every second or the time given by User.
-  //     const interval = setInterval(() => {
-  //       setShowPrompt((showPrompt) => !showPrompt);
-  //     }, 400);
-  //     return () => clearInterval(interval);
-  //   }, []);
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setCursorVisible((prev) => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  const cursorStyle = {
+    color: "#0AE0B6",
+    marginLeft: "2px",
+    opacity: cursorVisible ? 1 : 0,
+    transition: "opacity 0.25s",
+    fontWeight: "700"
+  };
 
   return (
     <Markup>
       {typedText}
-      {/* <span>{showPrompt ? '_' : ' '}</span> */}
+      <span style={cursorStyle}>|</span>
     </Markup>
   );
 }

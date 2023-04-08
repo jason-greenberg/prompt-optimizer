@@ -38,7 +38,7 @@
   background-position: top center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   height: 98vh;
   margin-top: 42px;
   width: 100vw;
@@ -90,8 +90,9 @@
 .message-container {
   display: flex;
   justify-content: flex-start;
-  margin-left: 25%;
+  margin-top: 20%;
+  margin-left: 20%;
   font-size: 62px;
   font-weight: 700;
-  width: 425px;
+  width: 750px;
 }

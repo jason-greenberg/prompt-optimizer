@@ -9,10 +9,10 @@ export default function SplashPage() {
   const user = useSelector(state => state.session.user)
   const messages = [
     'write a cover letter.',
+    'optimize your resume for ATS.',
     'network with recruiters.',
-    'apply to a job.',
+    'apply for a job.',
     'track your applications.',
-    'optimize your resume.'
   ]
 
   const [currentIndex, setCurrentIndex] = useState(0);

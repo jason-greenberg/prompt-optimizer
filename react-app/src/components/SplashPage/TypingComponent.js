@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function TypingComponent({
   text = "write a cover letter.",
-  interval = 50,
+  interval = 30,
   Markup = "span"
 }) {
   const [typedText, setTypedText] = useState("");
@@ -32,13 +32,13 @@ export default function TypingComponent({
   useEffect(() => {
     const cursorInterval = setInterval(() => {
       setCursorVisible((prev) => !prev);
-    }, 500);
+    }, 300);
     return () => clearInterval(cursorInterval);
   }, []);
 
   const cursorStyle = {
-    color: "#0AE0B6",
-    marginLeft: "2px",
+    color: "#2542F1",
+    marginLeft: "1px",
     opacity: cursorVisible ? 1 : 0,
     transition: "opacity 0.25s",
     fontWeight: "700"

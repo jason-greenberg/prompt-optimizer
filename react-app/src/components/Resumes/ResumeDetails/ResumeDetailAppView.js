@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { createATSOptimizedResumeThunk } from '../../../store/resume'
 import { authenticate } from '../../../store/session'
 import './ResumeDetails.css'
 import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
+import { fetchSingleApplicationThunk } from '../../../store/application'
 
 export default function ResumeDetailAppView() {
   const history = useHistory()
+  const { applicationId } = useParams();
   const dispatch = useDispatch()
   const resume = useSelector(state => state.resumes.currentResume);
   const user = useSelector(state => state.session.user);
@@ -21,6 +23,7 @@ export default function ResumeDetailAppView() {
   
   useEffect(() => {
     dispatch(authenticate());
+    dispatch(fetchSingleApplicationThunk(applicationId));
   }, [resume?.id])
 
   const handleEdit = async (e) => {
@@ -80,13 +83,13 @@ export default function ResumeDetailAppView() {
               </div>
             )}
             <button 
-              className={outOfCredits ? 'submit-button-disabled regenerate-button' : 'submit-button regenerate-button'}
+              className={outOfCredits ? 'submit-button-disabled regenerate-button  ats-button' : 'submit-button regenerate-button  ats-button'}
               onClick={outOfCredits ? null : onSubmit}
             >
-              Optimize Resume For ATS
+              Optimize w/ GPT-4 {'(10 credits)'}
             </button>
           </div>
-          <div className="resume-text letter-text">
+          <div className={`resume-text letter-text ${loading ? 'anim-border res-border' : ''}`}>
               {resume?.resume_text}
               <button 
                 className="skill-level-box edit-button edit-resume"

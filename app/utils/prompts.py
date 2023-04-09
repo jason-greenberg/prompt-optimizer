@@ -71,7 +71,8 @@ def cl_prompt_three_v2(resume):
 def resume_ATS_prompt(resume, job_description):
     return f"""Optimize the following resume for the provided job description without adding any new experiences or skills that the candidate doesn't already have. Please provide an optimized version of the resume that highlights the candidate's most relevant skills, experiences, and projects for the Front End Software Engineer role.
     1. Make sure the optimized resume is tailored for ATS systems by using relevant keywords and proper formatting.
-    2. Do not remove an element from the resume unless there is a plan to replace it with an optimized version of the element.
+    2. Do not remove an entire element from the resume unless there is a plan to replace it with an optimized version of the same element.
+    3. Do not remove any projects in their entirety from a resume
     3. Preserve headers from the original resume
     4. At the bottom of the revised resume, include a list of all revisions made, under the header "REVISIONS"
 

@@ -179,9 +179,7 @@ def create_ATS_resume(id):
     engine = data['engine']
     application_id = data['application_id']
 
-    resume = Resume.query.get(id)
-
-    resume_text = generate_gpt_optimized_resume(resume, job_description, engine, current_user)
+    resume_text = generate_gpt_optimized_resume(resume_text, job_description, engine, current_user)
 
     # Check if resume_text is an error dictionary
     if isinstance(resume_text, dict) and 'error' in resume_text and 'details' in resume_text:

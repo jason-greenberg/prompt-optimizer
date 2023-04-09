@@ -37,6 +37,7 @@ export default function ResumeDetailAppView() {
     e.preventDefault();
 
     setLoading(true);
+    console.log('current res', resume.resume_text)
       const response = await dispatch(
         // resumeId, jobDescription, companyDetails, engine, applicationId
         createATSOptimizedResumeThunk(
@@ -82,7 +83,7 @@ export default function ResumeDetailAppView() {
               </div>
             )}
             <button 
-              className={outOfCredits ? 'submit-button-disabled regenerate-button' : 'submit-button regenerate-button'}
+              className={outOfCredits ? 'submit-button-disabled regenerate-button ats-button' : 'submit-button regenerate-button ats-button'}
               onClick={outOfCredits ? null : onSubmit}
             >
               Optimize for ATS

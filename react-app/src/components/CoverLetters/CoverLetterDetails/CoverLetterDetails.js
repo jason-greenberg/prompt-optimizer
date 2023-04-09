@@ -71,6 +71,23 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
     }
     // Fetch the updated cover letter data after deletion
     await dispatch(fetchSingleApplicationThunk(applicationId));
+  };
+  
+  const highlightBracketedWords = (text) => {
+    const wrappedInBracketsRegex = /(\[[^\]]+\])/g;
+    const parts = text.split(wrappedInBracketsRegex);
+  
+    return parts.map((part, index) => {
+      if (part.match(wrappedInBracketsRegex)) {
+        return (
+          <span key={index} className="bracketed-highlight">
+            {part}
+          </span>
+        );
+      } else {
+        return part;
+      }
+    });
   };  
 
   return (
@@ -144,7 +161,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                 {/* { loading && (
                   <img src={loadingGif} alt="loading-icon" className="regen-loading" />
                 )} */}
-                {coverLetter?.letter_text}
+                {highlightBracketedWords(coverLetter?.letter_text || '')}
               <button 
                 className="skill-level-box edit-button edit-cover"
                 onClick={() => setEditCover(true)}

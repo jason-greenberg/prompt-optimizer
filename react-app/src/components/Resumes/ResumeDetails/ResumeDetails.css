@@ -140,6 +140,10 @@
   margin-right: 15px;
 }
 
+.revisions-highlight {
+  background-color: rgb(255, 255, 194);
+}
+
 .skill-level-box {
   background-color: #EEF0F1;
   border-radius: 5px;

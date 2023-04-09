@@ -59,6 +59,29 @@ export default function ResumeDetailAppView() {
       }
   };
 
+  const highlightRevisions = (text) => {
+    const revisionsStart = text.indexOf("REVISIONS");
+    
+    // If the revisions section does not exist, return the original text
+    if (revisionsStart === -1) {
+      return text;
+    }
+    
+    const beforeRevisions = text.slice(0, revisionsStart);
+    const revisionsEnd = text.indexOf("\n\n", revisionsStart);
+    const revisionsSection = text.slice(revisionsStart, revisionsEnd);
+    const afterRevisions = text.slice(revisionsEnd);
+  
+    return (
+      <>
+        {beforeRevisions}
+        <span className="revisions-highlight">{revisionsSection}</span>
+        {afterRevisions}
+      </>
+    );
+  };
+  
+
   return (
     <>
       {hasResume && (
@@ -91,7 +114,7 @@ export default function ResumeDetailAppView() {
           </div>
           <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
             {apiError && <div className="error-message">{apiError}</div>}
-              {resume?.resume_text}
+              {highlightRevisions(resume?.resume_text)}
               <button 
                 className="skill-level-box edit-button edit-resume"
                 onClick={handleEdit}

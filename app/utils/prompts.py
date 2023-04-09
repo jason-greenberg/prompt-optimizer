@@ -69,7 +69,11 @@ def cl_prompt_three_v2(resume):
 # ------- Resume Prompts ----------
 # Optimize resume for ATS
 def resume_ATS_prompt(resume, job_description):
-    return f"""Optimize the following resume for the provided job description without adding any new experiences or skills that the candidate doesn't already have. Please provide an optimized version of the resume that highlights the candidate's most relevant skills, experiences, and projects for the role in the provided job description. Make sure the optimized resume is tailored for ATS systems by using relevant keywords and proper formatting.
+    return f"""In the provided resume, perform the following operations.
+    1. Identify several keywords from the job description that can replace existing words in the resume.
+        Example: Resume: "React, Redux"; Job description "React+Redux"; Revised Resume: "React+Redux"
+    
+     Make sure to only add/replace keywords that are already represented in the current resume (ie. do not create new experiences or skills for the applicant, only look to enhance existing materials)
     ---
     Resume:
     {resume}

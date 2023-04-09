@@ -114,9 +114,9 @@ def generate_gpt_optimized_resume(resume, job_description, engine, user):
     """
 
     messages = [
-        {"role": "system", "content": "You are an expert ATS resume optimizer who will help to optimize a resume for a specific job without adding any new experiences or skills that the candidate doesn't already have."},
+        {"role": "system", "content": "You are an expert at inserting keywords from a job description into a resume without adding any new experiences or skills that the candidate doesn't already have."},
         {"role": "user", "content": resume_ATS_prompt(resume, job_description)},
-        {"role": "assistant", "content": 'Assistant generates an optimized resume here'}
+        {"role": "assistant", "content": 'Assistant outputs entire resume with inserted keywords here'}
     ]
 
     return call_gpt(messages, user, engine)

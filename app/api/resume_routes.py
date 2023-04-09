@@ -183,6 +183,10 @@ def create_ATS_resume(id):
 
     resume_text = generate_gpt_optimized_resume(resume, job_description, engine, current_user)
 
+    # Check if resume_text is an error dictionary
+    if isinstance(resume_text, dict) and 'error' in resume_text and 'details' in resume_text:
+        return jsonify(resume_text), 503
+
     # Create new resume in db
     new_resume = Resume(
         user_id=current_user.id,

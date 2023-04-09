@@ -88,6 +88,9 @@ export const createATSOptimizedResumeThunk = (
     const optimizedResume = await response.json();
     await dispatch(createATSOptimizedResume(optimizedResume));
     return optimizedResume;
+  } else if (response.status === 503) {
+    const errorData = await response.json();
+    return { 'error': 'Error creating ATS optimized resume', 'details': errorData.details };
   } else {
     return { 'error': 'Error creating ATS optimized resume' };
   }

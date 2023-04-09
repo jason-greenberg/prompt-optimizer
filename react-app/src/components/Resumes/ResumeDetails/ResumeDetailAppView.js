@@ -70,7 +70,6 @@ export default function ResumeDetailAppView() {
           }}
         >
           <div className="cover-letter-body">
-          {apiError && <div className="error-message">{apiError}</div>}
           <div 
             className="submit-container submit-cover regenerate-cover"
             onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
@@ -83,13 +82,14 @@ export default function ResumeDetailAppView() {
               </div>
             )}
             <button 
-              className={outOfCredits ? 'submit-button-disabled regenerate-button  ats-button' : 'submit-button regenerate-button  ats-button'}
+              className={outOfCredits ? 'submit-button-disabled regenerate-button' : 'submit-button regenerate-button'}
               onClick={outOfCredits ? null : onSubmit}
             >
-              Optimize w/ GPT-4 {'(10 credits)'}
+              Optimize for ATS
             </button>
           </div>
-          <div className={`resume-text letter-text ${loading ? 'anim-border res-border' : ''}`}>
+          <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
+            {apiError && <div className="error-message">{apiError}</div>}
               {resume?.resume_text}
               <button 
                 className="skill-level-box edit-button edit-resume"

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function TypingComponent({
   text = "write a cover letter.",
-  interval = 25,
+  interval = 50,
   Markup = "span"
 }) {
   const [typedText, setTypedText] = useState("");

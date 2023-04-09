@@ -2,6 +2,7 @@ from .prompts import (
     cl_prompt_one,
     cl_prompt_two,
     cl_prompt_three,
+    resume_ATS_prompt,
     corr_application_follow_up,
     corr_initial_connection_request,
     corr_application_follow_up,
@@ -103,6 +104,19 @@ def generate_gpt_correspondence(context, corr_type, engine, user):
         {"role": "system", "content": "You will act as an expert LinkedIn and email corresponder for job hunters. You will create LinkedIn and Email follow-up messages for recruiters and create replies to emails related to the job search."},
         {"role": "user", "content": f'{prompt}'},
         {"role": "assistant", "content": "Assistant generates a correspondences for LinkedIn or Email with user's context"}
+    ]
+
+    return call_gpt(messages, user, engine)
+
+def generate_gpt_optimized_resume(resume, job_description, engine, user):
+    """
+    Generates an optimized resume using OpenAI's chat completion API.
+    """
+
+    messages = [
+        {"role": "system", "content": "You are an expert ATS resume optimizer who will help to optimize a resume for a specific job without adding any new experiences or skills that the candidate doesn't already have."},
+        {"role": "user", "content": resume_ATS_prompt(resume, job_description)},
+        {"role": "assistant", "content": 'Assistant generates an optimized resume here'}
     ]
 
     return call_gpt(messages, user, engine)

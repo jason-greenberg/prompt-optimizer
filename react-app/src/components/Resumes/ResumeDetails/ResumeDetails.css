@@ -24,6 +24,10 @@
   width: 100%;
 }
 /* ---------- */
+.ats-button {
+  right: -13px;
+}
+
 .delete-dropdown {
   background-color: white;
   border-radius: 5px;
@@ -162,6 +166,7 @@
 .edit-button {
   background-color: rgb(121, 179, 121);
   margin-left: 10px;
+  z-index: 97;
 }
 
 .edit-button:hover {
@@ -177,4 +182,9 @@
 
 .remove-button:hover {
   background-color: red;
+}
+
+.anim-border.res-border::before {
+  background-color: #000000;
+  background-image: linear-gradient(white, #6a48ff);
 }

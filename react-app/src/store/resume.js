@@ -1,5 +1,6 @@
 // constants
 const CREATE = 'resume/CREATE_RESUME'
+const CREATE_ATS = 'resume/CREATE_ATS_OPTIMIZED_RESUME'
 const POPULATE = 'resume/POPULATE_USER_RESUMES'
 const READ = 'resume/READ_SINGLE_RESUME'
 const UPDATE = 'resume/UPDATE_RESUME'
@@ -10,6 +11,11 @@ export const CLEAR_CURRENT_RESUME = 'resume/CLEAR_CURRENT_RESUME';
 const createResume = (resume) => ({
   type: CREATE,
   resume
+})
+
+const createATSOptimizedResume = (optimizedResume) => ({
+  type: CREATE_ATS,
+  optimizedResume
 })
 
 export const clearCurrentResume = () => ({
@@ -53,6 +59,43 @@ export const createResumeThunk = (resume) => async (dispatch) => {
     return { 'error': 'Error creating resume'};
   }
 }
+
+export const createATSOptimizedResumeThunk = (
+  resumeId,
+  resume_text,
+  position_type,
+  skill_level,
+  job_description,
+  engine,
+  application_id
+) => async (dispatch) => {
+  const response = await fetch(`/api/resumes/${resumeId}/optimize`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      resume_text,
+      position_type,
+      skill_level,
+      job_description,
+      engine,
+      application_id,
+    })
+  })
+
+  if (response.ok) {
+    const optimizedResume = await response.json();
+    await dispatch(createATSOptimizedResume(optimizedResume));
+    return optimizedResume;
+  } else if (response.status === 503) {
+    const errorData = await response.json();
+    return { 'error': 'Error creating ATS optimized resume', 'details': errorData.details };
+  } else {
+    return { 'error': 'Error creating ATS optimized resume' };
+  }
+}
+
 
 export const fetchAllResumesThunk = () => async (dispatch) => {
   const response = await fetch('/api/resumes/')
@@ -130,6 +173,11 @@ export default function resumesReducer(state = initialState, action) {
       newState.currentResume = { ...action.resume };
       newState.allResumes = { ...state.allResumes }
       newState.allResumes[action.resume.id] = action.resume
+      return newState;
+    case CREATE_ATS:
+      newState.currentResume = { ...action.optimizedResume };
+      newState.allResumes = { ...state.allResumes }
+      newState.allResumes[action.optimizedResume.id] = action.optimizedResume
       return newState;
     case UPDATE:
       newState.allResumes = { ...state.allResumes };

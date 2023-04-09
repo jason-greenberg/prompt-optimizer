@@ -1,13 +1,30 @@
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
+import { createATSOptimizedResumeThunk } from '../../../store/resume'
+import { authenticate } from '../../../store/session'
 import './ResumeDetails.css'
+import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
+import { fetchSingleApplicationThunk } from '../../../store/application'
 
 export default function ResumeDetailAppView() {
   const history = useHistory()
+  const { applicationId } = useParams();
+  const dispatch = useDispatch()
   const resume = useSelector(state => state.resumes.currentResume);
+  const user = useSelector(state => state.session.user);
   const hasResume = resume && 'id' in resume
+  const outOfCredits = user.generation_balance < 1;
+  const application = useSelector(state => state.applications.currentApplication);
   const [showDeleteDropdown, setShowDeleteDropdown] = useState(false)
+  const [showPopup, setShowPopup] = useState(false);
+  const [apiError, setApiError] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    dispatch(authenticate());
+    dispatch(fetchSingleApplicationThunk(applicationId));
+  }, [resume?.id])
 
   const handleEdit = async (e) => {
     e.preventDefault()
@@ -15,6 +32,32 @@ export default function ResumeDetailAppView() {
 
     history.push(`/resumes/${resume.id}/edit`)
   }
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    console.log('current res', resume.resume_text)
+      const response = await dispatch(
+        // resumeId, jobDescription, companyDetails, engine, applicationId
+        createATSOptimizedResumeThunk(
+          application.resume_id, // resume id
+          resume.resume_text, // resume text,
+          `Optimized ${application.job_title}`, // position type,
+          resume.skill_level, // skill level
+          application.job_description, // job description
+          'gpt-3.5-turbo', // engine
+          application.id // application id
+        ));
+
+      // Check for error in response
+      if (response.error) {
+        setApiError(response.error);
+        await setLoading(false);
+      } else {
+        await setLoading(false);
+      }
+  };
 
   return (
     <>
@@ -28,7 +71,26 @@ export default function ResumeDetailAppView() {
           }}
         >
           <div className="cover-letter-body">
-          <div className="resume-text letter-text">
+          <div 
+            className="submit-container submit-cover regenerate-cover"
+            onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
+            onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
+          >
+            {showPopup && (
+              <div className="popup">
+                <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
+                <div>You're out of credits</div>
+              </div>
+            )}
+            <button 
+              className={outOfCredits ? 'submit-button-disabled regenerate-button ats-button' : 'submit-button regenerate-button ats-button'}
+              onClick={outOfCredits ? null : onSubmit}
+            >
+              Optimize for ATS
+            </button>
+          </div>
+          <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
+            {apiError && <div className="error-message">{apiError}</div>}
               {resume?.resume_text}
               <button 
                 className="skill-level-box edit-button edit-resume"

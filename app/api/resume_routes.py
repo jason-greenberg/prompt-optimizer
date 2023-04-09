@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 from app.models import Resume, CoverLetter, Application, db
-from ..utils.gpt import generate_gpt_cover_letter
+from ..utils.gpt import generate_gpt_cover_letter, generate_gpt_optimized_resume
 from datetime import datetime
 
 resume_routes = Blueprint('resumes', __name__)
@@ -156,6 +156,53 @@ def create_new_cover_letter_standalone(id):
         'coverletter': new_cover_letter.to_dict(),
         'application': existing_application.to_dict()
     }, 201
+
+# Create new ATS optimized resume
+@resume_routes.route('/<int:id>/optimize', methods=['POST'])
+@login_required
+def create_ATS_resume(id):
+    """
+    Creates a new resume
+    Expects 'resume_text', 'position_type', 'skill_level', 'job_description', 'engine', and 'application_id' in request body
+    """
+    data = request.json
+    required_fields = ['resume_text', 'position_type', 'skill_level', 'job_description', 'engine', 'application_id']
+    
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"error": f"Missing required field: {field}"}), 400
+
+    resume_text = data['resume_text']
+    position_type = data['position_type']
+    skill_level = data['skill_level']
+    job_description = data['job_description']
+    engine = data['engine']
+    application_id = data['application_id']
+
+    resume_text = generate_gpt_optimized_resume(resume_text, job_description, engine, current_user)
+
+    # Check if resume_text is an error dictionary
+    if isinstance(resume_text, dict) and 'error' in resume_text and 'details' in resume_text:
+        return jsonify(resume_text), 503
+
+    # Create new resume in db
+    new_resume = Resume(
+        user_id=current_user.id,
+        resume_text=resume_text,
+        position_type=position_type,
+        skill_level=skill_level,
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_resume)
+    db.session.commit()
+
+    # Associate new resume with application
+    application = Application.query.get(application_id)
+    application.resume_id = new_resume.id
+    db.session.commit()
+
+    return new_resume.to_dict(), 201
+
 
 # Create new resume
 @resume_routes.route('/', methods=['POST'])

@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 from app.models import Resume, CoverLetter, Application, db
-from ..utils.gpt import generate_gpt_cover_letter
+from ..utils.gpt import generate_gpt_cover_letter, generate_gpt_optimized_resume
 from datetime import datetime
 
 resume_routes = Blueprint('resumes', __name__)
@@ -158,9 +158,9 @@ def create_new_cover_letter_standalone(id):
     }, 201
 
 # Create new ATS optimized resume
-@resume_routes.route('/optimize', methods=['POST'])
+@resume_routes.route('/<int:id>/optimize', methods=['POST'])
 @login_required
-def create_resume():
+def create_resume(id):
     """
     Creates a new resume
     Expects 'resume_text', 'position_type', and 'skill_level' in request body
@@ -169,6 +169,13 @@ def create_resume():
     resume_text = data['resume_text']
     position_type = data['position_type']
     skill_level = data['skill_level']
+    job_description = data['job_description']
+    engine = data['engine']
+    application_id = data['application_id']
+
+    resume = Resume.query.get(id)
+
+    resume_text = generate_gpt_optimized_resume(resume, job_description, engine, current_user)
 
     # Create new resume in db
     new_resume = Resume(
@@ -179,6 +186,11 @@ def create_resume():
         created_at=datetime.utcnow()
     )
     db.session.add(new_resume)
+    db.session.commit()
+
+    # Associate new resume with application
+    application = Application.query.get(application_id)
+    application.resume_id = new_resume.id
     db.session.commit()
 
     return new_resume.to_dict(), 201

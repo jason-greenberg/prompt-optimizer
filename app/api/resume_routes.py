@@ -160,12 +160,18 @@ def create_new_cover_letter_standalone(id):
 # Create new ATS optimized resume
 @resume_routes.route('/<int:id>/optimize', methods=['POST'])
 @login_required
-def create_resume(id):
+def create_ATS_resume(id):
     """
     Creates a new resume
-    Expects 'resume_text', 'position_type', and 'skill_level' in request body
+    Expects 'resume_text', 'position_type', 'skill_level', 'job_description', 'engine', and 'application_id' in request body
     """
     data = request.json
+    required_fields = ['resume_text', 'position_type', 'skill_level', 'job_description', 'engine', 'application_id']
+    
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"error": f"Missing required field: {field}"}), 400
+
     resume_text = data['resume_text']
     position_type = data['position_type']
     skill_level = data['skill_level']
@@ -194,6 +200,7 @@ def create_resume(id):
     db.session.commit()
 
     return new_resume.to_dict(), 201
+
 
 # Create new resume
 @resume_routes.route('/', methods=['POST'])

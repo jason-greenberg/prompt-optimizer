@@ -1,3 +1,5 @@
+import React from "react";
+
 export const capitalizeResumeTitle = (string) => {
   const output = []
   const arr = string?.split(' ')
@@ -113,4 +115,45 @@ export const highlightBracketedWords = (text) => {
       return part;
     }
   });
-};  
+};
+
+export const makeCapsWordsBold = (text) => {
+  const allCapsRegex = /(\b[A-Z]{4,}(?:\s[A-Z]{4,})?\b)(?=\n|$)/g;
+  const parts = text.split(allCapsRegex);
+
+  return parts.map((part, index) => {
+    if (part.match(allCapsRegex)) {
+      return (
+        <React.Fragment key={index}>
+          <span className="res-section-header">{part}</span>
+        </React.Fragment>
+      );
+    } else {
+      return part;
+    }
+  });
+};
+
+
+
+export const highlightRevisions = (text) => {
+    const revisionsStart = text.indexOf("REVISIONS");
+    
+    // If the revisions section does not exist, return the original text
+    if (revisionsStart === -1) {
+      return text;
+    }
+    
+    const beforeRevisions = text.slice(0, revisionsStart);
+    const revisionsEnd = text.indexOf("\n\n\n", revisionsStart);
+    const revisionsSection = text.slice(revisionsStart, revisionsEnd);
+    const afterRevisions = text.slice(revisionsEnd);
+  
+    return (
+      <>
+        {makeCapsWordsBold(beforeRevisions)}
+        <span className="revisions-highlight">{revisionsSection}</span>
+        {makeCapsWordsBold(afterRevisions)}
+      </>
+    );
+  };

@@ -89,7 +89,7 @@
 .message {
   /* font-family: neo-sans,"Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif; */
   font-family: 'Noto Sans';
-  letter-spacing: -1px;
+  letter-spacing: -2px;
   width: 100%;
 }
 
@@ -100,5 +100,5 @@
   margin-left: 20%;
   font-size: 62px;
   font-weight: 700;
-  width: 770px;
+  width: 745px;
 }

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 
 const PAUSE_DURATION = {
-  letter: 20,
-  punctuation: 80,
-  whitespace: 40,
+  letter: 30,
+  punctuation: 400,
+  whitespace: 50,
 };
 
 const getPauseDuration = (char) => {

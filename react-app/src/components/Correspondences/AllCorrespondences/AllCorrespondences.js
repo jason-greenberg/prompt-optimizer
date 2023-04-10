@@ -26,10 +26,10 @@ export default function AllCorrespondences() {
 
   useEffect(() => {
     const fetchAsync = async () => {
+      await setExpanded({}); // Reset the expanded state when correspondences change
+      await setEditedResponse({});
+      await setEditting({});
       await dispatch(fetchCorrespondencesByApplicationIdThunk(applicationId))
-      setExpanded({}); // Reset the expanded state when correspondences change
-      setEditedResponse({});
-      setEditting({});
       await dispatch(authenticate());
     }
     fetchAsync()
@@ -49,10 +49,6 @@ export default function AllCorrespondences() {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
       [index]: !prevExpanded[index],
-    }));
-    setEditVisible((prevEditVisible) => ({
-      ...prevEditVisible,
-      [index]: !prevEditVisible[index],
     }));
   };
 
@@ -137,11 +133,14 @@ export default function AllCorrespondences() {
                   <div className="corr-right">
                     <div className="corr-type">
                       <div className="corr-type-word">{formatCorrType(corr.corr_type)}:</div>
-                      {editVisible[index] && (
-                        <button className="edit-button edit-corr" onClick={(e) => {
-                          e.stopPropagation();
-                          setEditting({ ...editting, [index]: true})
-                        }}>
+                      {expanded[index] && !editting[index] && (
+                        <button
+                          className="edit-button edit-corr"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditting({ ...editting, [index]: true });
+                          }}
+                        >
                           Edit
                         </button>
                       )}

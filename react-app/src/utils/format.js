@@ -97,3 +97,20 @@ export const formatCorrType = (corrType) => {
       return 'Correspondence';
   }
 }
+
+export const highlightBracketedWords = (text) => {
+  const wrappedInBracketsRegex = /(\[[^\]]+\])/g;
+  const parts = text.split(wrappedInBracketsRegex);
+
+  return parts.map((part, index) => {
+    if (part.match(wrappedInBracketsRegex)) {
+      return (
+        <span key={index} className="bracketed-highlight">
+          {part}
+        </span>
+      );
+    } else {
+      return part;
+    }
+  });
+};  

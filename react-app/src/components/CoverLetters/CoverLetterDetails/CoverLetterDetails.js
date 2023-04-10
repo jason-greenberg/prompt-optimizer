@@ -10,6 +10,7 @@ import { fetchSingleApplicationThunk } from '../../../store/application';
 import { authenticate } from '../../../store/session';
 import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
 import loadingGif from '../../Loading/assets/loading-bars.gif'
+import { highlightBracketedWords } from '../../../utils/format';
 
 export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   const dispatch = useDispatch();
@@ -72,23 +73,6 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
     // Fetch the updated cover letter data after deletion
     await dispatch(fetchSingleApplicationThunk(applicationId));
   };
-  
-  const highlightBracketedWords = (text) => {
-    const wrappedInBracketsRegex = /(\[[^\]]+\])/g;
-    const parts = text.split(wrappedInBracketsRegex);
-  
-    return parts.map((part, index) => {
-      if (part.match(wrappedInBracketsRegex)) {
-        return (
-          <span key={index} className="bracketed-highlight">
-            {part}
-          </span>
-        );
-      } else {
-        return part;
-      }
-    });
-  };  
 
   return (
     <>

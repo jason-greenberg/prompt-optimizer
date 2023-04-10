@@ -4,7 +4,7 @@ import './AllCorrespondences.css';
 import copyIcon from './assets/copy-icon-grey.png';
 import { fetchCorrespondencesByApplicationIdThunk, updateCorrespondenceThunk, deleteCorrespondenceThunk } from '../../../store/correspondence';
 import { useParams } from 'react-router-dom';
-import { formatCorrType } from '../../../utils/format';
+import { formatCorrType, highlightBracketedWords } from '../../../utils/format';
 import { chooseIcon } from '../../../utils/corr-images';
 import { handleCopyToClipboard } from '../../../utils/clipboard';
 import { authenticate } from '../../../store/session';
@@ -166,7 +166,7 @@ export default function AllCorrespondences() {
                           <div
                             className={`response ${expanded[index] ? 'expanded' : ''}`}
                           >
-                            {corr.generated_response}
+                            {highlightBracketedWords(corr?.generated_response || '')}
                           </div>
                         )}
                       <img

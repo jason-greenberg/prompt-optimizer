@@ -68,7 +68,7 @@ export default function ResumeDetailAppView() {
     }
     
     const beforeRevisions = text.slice(0, revisionsStart);
-    const revisionsEnd = text.indexOf("\n\n", revisionsStart);
+    const revisionsEnd = text.indexOf("\n\n\n", revisionsStart);
     const revisionsSection = text.slice(revisionsStart, revisionsEnd);
     const afterRevisions = text.slice(revisionsEnd);
   

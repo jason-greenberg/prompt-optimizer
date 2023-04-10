@@ -44,6 +44,11 @@
   width: 100vw;
 }
 /* ---------------- */
+.cursor {
+  font-family: 'Noto Sans';
+  font-weight: 900;
+}
+
 .nav-but {
   margin-left: 20px;
 }
@@ -83,7 +88,8 @@
 
 .message {
   /* font-family: neo-sans,"Inter var","system-ui","Helvetica Neue",Helvetica,Arial,sans-serif; */
-  font-family: 'Oxygen';
+  font-family: 'Noto Sans';
+  letter-spacing: -1px;
   width: 100%;
 }
 
@@ -94,5 +100,5 @@
   margin-left: 20%;
   font-size: 62px;
   font-weight: 700;
-  width: 730px;
+  width: 770px;
 }

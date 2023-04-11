@@ -1,3 +1,5 @@
+import React from "react";
+
 export const capitalizeResumeTitle = (string) => {
   const output = []
   const arr = string?.split(' ')
@@ -113,4 +115,85 @@ export const highlightBracketedWords = (text) => {
       return part;
     }
   });
-};  
+};
+
+// Format resume for website ------------
+
+export const makeCapsWordsBold = (text) => {
+  const allCapsRegex = /(\b[A-Z]{4,}(?:\s[A-Z]{4,})?\b)(?=\n|$)/g;
+  const parts = text.split(allCapsRegex);
+
+  return parts.map((part, index) => {
+    if (part.match(allCapsRegex)) {
+      return (
+        <React.Fragment key={index}>
+          <span className="res-section-header">{part}</span>
+        </React.Fragment>
+      );
+    } else {
+      return part;
+    }
+  });
+};
+
+export const joinWithLineBreaks = (elements) => {
+  return elements.map((element, index) => {
+    if (index < elements.length - 1) {
+      return (
+        <React.Fragment key={index}>
+          {element}
+          <br />
+        </React.Fragment>
+      );
+    } else {
+      return element;
+    }
+  });
+};
+
+export const highlightRevisions = (text) => {
+  const revisionsStart = text.indexOf("REVISIONS");
+    
+  // If the revisions section does not exist, format the text and replace newlines with <br> elements
+  if (revisionsStart === -1) {
+    const formattedText = joinWithLineBreaks(makeCapsWordsBold(text));
+    return formattedText;
+  }
+    
+  const beforeRevisions = text.slice(0, revisionsStart);
+  const revisionsEnd = text.indexOf("\n\n\n", revisionsStart);
+  const revisionsSection = text.slice(revisionsStart, revisionsEnd);
+  const afterRevisions = text.slice(revisionsEnd);
+
+  return (
+    <>
+      {joinWithLineBreaks(makeCapsWordsBold(beforeRevisions))}
+      <span className="revisions-highlight">{revisionsSection}</span>
+      {joinWithLineBreaks(makeCapsWordsBold(afterRevisions))}
+    </>
+  );
+};
+// --------------------------------------------
+
+// Format resume for Copy & Paste -------------
+export const convertResumeTextToHtml = (text) => {
+  const sectionKeywords = ['SKILLS', 'WORK EXPERIENCE', 'EDUCATION', 'PROJECTS', 'EXPERIENCE', 'TRAINING', 'CERTIFICATIONS', 'PUBLICATIONS', 'SUMMARY'];
+  const sectionHeaderRegex = new RegExp(`(${sectionKeywords.join('|')})`);
+
+  const sections = text.trim().split(/\n{2,}/g);
+  const formattedSections = sections.map((section) => {
+    const lines = section.trim().split(/\n/g);
+    const formattedLines = lines.map((line, index) => {
+      if (line.match(sectionHeaderRegex) && (index === 0 || index === lines.length - 1)) {
+        // If this line is a section header and it's either the first or last line of the section, put it on a new line and make it bold
+        const sectionHeader = line.match(sectionHeaderRegex)[0];
+        const restOfLine = line.split(sectionHeader)[1];
+        return `${index > 0 ? '<br>' : ''}<strong>${sectionHeader}</strong>${restOfLine}`;
+      } else {
+        return line;
+      }
+    });
+    return formattedLines.join("<br>");
+  });
+  return formattedSections.join("<br><br>");
+};

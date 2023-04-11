@@ -5,7 +5,7 @@ import { deleteCoverLetterThunk, fetchSingleCoverLetterThunk, clearCurrentCoverL
 import EditCoverLetter from '../EditCoverLetter/EditCoverLetter';
 import './CoverLetterDetails.css';
 import copyIcon from './assets/copy-icon-grey.png'
-import { handleCopyToClipboard } from '../../../utils/clipboard';
+import { copyToClipboardPlain, handleCopyToClipboard } from '../../../utils/clipboard';
 import { fetchSingleApplicationThunk } from '../../../store/application';
 import { authenticate } from '../../../store/session';
 import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
@@ -159,7 +159,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                 onClick={(e) => {
                   setCopySelected(true)
                   e.stopPropagation();
-                  handleCopyToClipboard(coverLetter.letter_text);
+                  copyToClipboardPlain(coverLetter.letter_text);
                 }}
               />
             </div>

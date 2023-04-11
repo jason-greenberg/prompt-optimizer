@@ -73,7 +73,7 @@ def resume_ATS_prompt(resume, job_description):
     1. Make sure the optimized resume is tailored for ATS systems by using relevant keywords and proper formatting.
     2. Do not remove an entire element from the resume unless there is a plan to replace it with an optimized version of the same element.
     3. Do not remove any projects in their entirety from a resume
-    3. Preserve headers from the original resume
+    3. Identify and preserve section headers from the original resume. Make sure these headers are written in ALL CAPS (eg. "Work Experience" -> "WORK EXPERIENCE")
     4. At the bottom of the revised resume, include a list of all revisions made, under the header "REVISIONS"
 
     Resume:

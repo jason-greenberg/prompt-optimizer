@@ -9,7 +9,7 @@ export default function SplashPage() {
   const user = useSelector(state => state.session.user)
   const messages = [
     'write a cover letter.',
-    'optimize your resume for ATS.',
+    'optimize your resume for the job description.',
     'network with recruiters.',
     'apply for a job.',
     'track your applications.',
@@ -22,7 +22,7 @@ export default function SplashPage() {
       setCurrentIndex((currentIndex + 1) % messages.length);
     };
 
-    const interval = setInterval(cycle, 2500); // Adjust the duration based on the total time it takes for an SVG to finish typing
+    const interval = setInterval(cycle, 3500); // Adjust the duration based on the total time it takes for an SVG to finish typing
 
     return () => {
       clearInterval(interval);

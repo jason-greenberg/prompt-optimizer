@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 
 const PAUSE_DURATION = {
   letter: 30,
-  punctuation: 80,
-  whitespace: 40,
+  punctuation: 400,
+  whitespace: 50,
 };
 
 const getPauseDuration = (char) => {
@@ -67,7 +67,7 @@ export default function TypingComponent({
   }, [typingInProgress, text]);
 
   const cursorStyle = {
-    color: "#2542F1",
+    color: "#5DEBC4",
     marginLeft: "0px",
     opacity: cursorVisible ? 1 : 0,
     transition: "opacity 0.25s",
@@ -77,7 +77,7 @@ export default function TypingComponent({
   return (
     <Markup>
       {typedText}
-      <span style={cursorStyle}>|</span>
+      <span className="cursor" style={cursorStyle}>|</span>
     </Markup>
   );
 }

@@ -6,7 +6,7 @@ import { fetchCorrespondencesByApplicationIdThunk, updateCorrespondenceThunk, de
 import { useParams } from 'react-router-dom';
 import { formatCorrType, highlightBracketedWords } from '../../../utils/format';
 import { chooseIcon } from '../../../utils/corr-images';
-import { handleCopyToClipboard } from '../../../utils/clipboard';
+import { copyToClipboardPlain } from '../../../utils/clipboard';
 import { authenticate } from '../../../store/session';
 
 export default function AllCorrespondences() {
@@ -175,7 +175,7 @@ export default function AllCorrespondences() {
                         onClick={(e) => {
                           setCopySelected(true)
                           e.stopPropagation();
-                          handleCopyToClipboard(corr.generated_response);
+                          copyToClipboardPlain(corr.generated_response);
                         }}
                       />
                     </div>

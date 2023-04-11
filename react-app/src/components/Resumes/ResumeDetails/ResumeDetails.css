@@ -115,6 +115,10 @@
   position: relative;
 }
 
+.res-section-header {
+  font-weight: 600;
+}
+
 .resume-text {
   background-color: white;
   border-radius: 10px;

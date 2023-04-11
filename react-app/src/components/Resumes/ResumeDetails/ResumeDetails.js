@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { deleteResumeThunk, fetchAllResumesThunk, fetchSingleResumeThunk } from '../../../store/resume'
-import { capitalizeResumeTitle, numberToRoman, getRomanIndex } from '../../../utils/format'
+import { capitalizeResumeTitle, numberToRoman, getRomanIndex, highlightRevisions } from '../../../utils/format'
 import Navigation from '../../Navigation'
 import './ResumeDetails.css'
 
@@ -103,7 +103,7 @@ export default function ResumeDetails() {
               </div>
             </div>
             <div className="resume-text">
-              {resume.resume_text}
+              {highlightRevisions(resume.resume_text)}
               <button 
                 className="skill-level-box remove-button"
                 onClick={(e) => {

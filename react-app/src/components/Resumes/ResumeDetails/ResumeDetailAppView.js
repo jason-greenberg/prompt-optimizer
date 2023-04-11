@@ -6,6 +6,10 @@ import { authenticate } from '../../../store/session'
 import './ResumeDetails.css'
 import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
 import { fetchSingleApplicationThunk } from '../../../store/application'
+import { convertResumeTextToHtml, highlightRevisions } from '../../../utils/format'
+import copyIcon from '../../Correspondences/AllCorrespondences/assets/copy-icon-grey.png';
+import { copyToClipboardFormatted } from '../../../utils/clipboard'
+
 
 export default function ResumeDetailAppView() {
   const history = useHistory()
@@ -20,6 +24,7 @@ export default function ResumeDetailAppView() {
   const [showPopup, setShowPopup] = useState(false);
   const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [copySelected, setCopySelected] = useState(false);
   
   useEffect(() => {
     dispatch(authenticate());
@@ -59,26 +64,10 @@ export default function ResumeDetailAppView() {
       }
   };
 
-  const highlightRevisions = (text) => {
-    const revisionsStart = text.indexOf("REVISIONS");
-    
-    // If the revisions section does not exist, return the original text
-    if (revisionsStart === -1) {
-      return text;
-    }
-    
-    const beforeRevisions = text.slice(0, revisionsStart);
-    const revisionsEnd = text.indexOf("\n\n\n", revisionsStart);
-    const revisionsSection = text.slice(revisionsStart, revisionsEnd);
-    const afterRevisions = text.slice(revisionsEnd);
-  
-    return (
-      <>
-        {beforeRevisions}
-        <span className="revisions-highlight">{revisionsSection}</span>
-        {afterRevisions}
-      </>
-    );
+  const handleCopyToClipboard = async (resumeText) => {
+    // Convert resumeText into HTML format
+    const resumeHtml = convertResumeTextToHtml(resumeText);
+    await copyToClipboardFormatted(resumeText, resumeHtml);
   };
   
 
@@ -114,13 +103,23 @@ export default function ResumeDetailAppView() {
           </div>
           <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
             {apiError && <div className="error-message">{apiError}</div>}
-              {highlightRevisions(resume?.resume_text)}
+              {(highlightRevisions(resume?.resume_text))}
               <button 
                 className="skill-level-box edit-button edit-resume"
                 onClick={handleEdit}
               >
                 Edit this resume
               </button>
+              <img
+                src={copyIcon}
+                alt="Copy"
+                className="copy-icon"
+                onClick={(e) => {
+                  setCopySelected(true)
+                  e.stopPropagation();
+                  handleCopyToClipboard(resume.resume_text);
+                }}
+              />
             </div>
           </div>
         </div>

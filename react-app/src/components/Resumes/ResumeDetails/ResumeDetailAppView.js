@@ -6,7 +6,10 @@ import { authenticate } from '../../../store/session'
 import './ResumeDetails.css'
 import zipCoverLogo from '../../Navigation/assets/zipcover-logo.png'
 import { fetchSingleApplicationThunk } from '../../../store/application'
-import { highlightRevisions } from '../../../utils/format'
+import { convertResumeTextToHtml, highlightRevisions } from '../../../utils/format'
+import copyIcon from '../../Correspondences/AllCorrespondences/assets/copy-icon-grey.png';
+import { copyToClipboardFormatted } from '../../../utils/clipboard'
+
 
 export default function ResumeDetailAppView() {
   const history = useHistory()
@@ -21,6 +24,7 @@ export default function ResumeDetailAppView() {
   const [showPopup, setShowPopup] = useState(false);
   const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [copySelected, setCopySelected] = useState(false);
   
   useEffect(() => {
     dispatch(authenticate());
@@ -59,6 +63,13 @@ export default function ResumeDetailAppView() {
         await setLoading(false);
       }
   };
+
+  const handleCopyToClipboard = async (resumeText) => {
+    // Convert resumeText into HTML format
+    const resumeHtml = convertResumeTextToHtml(resumeText);
+    await copyToClipboardFormatted(resumeText, resumeHtml);
+  };
+  
 
   return (
     <>
@@ -99,6 +110,16 @@ export default function ResumeDetailAppView() {
               >
                 Edit this resume
               </button>
+              <img
+                src={copyIcon}
+                alt="Copy"
+                className="copy-icon"
+                onClick={(e) => {
+                  setCopySelected(true)
+                  e.stopPropagation();
+                  handleCopyToClipboard(resume.resume_text);
+                }}
+              />
             </div>
           </div>
         </div>

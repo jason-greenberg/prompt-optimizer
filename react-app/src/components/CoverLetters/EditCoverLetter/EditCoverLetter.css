@@ -5,7 +5,8 @@
 
 .edit-letter {
   border: none ;
-  min-height: 350px;
+  height: 550px;
+  height: 100%;
   height: fit-content;
 }
 

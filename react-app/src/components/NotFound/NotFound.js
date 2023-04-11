@@ -6,14 +6,14 @@ import './NotFound.css'
 export default function NotFound() {
   const history = useHistory();
 
-  useEffect(() => {
-    const asyncFunc = async () => {
-      await setTimeout(() => {
-        return history.push('/dashboard');
-      }, 3000)
-    }
-    asyncFunc();
-  }, [])
+  // useEffect(() => {
+  //   const asyncFunc = async () => {
+  //     await setTimeout(() => {
+  //       return history.push('/dashboard');
+  //     }, 3000)
+  //   }
+  //   asyncFunc();
+  // }, [])
 
   return (
     <>

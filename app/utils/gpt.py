@@ -32,15 +32,14 @@ def call_gpt(messages, user, model='gpt-3.5-turbo'):
             messages=messages
         )
     except openai.error.APIConnectionError as e:
-        return {"error": "OpenAI API connection error", "details": str(e)}
+        return {"error": "OpenAI API connection error", "details": str(e)}, 503
 
     if response.choices[0].message.content is not None and user is not None:
         current_user = User.query.get(user.id)
         current_user.generation_balance -= 1
-        print('subtracting', current_user)
         db.session.commit()
 
-    print(response.choices[0].message.content)
+    # print(response.choices[0].message.content)
     return response.choices[0].message.content
 
 

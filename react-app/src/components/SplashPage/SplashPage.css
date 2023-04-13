@@ -47,6 +47,15 @@
 }
 /* ---------------- */
 
+.app-desc {
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 11rem;
+  margin-bottom: 25px;
+  max-width: 540px;
+  line-height: 35px;
+}
+
 .demo-desc {
   margin-bottom: 1rem;
   font-size: 44px;
@@ -132,21 +141,41 @@
   padding: 0px 16px;
 }
 
+.splash-start-button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  height: 32px;
+  padding: 20px 25px;
+}
+
+.splash-start-button:hover {
+  background-color: #4f65f1;
+  color: #ffffff;
+}
+
+.splash-start-container {
+  padding-top: 20px;
+}
+
 .message {
   font-family: 'Noto Sans';
   letter-spacing: -2px;
   line-height: 78px;
   width: 100%;
-  position: relative;
+  position: absolute;
   z-index: 0;
 }
 
 .message-container {
   display: flex;
   justify-content: flex-start;
-  position: absolute;
-  top: 22rem;
-  left: 22rem;
+  position: relative;
+  top: 15rem;
+  left: 19rem;
   font-size: 62px;
   font-weight: 700;
   width: 770px;

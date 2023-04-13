@@ -70,16 +70,20 @@ export default function SplashPage() {
           </div>
         </div>
         <div className="product-demos">
+          <div className="head-and-pitch">
+            <div className="headline">HOW ZIPCOVER WORKS</div>
+            <div className="pitch">Complete a Job Application in 60 seconds</div>
+          </div>
           <div className="cover-letter-demo indiv-demo">
-              <div className="demo-desc">{'Create a cover letter'}</div>
+              <div className="demo-desc">{'1. Create a cover letter'}</div>
               <img className="demo-gif cov-gif" src={createCover} alt="cover-demo" />
           </div>
           <div className="resume-demo indiv-demo">
-              <div className="demo-desc">{'Optimize your resume for each job'}</div>
+              <div className="demo-desc">{'2. Tailor your resume for the position'}</div>
               <img className="demo-gif res-gif" src={optimizeRes} alt="res-demo" />
           </div>
           <div className="correspondence-demo indiv-demo">
-              <div className="demo-desc">{'Network with recruiters'}</div>
+              <div className="demo-desc">{`3. Network with a click`}</div>
               <img className="demo-gif" src={createCorr} alt="corr-demo" />
           </div>
         </div>

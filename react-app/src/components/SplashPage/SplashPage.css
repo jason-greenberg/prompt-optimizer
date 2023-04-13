@@ -49,6 +49,10 @@
 
 .demo-desc {
   margin-bottom: 1rem;
+  font-size: 44px;
+  max-width: 1100px;
+  width: 100%;
+  text-align: left;
 }
 
 .demo-gif {
@@ -60,11 +64,37 @@
   margin-left: 20px;
 }
 
+.head-and-pitch {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.headline {
+  margin-top: 0px;
+  margin-bottom: 12px;
+  color: #4f65f1;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 .indiv-demo {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.pitch {
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-family: 'Noto Sans',sans-serif;
+  font-size: 50px;
+  color: #181b38;
+  font-weight: 700;
 }
 
 .splash-nav-left {
@@ -125,11 +155,6 @@
 .cursor {
   font-family: 'Noto Sans';
   font-weight: 900;
-}
-
-.cov-gif,
-.res-gif {
-  border-top: 2px solid black;
 }
 
 .product-demos {

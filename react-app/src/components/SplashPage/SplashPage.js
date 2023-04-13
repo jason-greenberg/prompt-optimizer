@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import './SplashPage.css';
 import TypingComponent from './TypingComponent';
-import Typing from './TypingComponent';
+import createCover from '../../utils/assets/create-cover.gif'
+import optimizeRes from '../../utils/assets/resume-demo.gif'
+import createCorr from '../../utils/assets/create-correspondence.gif'
 
 export default function SplashPage() {
   const user = useSelector(state => state.session.user)
@@ -33,10 +35,10 @@ export default function SplashPage() {
 
   // add no-scrolling styling to splash page only
   useEffect(() => {
-    document.body.classList.add("no-scroll");
+    document.body.classList.add("no-horizontal-scroll");
 
     return () => {
-      document.body.classList.remove("no-scroll");
+      document.body.classList.remove("no-hortizontal-scroll");
     };
   }, []);
 
@@ -65,6 +67,20 @@ export default function SplashPage() {
           <div className="message">
             <div>{'The fastest way to '}</div>
             {<TypingComponent text={messages[currentIndex]} />}
+          </div>
+        </div>
+        <div className="product-demos">
+          <div className="cover-letter-demo indiv-demo">
+              <div className="demo-desc">{'Create a cover letter'}</div>
+              <img className="demo-gif" src={createCover} alt="cover-demo" />
+          </div>
+          <div className="resume-demo indiv-demo">
+              <div className="demo-desc">{'Optimize your resume for each job'}</div>
+              <img className="demo-gif" src={optimizeRes} alt="res-demo" />
+          </div>
+          <div className="correspondence-demo indiv-demo">
+              <div className="demo-desc">{'Network with recruiters'}</div>
+              <img className="demo-gif" src={createCorr} alt="corr-demo" />
           </div>
         </div>
       </div>

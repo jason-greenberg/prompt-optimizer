@@ -23,7 +23,7 @@ export default function CorrespondenceDropdown() {
   const handleCorrespondence = async (e, corr_type) => {
     e.preventDefault();
     e.stopPropagation();
-    setHasSubmitted(corr_type);
+    await setHasSubmitted(corr_type);
     const response = await dispatch(
       createCorrespondenceThunk(applicationId, {
         corr_type: corr_type,

@@ -1,55 +1,70 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { useMenuSelector } from '../../context/Menu';
 import Navigation from '../Navigation';
+import { useMenuSelector } from '../../context/Menu';
+import ghIcon from './assets/gh-icon.png';
+import liIcon from './assets/li-icon.png';
+import jasonPhoto from './assets/jason.jpg';
 import './AboutDetails.css';
-import ghIcon from './assets/gh-icon.png'
-import liIcon from './assets/li-icon.png'
 
 export default function AboutDetails() {
   const user = useSelector(state => state.session?.user);
   const { setSelectedLink } = useMenuSelector();
 
   useEffect(() => {
-    setSelectedLink('about')
+    setSelectedLink('about');
 
-    document.body.classList.add('no-scroll');
+    document.body.classList.add('no-horizontal-scroll');
 
     return () => {
-      document.body.classList.remove('no-scroll');
-    }
+      document.body.classList.remove('no-horizontal-scroll');
+    };
   }, []);
 
   return (
     <>
-      { user ? (
+      {user ? (
         <Navigation />
       ) : (
         <div className="splash-nav-container">
-        <div className="splash-nav-bar">
-          <div className="splash-nav-left">zipcover</div>
-          <div className="splash-nav-right">
-            <NavLink to='/about'>About</NavLink>
-            { user ? (
-              <NavLink to='/dashboard'><button className="purple-button">DASHBOARD</button></NavLink>
-            ): (
-              <>
-                <NavLink to='/signup'><button className="purple-button">GET STARTED</button></NavLink>
-                <NavLink to='/login'><button className="white-button">SIGN IN</button></NavLink>
-              </>
-            )}
+          <div className="splash-nav-bar">
+            <div className="splash-nav-left">
+              <NavLink to="/">zipcover</NavLink>
+            </div>
+            <div className="splash-nav-right">
+              <NavLink to="/about">About</NavLink>
+              {user ? (
+                <NavLink to="/dashboard">
+                  <button className="purple-button">DASHBOARD</button>
+                </NavLink>
+              ) : (
+                <>
+                  <NavLink to="/signup">
+                    <button className="purple-button">GET STARTED</button>
+                  </NavLink>
+                  <NavLink to="/login">
+                    <button className="white-button">SIGN IN</button>
+                  </NavLink>
+                </>
+              )}
+            </div>
           </div>
         </div>
-      </div>
       )}
       <div className="about-details-container">
         <div className="about-details-body">
-          <h2 className="about-me-title">About Me</h2>
+          <div className="about-me-section">
+            <h2 className="about-me-title">Jason Greenberg</h2>
+            <h3 className="about-me-subtitle">Full Stack Developer</h3>
+          </div>
+          <h3 className="about-me-sub-heading">About Me</h3>
           <p className="text-bio">
-            Hi, I'm Jason. I'm a fullstack python developer and I love web development.
-            I enjoy tackling complex problems and coming up with creative solutions.
-            I'm continually learning new technologies and have a knack for automating tasks to enhance efficiency.
+            Hi, I'm Jason and once upon a time, I worked in clinical psychology research, but the magic of code caught my eye.
+            I was fascinated with writing scripts that could automate my research workflow.
+            Soon, I found myself learning JavaScript and embarking on a new adventure in software engineering.
+            Now, I spend my days building web applications and using code to solve real problems.
+            I'm always exploring new technologies and challenging myself to learn new tools.
           </p>
           <h3 className="about-me-sub-heading">Skills</h3>
           <ul>
@@ -87,5 +102,7 @@ export default function AboutDetails() {
         </div>
       </div>
     </>
-  );
+  )
 }
+
+           

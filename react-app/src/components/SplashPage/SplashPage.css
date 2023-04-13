@@ -93,8 +93,9 @@
 .message-container {
   display: flex;
   justify-content: flex-start;
-  margin-top: 20%;
-  margin-left: 20%;
+  position: absolute;
+  top: 22rem;
+  left: 22rem;
   font-size: 62px;
   font-weight: 700;
   width: 770px;
@@ -103,4 +104,20 @@
 .cursor {
   font-family: 'Noto Sans';
   font-weight: 900;
+}
+
+.product-demos {
+  align-items: center;
+  background-color: #F1F4F7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Noto Sans';
+  font-size: 62px;
+  letter-spacing: -2px;
+  line-height: 78px;
+  margin-top: 51.45rem;
+  padding: 4rem 0rem;
+  width: 100%;
+  row-gap: 5rem;
 }

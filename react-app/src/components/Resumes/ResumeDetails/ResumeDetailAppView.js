@@ -98,7 +98,7 @@ export default function ResumeDetailAppView() {
               className={outOfCredits ? 'submit-button-disabled regenerate-button ats-button' : 'submit-button regenerate-button ats-button'}
               onClick={outOfCredits ? null : onSubmit}
             >
-              Optimize for ATS
+              Optimize Resume For Job
             </button>
           </div>
           <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
@@ -108,12 +108,12 @@ export default function ResumeDetailAppView() {
                 className="skill-level-box edit-button edit-resume"
                 onClick={handleEdit}
               >
-                Edit this resume
+                Edit
               </button>
               <img
                 src={copyIcon}
                 alt="Copy"
-                className="copy-icon"
+                className="copy-icon copy-res"
                 onClick={(e) => {
                   setCopySelected(true)
                   e.stopPropagation();

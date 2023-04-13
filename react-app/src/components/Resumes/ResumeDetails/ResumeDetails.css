@@ -25,7 +25,14 @@
 }
 /* ---------- */
 .ats-button {
-  right: -13px;
+  right: -30px;
+  padding: 0px 20px;
+}
+
+.copy-icon.copy-res {
+  top: 15px;
+  right: 15px;
+  height: 23px;
 }
 
 .delete-dropdown {
@@ -86,7 +93,8 @@
 .edit-resume {
   position: absolute;
   top: 18px;
-  right: 20px;
+  right: 50px;
+  cursor: pointer;
 }
 
 .header-right {

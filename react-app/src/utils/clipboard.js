@@ -15,9 +15,7 @@ export const copyToClipboardFormatted = async (text, html) => {
         'text/html': new Blob([html], { type: 'text/html' }),
       }),
     ]);
-    console.log('Copied to clipboard');
   } catch (err) {
     console.error('Failed to copy to clipboard:', err);
   }
 };
-

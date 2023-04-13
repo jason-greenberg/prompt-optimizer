@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import './SplashPage.css';
 import TypingComponent from './TypingComponent';
 import createCover from '../../utils/assets/create-cover.gif'
@@ -11,7 +11,7 @@ export default function SplashPage() {
   const user = useSelector(state => state.session.user)
   const messages = [
     'write a cover letter.',
-    'optimize your resume for the job description.',
+    'optimize your resume.',
     'network with recruiters.',
     'apply for a job.',
     'track your applications.',
@@ -24,7 +24,7 @@ export default function SplashPage() {
       setCurrentIndex((currentIndex + 1) % messages.length);
     };
 
-    const interval = setInterval(cycle, 3500); // Adjust the duration based on the total time it takes for an SVG to finish typing
+    const interval = setInterval(cycle, 3000); // Adjust the duration based on the total time it takes for an SVG to finish typing
 
     return () => {
       clearInterval(interval);
@@ -67,6 +67,16 @@ export default function SplashPage() {
           <div className="message">
             <div>{'The fastest way to '}</div>
             {<TypingComponent text={messages[currentIndex]} />}
+          </div>
+          <div className="get-started-box">
+            <div className="app-desc">Experience effortless job hunting with ZipCover—
+              crafting impeccable cover letters in seconds, optimizing resumes, and turning introverts into networking wizards.
+            </div>
+            <Link className="splash-start-container" to={ user ? '/dashboard' : '/signup' }>
+              <button className="purple-button splash-start-button">
+                { user ? 'GO TO DASHBOARD' : 'GET STARTED FOR FREE' }
+              </button>
+            </Link>
           </div>
         </div>
         <div className="product-demos">

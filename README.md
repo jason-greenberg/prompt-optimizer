@@ -14,7 +14,7 @@ https://zipcover.onrender.com
 ### Create a Cover Letter
 ![Cover Letter Demo](react-app/src/utils/assets/create-cover.gif)
 
-## Optimize your Resume for a Specific Job
+### Optimize your Resume for a Specific Job
 ![Resume Demo](react-app/src/utils/assets/resume-demo.gif)
 
 ### Correspond with Recruiters & Network

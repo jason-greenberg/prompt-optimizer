@@ -18,6 +18,7 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 999;
 }
 
 .splash-nav-bar {
@@ -28,7 +29,7 @@
   justify-content: space-between;
   height: 52px;
   max-width: 1300px;
-  position: fixed;
+  position: relative;
   top: 0;
   width: 100%;
   z-index: 999;
@@ -124,6 +125,11 @@
 .cursor {
   font-family: 'Noto Sans';
   font-weight: 900;
+}
+
+.cov-gif,
+.res-gif {
+  border-top: 2px solid black;
 }
 
 .product-demos {

@@ -70,6 +70,10 @@ export default function SplashPage() {
           </div>
         </div>
         <div className="product-demos">
+          <div className="head-and-pitch">
+            <div className="headline">HOW ZIPCOVER WORKS</div>
+            <div className="pitch">Complete a Job Application in 60 seconds</div>
+          </div>
           <div className="cover-letter-demo indiv-demo">
               <div className="demo-desc">{'1. Create a cover letter'}</div>
               <img className="demo-gif cov-gif" src={createCover} alt="cover-demo" />
@@ -79,7 +83,7 @@ export default function SplashPage() {
               <img className="demo-gif res-gif" src={optimizeRes} alt="res-demo" />
           </div>
           <div className="correspondence-demo indiv-demo">
-              <div className="demo-desc">{`3. Network with just a click`}</div>
+              <div className="demo-desc">{`3. Network with a click`}</div>
               <img className="demo-gif" src={createCorr} alt="corr-demo" />
           </div>
         </div>

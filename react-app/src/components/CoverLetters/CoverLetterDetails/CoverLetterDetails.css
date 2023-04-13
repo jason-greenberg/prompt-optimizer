@@ -1,7 +1,7 @@
 .letter-text {
   margin: 0;
   max-width: 700px;
-  min-height: 450px;
+  min-height: 400px;
 }
 
 @-webkit-keyframes rotate {

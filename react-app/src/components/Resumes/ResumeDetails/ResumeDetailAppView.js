@@ -43,7 +43,6 @@ export default function ResumeDetailAppView() {
     e.preventDefault();
 
     setLoading(true);
-    console.log('current res', resume.resume_text)
       const response = await dispatch(
         // resumeId, jobDescription, companyDetails, engine, applicationId
         createATSOptimizedResumeThunk(

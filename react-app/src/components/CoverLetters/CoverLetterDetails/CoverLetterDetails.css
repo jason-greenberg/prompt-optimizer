@@ -67,6 +67,7 @@
 
 .edit-button.edit-cover {
   position: absolute;
+  cursor: pointer;
   top: 18px;
   right: 50px;
 }

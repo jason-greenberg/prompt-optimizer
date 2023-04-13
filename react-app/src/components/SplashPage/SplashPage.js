@@ -72,11 +72,11 @@ export default function SplashPage() {
         <div className="product-demos">
           <div className="cover-letter-demo indiv-demo">
               <div className="demo-desc">{'Create a cover letter'}</div>
-              <img className="demo-gif" src={createCover} alt="cover-demo" />
+              <img className="demo-gif cov-gif" src={createCover} alt="cover-demo" />
           </div>
           <div className="resume-demo indiv-demo">
               <div className="demo-desc">{'Optimize your resume for each job'}</div>
-              <img className="demo-gif" src={optimizeRes} alt="res-demo" />
+              <img className="demo-gif res-gif" src={optimizeRes} alt="res-demo" />
           </div>
           <div className="correspondence-demo indiv-demo">
               <div className="demo-desc">{'Network with recruiters'}</div>

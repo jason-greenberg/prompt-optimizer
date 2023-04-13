@@ -31,6 +31,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
 
   useEffect(() => {
     dispatch(authenticate());
+    setApiError(false);
   }, [coverLetter?.id])
 
   const onSubmit = async (e) => {
@@ -89,12 +90,11 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
           }}
         >
           <div className="cover-letter-body">
-            {apiError && <div className="error-message">{apiError}</div>}
             <div 
               className="submit-container submit-cover regenerate-cover"
               onClick={outOfCredits ? () => setShowPopup(prev => !prev) : null}
               onMouseLeave={outOfCredits ? () => setShowPopup(false) : null}
-            >
+              >
               {showPopup && (
                 <div className="popup">
                   <img className="option-icon" src={zipCoverLogo} alt="zip-cover-logo" />
@@ -104,7 +104,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
               <button 
                 className={outOfCredits ? 'submit-button-disabled regenerate-button' : 'submit-button regenerate-button'}
                 onClick={outOfCredits ? null : onSubmit}
-              >
+                >
                 Regenerate
               </button>
             </div>
@@ -115,7 +115,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                 e.stopPropagation()
                 setShowDeleteDropdown(prev => !prev)
               }}
-            >
+              >
               X
             </button>
             { showDeleteDropdown && (
@@ -125,7 +125,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                   <button 
                     className="delete-option-button delete-option-yes"
                     onClick={handleDelete}
-                  >
+                    >
                     Yes
                   </button>
                   <button 
@@ -135,13 +135,14 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
                       e.stopPropagation()
                       setShowDeleteDropdown(false)
                     }}
-                  > 
+                    > 
                     No
                   </button>
                 </div>
               </div>
             )}
           <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
+            {apiError && <div className="error-message">{apiError}</div>}
                 {/* { loading && (
                   <img src={loadingGif} alt="loading-icon" className="regen-loading" />
                 )} */}

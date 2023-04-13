@@ -29,6 +29,7 @@ export default function ResumeDetailAppView() {
   useEffect(() => {
     dispatch(authenticate());
     dispatch(fetchSingleApplicationThunk(applicationId));
+    setApiError(false)
   }, [resume?.id])
 
   const handleEdit = async (e) => {

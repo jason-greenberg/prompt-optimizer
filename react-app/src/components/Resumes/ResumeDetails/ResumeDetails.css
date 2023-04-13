@@ -181,6 +181,7 @@
 
 .edit-button {
   background-color: rgb(121, 179, 121);
+  cursor: pointer;
   margin-left: 10px;
   z-index: 97;
 }
@@ -191,6 +192,7 @@
 
 .remove-button {
   background-color: rgb(243, 129, 129);
+  cursor: pointer;
   position: absolute;
   top: 18px;
   right: 20px;

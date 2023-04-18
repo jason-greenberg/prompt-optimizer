@@ -1,8 +1,14 @@
 from flask import Blueprint, jsonify, make_response, request, redirect
 from flask_login import login_required, current_user
+import os
 from app.models import db, User
+from google.cloud import talent_v4beta1 as jobs_v4
+from google.oauth2 import service_account
 
 job_search_routes = Blueprint('job_search', __name__)
+
+# Set the path to the JSON key file
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials/zipcover-710dc6cb8394.json'
 
 # Search Google Cloud Jobs API based on user request body
 @job_search_routes.route('/search', methods=['POST'])

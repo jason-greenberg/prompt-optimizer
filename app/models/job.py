@@ -17,10 +17,13 @@ class Job(db.Model):
     country = db.Column(db.String, nullable=False)
     apply_link = db.Column(db.String, nullable=False)
     company_name = db.Column(db.String, nullable=False)
+    company_website = db.Column(db.String, nullable=True)
     employment_type = db.Column(db.String, nullable=False)
     publisher = db.Column(db.String, nullable=False)
     employer_logo = db.Column(db.String, nullable=True)
     posted_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
+
+    user = db.relationship('User', back_populates='jobs')
 
     def to_dict(self):
         return {
@@ -34,6 +37,7 @@ class Job(db.Model):
             'country': self.country,
             'apply_link': self.apply_link,
             'company_name': self.company_name,
+            'company_website': self.company_website,
             'employment_type': self.employment_type,
             'publisher': self.publisher,
             'employer_logo': self.employer_logo,

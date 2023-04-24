@@ -9,13 +9,50 @@ job_search_routes = Blueprint('job_search', __name__)
 
 RAPIDAPI_KEY = os.environ.get('RAPIDAPI_KEY')
 RAPIDAPI_HOST = os.environ.get('RAPIDAPI_HOST')
-PUBlISHER_ID = os.environ.get('PUBLISHER_ID')
+PUBLISHER_ID = os.environ.get('PUBLISHER_ID')
 
 
 @job_search_routes.route('/search', methods=['POST'])
 @login_required
 def search():
-    
+    search_data = request.get_json()
+
+    url = "https://indeed-indeed.p.rapidapi.com/apisearch"
+
+    querystring = {
+        "publisher": PUBLISHER_ID,
+        "v": "2",
+        "format": "json",
+        "q": search_data.get("q", "java"),
+        "l": search_data.get("l", "austin, tx"),
+        "sort": search_data.get("sort", "relevance"),
+        "radius": search_data.get("radius", "25"),
+        "st": search_data.get("st"),
+        "jt": search_data.get("jt"),
+        "start": search_data.get("start"),
+        "limit": search_data.get("limit"),
+        "fromage": search_data.get("fromage"),
+        "highlight": search_data.get("highlight"),
+        "filter": search_data.get("filter"),
+        "latlong": search_data.get("latlong"),
+        "co": search_data.get("co"),
+        "chnl": search_data.get("chnl"),
+        "userip": request.remote_addr,
+        "useragent": request.user_agent.string
+    }
+
+    headers = {
+        "content-type": "application/octet-stream",
+        "X-RapidAPI-Key": RAPIDAPI_KEY,
+        "X-RapidAPI-Host": RAPIDAPI_HOST
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)
 
 
 

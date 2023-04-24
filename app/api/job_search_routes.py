@@ -14,6 +14,10 @@ PUBLISHER_ID = os.environ.get('PUBLISHER_ID')
 @job_search_routes.route('/search', methods=['POST'])
 @login_required
 def search():
+    """Search for jobs using JSearch via RapidAPI
+    Ultra-Fast and Simple Job Search for jobs posted on LinkedIn, Indeed, Glassdoor, ZipRecruiter, BeBee and many others, all in a single API.
+    Full documentation can be found here: https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
+    """
     search_data = request.get_json()
 
     url = "https://jsearch.p.rapidapi.com/search"

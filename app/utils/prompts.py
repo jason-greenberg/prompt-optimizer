@@ -26,6 +26,15 @@ def cl_prompt_three():
     
     """
 
+def company_values_prompt(company_name):
+    return f"""Output company ethical values in a numbered list, with no text before or after the number list. Output the ethical values ie. their code of morals, (or in the absence of this information, their goals) on the company closest to the following input:
+
+Input: '{company_name}'
+
+output a numbered list of the closest matching company morals. If you cannot locate the company, do not mention this, instead take an educated guess at this information. Limit all output to a numbered list, with a value and expansion on the value under each number. Do not precede the first bullet with any sentences, only output the list.
+    
+    """
+
 # ------ Cover Letter Prompts V2 (In Testing) =======
 def cl_prompt_one_v2(resume, job_description):
     return f"""You will act as an expert in generating engaging and relatable cover letters for junior web developers. I will give you a resume and a job description to write the cover letter with. Avoid repeating any phrases given in your prompts verbatim. The letter should only be two paragraphs. Do not use the word 'junior'.

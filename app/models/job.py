@@ -1,0 +1,41 @@
+from .db import db, environment, SCHEMA, add_prefix_for_prod
+from datetime import datetime
+
+class Job(db.Model):
+    __tablename__ = 'jobs'
+
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=True)
+    job_title = db.Column(db.String, nullable=False)
+    job_description = db.Column(db.Text, nullable=False)
+    company_details = db.Column(db.Text, nullable=True)
+    city = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    country = db.Column(db.String, nullable=False)
+    apply_link = db.Column(db.String, nullable=False)
+    company_name = db.Column(db.String, nullable=False)
+    employment_type = db.Column(db.String, nullable=False)
+    publisher = db.Column(db.String, nullable=False)
+    employer_logo = db.Column(db.String, nullable=True)
+    posted_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'job_title': self.job_title,
+            'job_description': self.job_description,
+            'company_details': self.company_details,
+            'city': self.city,
+            'state': self.state,
+            'country': self.country,
+            'apply_link': self.apply_link,
+            'company_name': self.company_name,
+            'employment_type': self.employment_type,
+            'publisher': self.publisher,
+            'employer_logo': self.employer_logo,
+            'posted_at': self.posted_at
+        }

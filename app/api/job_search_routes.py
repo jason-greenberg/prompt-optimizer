@@ -56,8 +56,7 @@ def search():
     if response.status_code == 200:
         job_data_list = response.json().get('data', [])
         for job_data in job_data_list:
-            job.user_id = current_user.id
-            job = create_job_from_api_data(job_data)
+            job = create_job_from_api_data(job_data, current_user.id)
             db.session.add(job)
         db.session.commit()
 

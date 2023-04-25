@@ -1,9 +1,9 @@
 from app.models import Job
 from datetime import datetime
 
-def create_job_from_api_data(job_data):
+def create_job_from_api_data(job_data, user_id):
     job = Job(
-        user_id=job_data.get('user_id', ""),
+        user_id=user_id,
         job_title=job_data.get("job_title", ""),
         job_description=job_data.get("job_description", ""),
         city=job_data.get("job_city", ""),

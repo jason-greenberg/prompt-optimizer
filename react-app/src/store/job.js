@@ -6,6 +6,7 @@ const READ = 'job/READ_SINGLE_JOB'
 const UPDATE = 'job/UPDATE_JOB'
 const DELETE = 'job/DELETE_JOB'
 const CLEAR_CURRENT_JOB = 'job/CLEAR_CURRENT_JOB'
+const UPDATE_COMPANY_DETAILS = 'job/UPDATE_COMPANY_DETAILS';
 
 // -------- ACTIONS ---------
 const searchJobs = (jobs) => ({
@@ -33,12 +34,17 @@ const updateJob = (job) => ({
   job
 })
 
+const updateCompanyDetails = (job) => ({
+  type: UPDATE_COMPANY_DETAILS,
+  job
+});
+
 const deleteJob = (jobId) => ({
   type: DELETE,
   jobId
 })
 
-const clearCurrentJob = () => ({
+export const clearCurrentJob = () => ({
   type: CLEAR_CURRENT_JOB,
 });
 
@@ -126,6 +132,23 @@ export const updateJobThunk = (job) => async (dispatch) => {
   }
 }
 
+export const updateNewJobsCompanyDetailsThunk = () => async (dispatch, getState) => {
+  const newJobs = getState().jobs.newJobs;
+
+  for (const jobId in newJobs) {
+    const response = await fetch(`/api/jobs/${jobId}/company_details`, {
+      method: 'POST'
+    });
+
+    if (response.ok) {
+      const updatedJob = await response.json();
+      dispatch(updateCompanyDetails(updatedJob));
+    } else {
+      return { 'error': 'Error updating company details' };
+    }
+  }
+};
+
 export const deleteJobThunk = (jobId) => async (dispatch) => {
   const response = await fetch(`/api/jobs/${jobId}`, {
     method: 'DELETE'
@@ -141,6 +164,7 @@ export const deleteJobThunk = (jobId) => async (dispatch) => {
 // -------- REDUCER ---------
 const initialState = {
   allJobs: {},
+  newJobs: {},
   currentJob: {}
 };
 
@@ -148,7 +172,8 @@ export default function jobsReducer(state = initialState, action) {
   const newState = { ...state };
   switch (action.type) {
     case SEARCH_JOBS:
-      newState.allJobs = { ...action.jobs };
+      newState.newJobs = { ...action.jobs };
+      newState.allJobs = { ...state.allJobs, ...action.jobs }
       return newState;
     case POPULATE:
       newState.allJobs = { ...action.jobs };
@@ -165,6 +190,12 @@ export default function jobsReducer(state = initialState, action) {
       newState.allJobs = { ...state.allJobs };
       newState.allJobs[action.job.id] = action.job;
       return newState;
+    case UPDATE_COMPANY_DETAILS:
+      newState.allJobs = { ...state.allJobs };
+      newState.allJobs[action.job.id] = action.job;
+      newState.newJobs = { ...state.newJobs };
+      newState.newJobs[action.job.id] = action.job;
+      return newState;      
     case DELETE:
       newState.allJobs = { ...state.allJobs };
       delete newState.allJobs[action.jobId];

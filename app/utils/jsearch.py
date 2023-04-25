@@ -1,6 +1,11 @@
+from flask import jsonify, make_response
 from app.models import db, Job
 from datetime import datetime
 from ..utils.gpt import generate_company_details
+
+def page_not_found():
+    response = make_response(jsonify({"error": "Sorry, the job you're looking for does not exist."}), 404)
+    return response
 
 def create_job_from_api_data(job_data, user_id):
     job = Job(
@@ -24,10 +29,12 @@ def create_job_from_api_data(job_data, user_id):
 def add_company_details_async(job_id, current_user):
     job = Job.query.get(job_id)
     if job is None:
-        return
+        return page_not_found()
 
     # Generate company details using OpenAI
     company_details = generate_company_details(job.company_name, 'gpt-3.5-turbo', current_user)
 
     job.company_details = company_details
     db.session.commit()
+
+    return job.to_dict()

@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 import requests
 from app.models import db, Job, User
 from ..utils.jsearch import create_job_from_api_data, add_company_details_async
+from ..utils.gpt import generate_company_details
 
 job_search_routes = Blueprint('job_search', __name__)
 
@@ -84,7 +85,7 @@ def search():
         
         # Convert the new Job objects to JSON
         new_jobs_json = [job.to_dict() for job in new_jobs]
-        
+            
         return jsonify(new_jobs_json)
     else:
         return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)

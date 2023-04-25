@@ -5,6 +5,7 @@ def create_job_from_api_data(job_data, user_id):
     job = Job(
         user_id=user_id,
         job_title=job_data.get("job_title", ""),
+        external_api_id=job_data.get("job_id", ""),
         job_description=job_data.get("job_description", ""),
         city=job_data.get("job_city", ""),
         state=job_data.get("job_state", ""),

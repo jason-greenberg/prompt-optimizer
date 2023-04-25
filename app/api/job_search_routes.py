@@ -69,7 +69,7 @@ def search():
         # Convert the Job objects to JSON
         recent_jobs_json = [job.to_dict() for job in recent_jobs]
 
-        return jsonify(recent_jobs_json)
+        return jsonify(response.json())
     else:
         return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)
 
@@ -102,18 +102,19 @@ def create_job():
     data = request.json
     new_job = Job(
         user_id=current_user.id,
-        job_title=data['job_title'],
-        job_description=data['job_description'],
-        company_details=data['company_details'],
-        city=data['city'],
-        state=data['state'],
-        country=data['country'],
-        apply_link=data['apply_link'],
-        company_name=data['company_name'],
-        company_website=data['company_website'],
-        employment_type=data['employment_type'],
-        publisher=data['publisher'],
-        employer_logo=data['employer_logo'],
+        external_api_id=data.get('external_api_id', ""),
+        job_title=data.get('job_title', ""),
+        job_description=data.get('job_description', ""),
+        company_details=data.get('company_details', ""),
+        city=data.get('city', ""),
+        state=data.get('state', ""),
+        country=data.get('country', ""),
+        apply_link=data.get('apply_link', ""),
+        company_name=data.get('company_name', ""),
+        company_website=data.get('company_website', ""),
+        employment_type=data.get('employment_type', ""),
+        publisher=data.get('publisher', ""),
+        employer_logo=data.get('employer_logo', ""),
         posted_at=datetime.utcnow()
     )
     db.session.add(new_job)

@@ -5,6 +5,7 @@ from .coverletters import seed_coverletters, undo_coverletters
 from .applications import seed_applications, undo_applications
 from .correspondences import seed_correspondences, undo_correspondences
 from .transactions import seed_transactions, undo_transactions
+from .jobs import seed_jobs, undo_jobs
 
 from app.models.db import db, environment, SCHEMA
 
@@ -26,12 +27,15 @@ def seed():
         undo_coverletters()
         undo_applications()
         undo_correspondences()
+        undo_transactions()
+        undo_jobs
     seed_users()
     seed_resumes()
     seed_coverletters()
     seed_applications()
     seed_correspondences()
     seed_transactions()
+    seed_jobs()
 
 
 # Creates the `flask seed undo` command
@@ -43,3 +47,4 @@ def undo():
     undo_applications()
     undo_correspondences()
     undo_transactions()
+    undo_jobs()

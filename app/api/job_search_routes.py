@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 import os
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 import requests
 from app.models import db, Job, User
 from ..utils.jsearch import create_job_from_api_data
@@ -58,7 +59,11 @@ def search():
         for job_data in job_data_list:
             job = create_job_from_api_data(job_data, current_user.id)
             db.session.add(job)
-        db.session.commit()
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+                continue
 
         # Get the length of the response array
         num_recent_jobs = len(job_data_list)
@@ -69,7 +74,7 @@ def search():
         # Convert the Job objects to JSON
         recent_jobs_json = [job.to_dict() for job in recent_jobs]
 
-        return jsonify(response.json())
+        return jsonify(recent_jobs_json)
     else:
         return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)
 

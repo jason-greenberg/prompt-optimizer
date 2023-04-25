@@ -8,6 +8,7 @@ def seed_jobs():
 
     job1 = Job(
         user_id=demo.id,
+        external_api_id='j1',
         job_title='Software Engineer',
         job_description='Develop software solutions...',
         company_details='A leading software company...',
@@ -25,6 +26,7 @@ def seed_jobs():
 
     job2 = Job(
         user_id=demo.id,
+        external_api_id='j2',
         job_title='Frontend Developer',
         job_description='Create user interfaces...',
         company_details='A top web development firm...',
@@ -42,6 +44,7 @@ def seed_jobs():
 
     job3 = Job(
         user_id=demo.id,
+        external_api_id='j3',
         job_title='Backend Developer',
         job_description='Develop server-side applications...',
         company_details='A leading backend services company...',
@@ -59,6 +62,7 @@ def seed_jobs():
 
     job4 = Job(
         user_id=demo.id,
+        external_api_id='j4',
         job_title='Fullstack Developer',
         job_description='Develop fullstack applications...',
         company_details='A top data analysis company...',
@@ -76,6 +80,7 @@ def seed_jobs():
 
     job5 = Job(
         user_id=demo.id,
+        external_api_id='j5',
         job_title='Lead FS Developer',
         job_description='Lead a team of fullstack developers...',
         company_details='A well-established project management firm...',

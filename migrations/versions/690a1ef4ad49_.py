@@ -116,6 +116,7 @@ def upgrade():
     op.create_table('jobs',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('external_api_id', sa.String(), nullable=False),
     sa.Column('job_title', sa.String(), nullable=False),
     sa.Column('job_description', sa.Text(), nullable=False),
     sa.Column('company_details', sa.Text(), nullable=True),
@@ -130,7 +131,8 @@ def upgrade():
     sa.Column('employer_logo', sa.String(), nullable=True),
     sa.Column('posted_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='SET NULL'),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.Index('user_external_api_unique', 'user_id', 'external_api_id', unique=True)
     )
 
     if environment == "production":

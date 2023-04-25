@@ -1,15 +1,21 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 import os
+from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 import requests
-from app.models import db, User
+from app.models import db, Job, User
+from ..utils.jsearch import create_job_from_api_data
 
 job_search_routes = Blueprint('job_search', __name__)
-
 
 RAPIDAPI_KEY = os.environ.get('RAPIDAPI_KEY')
 RAPIDAPI_HOST = os.environ.get('RAPIDAPI_HOST')
 PUBLISHER_ID = os.environ.get('PUBLISHER_ID')
+
+def page_not_found():
+    response = make_response(jsonify({"error": "Sorry, the job you're looking for does not exist."}), 404)
+    return response
 
 @job_search_routes.route('/search', methods=['POST'])
 @login_required
@@ -49,6 +55,111 @@ def search():
     response = requests.get(url, headers=headers, params=querystring)
 
     if response.status_code == 200:
-        return jsonify(response.json())
+        job_data_list = response.json().get('data', [])
+        for job_data in job_data_list:
+            job = create_job_from_api_data(job_data, current_user.id)
+            db.session.add(job)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+                continue
+
+        # Get the length of the response array
+        num_recent_jobs = len(job_data_list)
+
+        # Query the job table for the most recent jobs that match the length of the response array
+        recent_jobs = Job.query.filter_by(user_id=current_user.id).order_by(Job.id.desc()).limit(num_recent_jobs).all()
+
+        # Convert the Job objects to JSON
+        recent_jobs_json = [job.to_dict() for job in recent_jobs]
+
+        return jsonify(recent_jobs_json)
     else:
         return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)
+
+    
+# Get all jobs of current user
+@job_search_routes.route('/')
+@login_required
+def get_jobs():
+    jobs = Job.query.filter_by(user_id=current_user.id).all()
+    return [j.to_dict() for j in jobs]
+
+# Get job by id
+@job_search_routes.route('/<int:id>')
+@login_required
+def get_job_by_id(id):
+    job = Job.query.get(id)
+
+    if job is None:
+        return page_not_found()
+
+    if job.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Job must belong to the current user'}), 403)
+
+    return job.to_dict()
+
+# Create new job
+@job_search_routes.route('/', methods=['POST'])
+@login_required
+def create_job():
+    data = request.json
+    new_job = Job(
+        user_id=current_user.id,
+        external_api_id=data.get('external_api_id', ""),
+        job_title=data.get('job_title', ""),
+        job_description=data.get('job_description', ""),
+        company_details=data.get('company_details', ""),
+        city=data.get('city', ""),
+        state=data.get('state', ""),
+        country=data.get('country', ""),
+        apply_link=data.get('apply_link', ""),
+        company_name=data.get('company_name', ""),
+        company_website=data.get('company_website', ""),
+        employment_type=data.get('employment_type', ""),
+        publisher=data.get('publisher', ""),
+        employer_logo=data.get('employer_logo', ""),
+        posted_at=datetime.utcnow()
+    )
+    db.session.add(new_job)
+    db.session.commit()
+
+    return new_job.to_dict(), 201
+
+# Update job by id
+@job_search_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def update_job(id):
+    job = Job.query.get(id)
+
+    if job is None:
+        return page_not_found()
+
+    if job.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Job must belong to the current user'}), 403)
+
+    data = request.json
+    for field in data:
+        setattr(job, field, data[field])
+
+    db.session.commit()
+
+    return job.to_dict()
+
+# Delete job by id
+@job_search_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_job(id):
+    job = Job.query.get(id)
+
+    if job is None:
+        return page_not_found()
+
+    if job.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Job must belong to the current user'}), 403)
+
+    db.session.delete(job)
+    db.session.commit()
+
+    return {'message': 'Successfully deleted job'}

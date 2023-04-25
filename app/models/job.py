@@ -1,14 +1,23 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from sqlalchemy.schema import UniqueConstraint
 
 class Job(db.Model):
     __tablename__ = 'jobs'
 
     if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = (
+            UniqueConstraint('user_id', 'external_api_id', name='user_external_api_unique'),
+            {'schema': SCHEMA},
+        )
+    else:
+        __table_args__ = (
+            UniqueConstraint('user_id', 'external_api_id', name='user_external_api_unique'),
+        )
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=True)
+    external_api_id = db.Column(db.String, nullable=False)
     job_title = db.Column(db.String, nullable=False)
     job_description = db.Column(db.Text, nullable=False)
     company_details = db.Column(db.Text, nullable=True)

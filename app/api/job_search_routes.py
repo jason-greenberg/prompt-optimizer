@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 import os
 import requests
-from app.models import db, User
+from app.models import db, Job, User
 
 job_search_routes = Blueprint('job_search', __name__)
 
@@ -52,3 +52,87 @@ def search():
         return jsonify(response.json())
     else:
         return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)
+    
+# Get all jobs of current user
+@job_search_routes.route('/')
+@login_required
+def get_jobs():
+    jobs = Job.query.filter_by(user_id=current_user.id).all()
+    return [j.to_dict() for j in jobs]
+
+# Get job by id
+@job_search_routes.route('/<int:id>')
+@login_required
+def get_job_by_id(id):
+    job = Job.query.get(id)
+
+    if job is None:
+        return page_not_found()
+
+    if job.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Job must belong to the current user'}), 403)
+
+    return job.to_dict()
+
+# Create new job
+@job_search_routes.route('/', methods=['POST'])
+@login_required
+def create_job():
+    data = request.json
+    new_job = Job(
+        user_id=current_user.id,
+        job_title=data['job_title'],
+        job_description=data['job_description'],
+        company_details=data['company_details'],
+        city=data['city'],
+        state=data['state'],
+        country=data['country'],
+        apply_link=data['apply_link'],
+        company_name=data['company_name'],
+        company_website=data['company_website'],
+        employment_type=data['employment_type'],
+        publisher=data['publisher'],
+        employer_logo=data['employer_logo'],
+        posted_at=datetime.utcnow()
+    )
+    db.session.add(new_job)
+    db.session.commit()
+
+    return new_job.to_dict(), 201
+
+# Update job by id
+@job_search_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def update_job(id):
+    job = Job.query.get(id)
+
+    if job is None:
+        return page_not_found()
+
+    if job.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Job must belong to the current user'}), 403)
+
+    data = request.json
+    for field in data:
+        setattr(job, field, data[field])
+
+    db.session.commit()
+
+    return job.to_dict()
+
+# Delete job by id
+@job_search_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_job(id):
+    job = Job.query.get(id)
+
+    if job is None:
+        return page_not_found()
+
+    if job.user_id != current_user.id:
+        return make_response(jsonify({'error': 'Job must belong to the current user'}), 403)
+
+    db.session.delete(job)
+    db.session.commit()
+
+    return {'message': 'Successfully deleted job'}

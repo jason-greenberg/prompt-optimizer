@@ -5,4 +5,5 @@ from .coverletter import CoverLetter
 from .application import Application
 from .correspondence import Correspondence
 from .transaction import Transaction
+from .job import Job
 from .db import environment, SCHEMA

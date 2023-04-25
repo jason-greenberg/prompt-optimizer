@@ -2,6 +2,7 @@ from .prompts import (
     cl_prompt_one,
     cl_prompt_two,
     cl_prompt_three,
+    company_values_prompt,
     resume_ATS_prompt,
     corr_application_follow_up,
     corr_initial_connection_request,
@@ -56,6 +57,19 @@ def generate_gpt_cover_letter(resume, job_description, company_details, engine, 
             "content": 'Assistant generates a revised, more personable cover letter here'},
         {"role": "user", "content": cl_prompt_three()},
         {"role": "assistant", "content": 'Assistant generates another revision, to include applicants qualifications for the job'}
+    ]
+
+    return call_gpt(messages, user, engine)
+
+def generate_company_details(company_name, engine, user):
+    """
+    Generates a company description using OpenAI's chat completion api.
+    Relies on OpenAI's training data for information about companies
+    """
+    messages = [
+        {"role": "system", "content": "You will act as an expert in retreiving company details for a job application. You will create a number list of details about a company that a candidate can use to tailor their cover letter."},
+        {"role": "user", "content": company_values_prompt(company_name)},
+        {"role": "assistant", "content": 'Assistant generates a list of company morals or ethical guidelines here'}
     ]
 
     return call_gpt(messages, user, engine)

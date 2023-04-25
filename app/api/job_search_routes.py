@@ -1,15 +1,20 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 import os
+from datetime import datetime
 import requests
 from app.models import db, Job, User
+from ..utils.jsearch import create_job_from_api_data
 
 job_search_routes = Blueprint('job_search', __name__)
-
 
 RAPIDAPI_KEY = os.environ.get('RAPIDAPI_KEY')
 RAPIDAPI_HOST = os.environ.get('RAPIDAPI_HOST')
 PUBLISHER_ID = os.environ.get('PUBLISHER_ID')
+
+def page_not_found():
+    response = make_response(jsonify({"error": "Sorry, the job you're looking for does not exist."}), 404)
+    return response
 
 @job_search_routes.route('/search', methods=['POST'])
 @login_required
@@ -49,9 +54,26 @@ def search():
     response = requests.get(url, headers=headers, params=querystring)
 
     if response.status_code == 200:
-        return jsonify(response.json())
+        job_data_list = response.json().get('data', [])
+        for job_data in job_data_list:
+            job.user_id = current_user.id
+            job = create_job_from_api_data(job_data)
+            db.session.add(job)
+        db.session.commit()
+
+        # Get the length of the response array
+        num_recent_jobs = len(job_data_list)
+
+        # Query the job table for the most recent jobs that match the length of the response array
+        recent_jobs = Job.query.filter_by(user_id=current_user.id).order_by(Job.id.desc()).limit(num_recent_jobs).all()
+
+        # Convert the Job objects to JSON
+        recent_jobs_json = [job.to_dict() for job in recent_jobs]
+
+        return jsonify(recent_jobs_json)
     else:
         return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)
+
     
 # Get all jobs of current user
 @job_search_routes.route('/')

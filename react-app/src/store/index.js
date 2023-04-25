@@ -5,13 +5,15 @@ import resumesReducer from './resume'
 import coverLettersReducer from './coverletter';
 import applicationsReducer from './application';
 import correspondencesReducer from './correspondence';
+import jobsReducer from './job';
 
 const rootReducer = combineReducers({
   session,
   resumes: resumesReducer,
   coverletters: coverLettersReducer,
   applications: applicationsReducer,
-  correspondences: correspondencesReducer
+  correspondences: correspondencesReducer,
+  jobs: jobsReducer
 });
 
 

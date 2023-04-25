@@ -21,7 +21,7 @@ import openai
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-def call_gpt(messages, user, model='gpt-3.5-turbo'):
+def call_gpt(messages, user, model='gpt-3.5-turbo', free=False):
     """
     Sends a request for chat completion to OpenAI
     messages parameter is a list of objects, each object containing 'role' and 'content' attributes
@@ -37,9 +37,9 @@ def call_gpt(messages, user, model='gpt-3.5-turbo'):
 
     if response.choices[0].message.content is not None and user is not None:
         current_user = User.query.get(user.id)
-        current_user.generation_balance -= 1
-        db.session.commit()
-
+        if free is not True:
+            current_user.generation_balance -= 1
+            db.session.commit()
     # print(response.choices[0].message.content)
     return response.choices[0].message.content
 
@@ -72,7 +72,7 @@ def generate_company_details(company_name, engine, user):
         {"role": "assistant", "content": 'Assistant generates a list of company morals or ethical guidelines here'}
     ]
 
-    return call_gpt(messages, user, engine)
+    return call_gpt(messages, user, engine, free=True) # Free because it's a small request
 
 
 def generate_gpt_correspondence(context, corr_type, engine, user):

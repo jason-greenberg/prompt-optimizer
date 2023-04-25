@@ -5,7 +5,8 @@ from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 import requests
 from app.models import db, Job, User
-from ..utils.jsearch import create_job_from_api_data
+from ..utils.jsearch import create_job_from_api_data, add_company_details_async
+from ..utils.gpt import generate_company_details
 
 job_search_routes = Blueprint('job_search', __name__)
 
@@ -54,27 +55,38 @@ def search():
 
     response = requests.get(url, headers=headers, params=querystring)
 
+    # For each job in the response, create a new Job object and add it to the database
     if response.status_code == 200:
         job_data_list = response.json().get('data', [])
+        
+        # Query the database to get all jobs associated with the current user
+        existing_jobs = Job.query.filter_by(user_id=current_user.id).all()
+        
+        # Create a set of external API IDs of jobs that already exist in the user's database
+        existing_job_ids = {job.external_api_id for job in existing_jobs}
+        
+        # Initialize an empty list to store new jobs
+        new_jobs = []
+        
         for job_data in job_data_list:
-            job = create_job_from_api_data(job_data, current_user.id)
-            db.session.add(job)
-            try:
-                db.session.commit()
-            except IntegrityError:
-                db.session.rollback()
-                continue
-
-        # Get the length of the response array
-        num_recent_jobs = len(job_data_list)
-
-        # Query the job table for the most recent jobs that match the length of the response array
-        recent_jobs = Job.query.filter_by(user_id=current_user.id).order_by(Job.id.desc()).limit(num_recent_jobs).all()
-
-        # Convert the Job objects to JSON
-        recent_jobs_json = [job.to_dict() for job in recent_jobs]
-
-        return jsonify(recent_jobs_json)
+            # Check if the job's external API ID is not in the set of existing job IDs
+            if job_data.get("job_id", "") not in existing_job_ids:
+                # Create a new job from the API data
+                job = create_job_from_api_data(job_data, current_user.id)
+                db.session.add(job)
+                new_jobs.append(job)
+        
+        # Commit the new jobs to the database
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return make_response(jsonify({"error": "Failed to add new jobs to the database"}), 500)
+        
+        # Convert the new Job objects to JSON
+        new_jobs_json = [job.to_dict() for job in new_jobs]
+            
+        return jsonify(new_jobs_json)
     else:
         return make_response(jsonify({"error": "Failed to fetch job search results"}), response.status_code)
 
@@ -126,6 +138,24 @@ def create_job():
     db.session.commit()
 
     return new_job.to_dict(), 201
+
+# Add company details to job by id using OpenAI
+@job_search_routes.route('/<int:id>/company_details', methods=['POST'])
+@login_required
+def add_company_details(id):
+
+    job = Job.query.get(id)
+
+    if job is None:
+        return page_not_found()
+
+    # Generate company details using OpenAI
+    company_details = generate_company_details(job.company_name, 'gpt-3.5-turbo', current_user)
+
+    job.company_details = company_details
+    db.session.commit()
+
+    return job.to_dict()
 
 # Update job by id
 @job_search_routes.route('/<int:id>', methods=['PUT'])

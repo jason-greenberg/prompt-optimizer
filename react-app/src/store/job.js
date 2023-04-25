@@ -1,11 +1,18 @@
 // constants
+const SEARCH_JOBS = 'SEARCH_JOBS'
 const CREATE = 'job/CREATE_JOB'
 const POPULATE = 'job/POPULATE_JOBS'
 const READ = 'job/READ_SINGLE_JOB'
 const UPDATE = 'job/UPDATE_JOB'
 const DELETE = 'job/DELETE_JOB'
+const CLEAR_CURRENT_JOB = 'job/CLEAR_CURRENT_JOB'
 
 // -------- ACTIONS ---------
+const searchJobs = (jobs) => ({
+  type: SEARCH_JOBS,
+  jobs,
+})
+
 const createJob = (job) => ({
   type: CREATE,
   job
@@ -31,7 +38,35 @@ const deleteJob = (jobId) => ({
   jobId
 })
 
+const clearCurrentJob = () => ({
+  type: CLEAR_CURRENT_JOB,
+});
+
 // ----- THUNK ACTIONS ------
+export const searchJobsThunk = (searchData) => async (dispatch) => {
+  try {
+    const response = await fetch('/api/jobs/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(searchData),
+    });
+
+    if (response.ok) {
+      const normalizedJobs = {}
+      const jobs = await response.json();
+      jobs.forEach(job => normalizedJobs[job.id] = job)
+      dispatch(searchJobs(normalizedJobs));
+    } else {
+      throw new Error('Failed to fetch job search results');
+    }
+  } catch (error) {
+    return { 'error': 'Error searching jobs' };
+  }
+}
+
+
 export const createJobThunk = (job) => async (dispatch) => {
   const response = await fetch('/api/jobs/', {
     method: 'POST',
@@ -112,6 +147,9 @@ const initialState = {
 export default function jobsReducer(state = initialState, action) {
   const newState = { ...state };
   switch (action.type) {
+    case SEARCH_JOBS:
+      newState.allJobs = { ...action.jobs };
+      return newState;
     case POPULATE:
       newState.allJobs = { ...action.jobs };
       return newState;

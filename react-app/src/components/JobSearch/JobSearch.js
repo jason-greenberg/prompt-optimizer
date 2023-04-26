@@ -60,7 +60,7 @@ export default function JobSearch() {
                   <tr className="column-headings">
                     <th className="column-name"></th>
                     <th className="column-name job-title">JOB TITLE</th>
-                    <th className="column-name">COMPANY</th>
+                    <th className="column-name company">COMPANY</th>
                     <th className="column-name">DATE POSTED</th>
                     <th className="column-name">LOCATION</th>
                   </tr>
@@ -81,7 +81,7 @@ export default function JobSearch() {
                         </button>
                       </td>
                       <td className="job-title">{job.job_title}</td>
-                      <td>{job.company_name}</td>
+                      <td className="company">{job.company_name}</td>
                       <td>{formatDate(job.posted_at)}</td>
                       <td>{job.city}, {job.state} {job.country}</td>
                     </tr>

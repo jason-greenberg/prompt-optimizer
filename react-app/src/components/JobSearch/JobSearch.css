@@ -1,0 +1,28 @@
+/* CONTAINERS */
+.job-search-container {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+/* ---------- */
+
+
+.job-cue {
+  min-width: 110px;
+  white-space: nowrap;
+}
+
+.job-search-box {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  margin-left: 15px;
+  margin-top: 5px;
+  min-width: 500px;
+}
+
+.job-search-header {
+  align-items: center;
+  display: flex;
+}

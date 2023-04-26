@@ -70,7 +70,7 @@ export const formatDate = (dateString) => {
   }
 
   const days = Math.floor(hours / 24);
-  return days === 1 ? 'a day ago' : `${days} days ago`;
+  return days === 1 ? 'Yesterday' : `${days} days ago`;
 };
 
 export const formatCorrType = (corrType) => {

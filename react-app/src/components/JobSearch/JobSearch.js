@@ -7,21 +7,29 @@ import Navigation from '../Navigation';
 import './JobSearch.css';
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
+import { fetchAllJobsThunk } from '../../store/job';
+import { formatDate } from '../../utils/format';
 
 export default function JobSearch() {
   const user = useSelector(state => state.session.user);
-  const applications = useSelector(state => state.applications.allApplications)
-  const applicationsArray = Object.values(applications);
   const history = useHistory()
   const location = useLocation();
-  const resumeDeleted = location.state?.resumeDeleted;
-  const applicationDeleted = location.state?.applicationDeleted;
-  const [showBanner, setShowBanner] = useState(resumeDeleted);
-  const [showAppBanner, setShowAppBanner] = useState(applicationDeleted);
+  const jobs = useSelector(state => state.jobs.allJobs);
+  const jobsArray = Object.values(jobs);
   const { setSelectedLink } = useMenuSelector()
 
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchAsync = async () => {
+      setSelectedLink('easy apply');
+      await dispatch(fetchAllJobsThunk());
+      await setIsLoaded(true);
+    }
+
+    fetchAsync();
+  }, [dispatch])
 
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
@@ -31,44 +39,39 @@ export default function JobSearch() {
   return (
     <>
       <Navigation />
-      {isLoaded && applicationsArray.length > 0 && (
+      {isLoaded && jobsArray.length > 0 && (
         <div className="dashboard-container">
           <div className="dashboard-body">
-          {showBanner && (
-            <div className="resume-deleted-banner">
-              Resume successfully deleted.
-            </div>
-          )}
-          {showAppBanner && (
-            <div className="resume-deleted-banner">
-              Application successfully deleted.
-            </div>
-          )}
             <div className="current-apps-table">
-              <h3 className="table-title">Current Applications</h3>
+              <div className="job-search-container">
+                <div className="job-search-header">
+                  <h3 className="table-title">Job Feed</h3>
+                  <div className="job-search-box">
+                    <div className="job-cue">What & Where</div>
+                  </div>
+                </div>
+              </div>
               <table className="applications-table">
                 <thead>
                   <tr className="column-headings">
                     <th className="column-name job-title">JOB TITLE</th>
-                    <th className="column-name">POSITION TYPE</th>
-                    <th className="column-name">DATE APPLIED</th>
-                    <th className="column-name">FOLLOW UP</th>
+                    <th className="column-name">COMPANY</th>
+                    <th className="column-name">DATE POSTED</th>
+                    <th className="column-name">LOCATION</th>
                     <th className="column-name">ADDITIONAL INFO</th>
                   </tr>
                 </thead>
                 <tbody className="applications-container">
-                  {applicationsArray.map((app) => (
+                  {jobsArray.map((job) => (
                     <tr 
-                      key={app.id} 
+                      key={job.id} 
                       className="individual-app"
-                      onClick={() => handleClick(app)}
+                      onClick={() => handleClick(job)}
                     >
-                      <td className="job-title">{app.job_title}</td>
-                      <td>{app.position_type}</td>
-                      <td>{app.created_at}</td>
-                      <td>
-                        <input type="checkbox" />
-                      </td>
+                      <td className="job-title">{job.job_title}</td>
+                      <td>{job.company_name}</td>
+                      <td>{formatDate(job.posted_at)}</td>
+                      <td>{job.city}, {job.state} {job.country}</td>
                       <td>None</td>
                     </tr>
                   ))}
@@ -78,7 +81,7 @@ export default function JobSearch() {
           </div>
         </div>
       )}
-      { isLoaded && !(applicationsArray.length > 0) && (
+      { isLoaded && !(jobsArray.length > 0) && (
         <div className="dashboard-container">
           <div className="dashboard-body">
           <div className="current-apps-table">

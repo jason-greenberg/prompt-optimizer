@@ -20,6 +20,7 @@ import ManageCorrespondences from "./components/Correspondences/ManageCorrespond
 import CheckoutPage from "./components/Payments/CheckoutPage";
 import NotFound from "./components/NotFound/NotFound";
 import Cancel from "./components/Payments/Cancel";
+import JobSearch from "./components/JobSearch/JobSearch";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function App() {
           <Route path="/about" component={AboutDetails} />
           <Route path="/applications/new" component={CreateApplication} />
           <Route path="/applications/:applicationId" component={ApplicationDetails} />
+          <Route path="/jobs" component={JobSearch} />
           <Route path="/resumes/new" component={CreateResumeForm} />
           <Route path="/resumes/:resumeId/edit" component={EditResume} />
           <Route path="/resumes/:resumeId" component={ResumeDetails} />

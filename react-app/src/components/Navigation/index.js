@@ -30,6 +30,13 @@ export default function Navigation() {
 								Dashboard
 							</NavLink>
 							<NavLink 
+								className={"nav-link" + (selectedLink === "easy apply" ? " selected-link" : "")}
+								onClick={() => changeSelectedLink('easy apply')}
+								to="/jobs"
+							>
+								Easy Apply
+							</NavLink>
+							<NavLink 
 								className={"nav-link" + (selectedLink === "resumes" ? " selected-link" : "")}
 								onClick={() => changeSelectedLink('resumes')}
 								to="/resumes"

@@ -6,7 +6,9 @@
   width: 100%;
 }
 /* ---------- */
-
+td.apply-cell {
+  padding: 20px 0px;
+}
 
 .job-cue {
   min-width: 110px;
@@ -25,4 +27,9 @@
 .job-search-header {
   align-items: center;
   display: flex;
+}
+
+/* BUTTONS */
+.apply-button {
+  padding: 10px 20px;
 }

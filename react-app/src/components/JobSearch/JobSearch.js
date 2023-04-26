@@ -36,6 +36,10 @@ export default function JobSearch() {
     return history.push(`/applications/${app.id}`)
   }
 
+  const handleApply = async (app) => {
+
+  }
+
   return (
     <>
       <Navigation />
@@ -45,7 +49,7 @@ export default function JobSearch() {
             <div className="current-apps-table">
               <div className="job-search-container">
                 <div className="job-search-header">
-                  <h3 className="table-title">Job Feed</h3>
+                  <h3 className="table-title">Job Search</h3>
                   <div className="job-search-box">
                     <div className="job-cue">What & Where</div>
                   </div>
@@ -54,11 +58,11 @@ export default function JobSearch() {
               <table className="applications-table">
                 <thead>
                   <tr className="column-headings">
+                    <th className="column-name"></th>
                     <th className="column-name job-title">JOB TITLE</th>
                     <th className="column-name">COMPANY</th>
                     <th className="column-name">DATE POSTED</th>
                     <th className="column-name">LOCATION</th>
-                    <th className="column-name">ADDITIONAL INFO</th>
                   </tr>
                 </thead>
                 <tbody className="applications-container">
@@ -66,13 +70,20 @@ export default function JobSearch() {
                     <tr 
                       key={job.id} 
                       className="individual-app"
-                      onClick={() => handleClick(job)}
+                      // onClick={() => handleClick(job)}
                     >
+                      <td className="apply-cell">
+                        <button 
+                          className="view-button apply-button"
+                          onClick={handleApply}
+                        >
+                          Easy Apply
+                        </button>
+                      </td>
                       <td className="job-title">{job.job_title}</td>
                       <td>{job.company_name}</td>
                       <td>{formatDate(job.posted_at)}</td>
                       <td>{job.city}, {job.state} {job.country}</td>
-                      <td>None</td>
                     </tr>
                   ))}
                 </tbody>

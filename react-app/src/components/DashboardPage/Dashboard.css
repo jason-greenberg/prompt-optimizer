@@ -124,11 +124,18 @@
   width: 100%;
 }
 
+
 th.job-title {
   padding-left: 20px;
+  max-width: 200px;
+}
+
+td.company {
+  max-width: 80px;
 }
 
 td.job-title {
   font-weight: 500;
   padding-left: 20px;
+  max-width: 115px;
 }

@@ -8,6 +8,7 @@
 /* ---------- */
 td.apply-cell {
   padding: 20px 0px;
+  max-width: 70px;
 }
 
 .job-cue {
@@ -31,5 +32,6 @@ td.apply-cell {
 
 /* BUTTONS */
 .apply-button {
-  padding: 10px 20px;
+  margin-left: 40px;
+  padding: 10px 30px;
 }

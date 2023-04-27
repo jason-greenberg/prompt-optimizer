@@ -52,7 +52,13 @@ export default function JobSearch() {
                   <h3 className="table-title">Job Search</h3>
                   <div className="job-search-box">
                     <div className="job-cue">What & Where</div>
+                    <input 
+                      className="job-search-input"
+                      type="text" 
+                      placeholder='job title, keywords, and/or location'
+                    />
                   </div>
+                  <button className="search-button">Search</button>
                 </div>
               </div>
               <table className="applications-table">
@@ -62,7 +68,8 @@ export default function JobSearch() {
                     <th className="column-name job-title">JOB TITLE</th>
                     <th className="column-name company">COMPANY</th>
                     <th className="column-name">DATE POSTED</th>
-                    <th className="column-name">LOCATION</th>
+                    <th className="column-name location">LOCATION</th>
+                    <th className="column-name">PLATFORM</th>
                   </tr>
                 </thead>
                 <tbody className="applications-container">
@@ -82,8 +89,13 @@ export default function JobSearch() {
                       </td>
                       <td className="job-title">{job.job_title}</td>
                       <td className="company">{job.company_name}</td>
-                      <td>{formatDate(job.posted_at)}</td>
-                      <td>{job.city}, {job.state} {job.country}</td>
+                      <td className="date-posted">
+                        {formatDate(job.posted_at)}
+                      </td>
+                      <td className="location">
+                        {job.city}, {job.state} {job.country}
+                      </td>
+                      <td className="publisher">{job.publisher}</td>
                     </tr>
                   ))}
                 </tbody>

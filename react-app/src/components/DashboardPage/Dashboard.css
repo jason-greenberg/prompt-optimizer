@@ -137,6 +137,10 @@ th.job-title {
   max-width: 200px;
 }
 
+td.date-posted {
+  max-width: 50px;
+}
+
 td.company {
   max-width: 80px;
 }
@@ -145,5 +149,13 @@ td.job-title {
   font-weight: 500;
   padding-left: 20px;
   padding-right: 10px;
+  max-width: 80px;
+}
+
+td.location {
+  max-width: 80px;
+}
+
+td.publisher {
   max-width: 90px;
 }

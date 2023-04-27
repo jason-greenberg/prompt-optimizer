@@ -10,6 +10,8 @@ import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
 import { fetchAllJobsThunk, searchJobsThunk } from '../../store/job';
 import { formatDate } from '../../utils/format';
+import OpenModalButton from '../OpenModalButton';
+import IndividualJobModal from './IndividualJobModal';
 
 export default function JobSearch() {
   const user = useSelector(state => state.session.user);
@@ -120,12 +122,15 @@ export default function JobSearch() {
                     >
                       <td className="apply-cell">
                         <button 
-                          className="view-button apply-button"
                           onClick={handleApply}
                         >
                           { !loading && (
                             <>
-                              Easy Apply
+                              <OpenModalButton
+                                className="view-button apply-button"
+                                modalComponent={<IndividualJobModal />}
+                                buttonText={'Easy Apply'}
+                              />
                             </>
                           )}
                           { loading && (

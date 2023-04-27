@@ -31,6 +31,7 @@ export const fetchAllSearchesThunk = () => async (dispatch) => {
   if (response.ok) {
     const searches = await response.json();
     await dispatch(populateSearches(searches));
+    await dispatch(readSearch(searches[searches.length - 1]))
     return searches;
   } else {
     return { error: 'Error fetching searches' };

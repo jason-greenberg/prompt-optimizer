@@ -44,6 +44,15 @@ td.apply-cell {
 .job-search-input:focus {
   outline: none;
 }
+
+.loading-checkout.loading-search {
+  height: 25px;
+  padding: 0px;
+}
+
+.search-button.search-load-container {
+  padding: 8px 27px 6px 27px;
+}
 /* BUTTONS */
 .apply-button {
   font-weight: 600;

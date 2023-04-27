@@ -173,7 +173,7 @@ export default function jobsReducer(state = initialState, action) {
   switch (action.type) {
     case SEARCH_JOBS:
       newState.newJobs = { ...action.jobs };
-      newState.allJobs = { ...state.allJobs, ...action.jobs }
+      newState.allJobs = { ...action.jobs }
       return newState;
     case POPULATE:
       newState.allJobs = { ...action.jobs };

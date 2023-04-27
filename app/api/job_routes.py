@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 import requests
-from app.models import db, Job, User
+from app.models import db, Job, User, Search
 from ..utils.jsearch import create_job_from_api_data, add_company_details_async
 from ..utils.gpt import generate_company_details
 
@@ -30,7 +30,7 @@ def search():
     url = "https://jsearch.p.rapidapi.com/search"
 
     querystring = {
-        "query": search_data.get("query", "Software Engineer in San Francisco, CA"),  # Free-form jobs search query. Highly recommended to include job title and location, eg. web development in chicago
+        "query": search_data.get("search", "Software Engineer in San Francisco, CA"),  # Free-form jobs search query. Highly recommended to include job title and location, eg. web development in chicago
         "page": search_data.get("page", "1"),  # Page number of the results to return. Default is 1. Allowed values: 1-100
         "num_pages": search_data.get("num_pages", "1"),  # Number of pages to return, starting from page. Allowed values: 1-20. Default: 1.
         "date_posted": search_data.get("date_posted"),  # Find jobs posted within the time specified. Allowed values: all, today, 3days, week, month. Default: all.
@@ -47,6 +47,16 @@ def search():
     # Remove None values from the querystring
     querystring = {k: v for k, v in querystring.items() if v is not None}
 
+    # If search query is not identical to the user's most recent search, delete all previous user search entries
+    user = User.query.get(current_user.id)
+    # Get the user's most recent search
+    most_recent_search = user.searches[-1].search if user.searches else None
+    if most_recent_search is not None and most_recent_search.lower() != querystring.get("query").lower():
+        # Delete all previous user job entries
+        for job in user.jobs:
+            db.session.delete(job)
+        db.session.commit()
+
     headers = {
         "content-type": "application/octet-stream",
         "X-RapidAPI-Key": RAPIDAPI_KEY,
@@ -54,6 +64,21 @@ def search():
     }
 
     response = requests.get(url, headers=headers, params=querystring)
+
+    # Add search_data to database as a new search for the user
+    new_search = Search(
+        user_id=current_user.id,
+        search=search_data.get("search", "Software Engineer in San Francisco, CA"),
+        num_pages=search_data.get("num_pages", "1"),
+        date_posted=search_data.get("date_posted"),
+        remote_only=search_data.get("remote_jobs_only", False),
+        employment_types=search_data.get("employment_types"),
+        experience=search_data.get("experience"),
+        radius=search_data.get("radius", 50),
+        created_at=datetime.utcnow()
+    )
+    db.session.add(new_search)
+    db.session.commit()
 
     # For each job in the response, create a new Job object and add it to the database
     if response.status_code == 200:

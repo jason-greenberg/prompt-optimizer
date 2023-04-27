@@ -10,7 +10,7 @@ class Search(db.Model):
         )
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     search = db.Column(db.String, nullable=False)
     num_pages = db.Column(db.Integer, default=1, nullable=False)
     date_posted = db.Column(db.String, default='today', nullable=False)

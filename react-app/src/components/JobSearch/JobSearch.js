@@ -20,6 +20,7 @@ export default function JobSearch() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [search, setSearch] = useState('');
+  const [searchSubmitted, setSearchSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -29,7 +30,7 @@ export default function JobSearch() {
     }
 
     fetchAsync();
-  }, [dispatch, jobsArray.length])
+  }, [dispatch, jobsArray.length, searchSubmitted])
 
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
@@ -44,7 +45,7 @@ export default function JobSearch() {
     if (search !== '') {
       // Construct searchData for JSearch API
       const searchData = {
-        query: search,
+        search,
         page: 1,
         num_pages: 1,
         date_posted: 'today',
@@ -53,8 +54,8 @@ export default function JobSearch() {
         job_requirements: 'under_3_years_experience,more_than_3_years_experience',
         radius: 50
       }
-
-      await dispatch(searchJobsThunk(searchData));
+      await dispatch(searchJobsThunk(searchData))
+        .then(() => setSearchSubmitted(true));
     }
   }
 
@@ -133,15 +134,36 @@ export default function JobSearch() {
         <div className="dashboard-container">
           <div className="dashboard-body">
           <div className="current-apps-table">
-              <h3 className="table-title">Current Applications</h3>
+              <div className="job-search-container">
+                <div className="job-search-header">
+                  <h3 className="table-title">Job Search</h3>
+                  <div className="job-search-box">
+                    <div className="job-cue">What & Where</div>
+                    <input 
+                      className="job-search-input"
+                      placeholder='job title, keywords, and/or location'
+                      type="text" 
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </div>
+                  <button 
+                    className="search-button"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
               <table className="applications-table">
                 <thead>
                   <tr className="column-headings">
+                    <th className="column-name"></th>
                     <th className="column-name job-title">JOB TITLE</th>
-                    <th className="column-name">POSITION TYPE</th>
-                    <th className="column-name">DATE APPLIED</th>
-                    <th className="column-name">FOLLOW UP</th>
-                    <th className="column-name">ADDITIONAL INFO</th>
+                    <th className="column-name company">COMPANY</th>
+                    <th className="column-name">DATE POSTED</th>
+                    <th className="column-name location">LOCATION</th>
+                    <th className="column-name">PLATFORM</th>
                   </tr>
                 </thead>
                 <tbody className="applications-container">

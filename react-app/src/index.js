@@ -11,6 +11,7 @@ import * as coverLetterActions from "./store/coverletter";
 import * as applicationActions from "./store/application";
 import * as correspondenceActions from "./store/correspondence";
 import * as jobsActions from "./store/job"
+import * as searchActions from "./store/search"
 import App from "./App";
 
 import "./index.css";
@@ -26,6 +27,7 @@ if (process.env.NODE_ENV !== "production") {
 	window.applicationActions = applicationActions;
 	window.correspondenceActions = correspondenceActions;
 	window.jobsActions = jobsActions;
+	window.searchActions = searchActions;
 }
 
 // Wrap the application with the Modal provider and render the Modal component

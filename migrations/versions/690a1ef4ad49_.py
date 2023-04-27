@@ -146,7 +146,7 @@ def upgrade():
     sa.Column('date_posted', sa.String(), nullable=False),
     sa.Column('remote_only', sa.Boolean(), nullable=False),
     sa.Column('employment_types', sa.String(), nullable=False),
-    sa.Column('experience', sa.String, nullable=False),
+    sa.Column('experience', sa.String(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')

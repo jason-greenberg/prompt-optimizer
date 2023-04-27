@@ -10,8 +10,8 @@ class Search(db.Model):
         )
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=True)
-    query = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    search = db.Column(db.String, nullable=False)
     num_pages = db.Column(db.Integer, default=1, nullable=False)
     date_posted = db.Column(db.String, default='today', nullable=False)
     remote_only = db.Column(db.Boolean, default=False, nullable=False)
@@ -26,7 +26,7 @@ class Search(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'query': self.query,
+            'search': self.search,
             'num_pages': self.num_pages,
             'date_posted': self.date_posted,
             'remote_only': self.remote_only,

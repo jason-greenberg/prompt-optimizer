@@ -141,7 +141,7 @@ def upgrade():
     op.create_table('searches',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('query', sa.String(), nullable=False),
+    sa.Column('search', sa.String(), nullable=False),
     sa.Column('num_pages', sa.Integer(), nullable=False),
     sa.Column('date_posted', sa.String(), nullable=False),
     sa.Column('remote_only', sa.Boolean(), nullable=False),
@@ -152,6 +152,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE searches SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

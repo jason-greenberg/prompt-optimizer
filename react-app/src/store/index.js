@@ -6,6 +6,7 @@ import coverLettersReducer from './coverletter';
 import applicationsReducer from './application';
 import correspondencesReducer from './correspondence';
 import jobsReducer from './job';
+import searchReducer from './search';
 
 const rootReducer = combineReducers({
   session,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   coverletters: coverLettersReducer,
   applications: applicationsReducer,
   correspondences: correspondencesReducer,
-  jobs: jobsReducer
+  jobs: jobsReducer,
+  searches: searchReducer
 });
 
 

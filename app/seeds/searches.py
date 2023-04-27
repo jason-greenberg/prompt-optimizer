@@ -9,7 +9,7 @@ def seed_searches():
 
     search1 = Search(
         user_id=demo.id,
-        query='Software Engineer in San Francisco, CA',
+        search='Software Engineer in San Francisco, CA',
         num_pages=2,
         date_posted='today',
         remote_only=False,
@@ -20,7 +20,7 @@ def seed_searches():
 
     search2 = Search(
         user_id=demo.id,
-        query='Frontend Developer in New York, NY',
+        search='Frontend Developer in New York, NY',
         num_pages=1,
         date_posted='3days',
         remote_only=True,

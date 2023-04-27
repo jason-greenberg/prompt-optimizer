@@ -8,7 +8,7 @@ from app.models import db, Job, User
 from ..utils.jsearch import create_job_from_api_data, add_company_details_async
 from ..utils.gpt import generate_company_details
 
-job_search_routes = Blueprint('job_search', __name__)
+job_routes = Blueprint('job_routes', __name__)
 
 RAPIDAPI_KEY = os.environ.get('RAPIDAPI_KEY')
 RAPIDAPI_HOST = os.environ.get('RAPIDAPI_HOST')
@@ -18,7 +18,7 @@ def page_not_found():
     response = make_response(jsonify({"error": "Sorry, the job you're looking for does not exist."}), 404)
     return response
 
-@job_search_routes.route('/search', methods=['POST'])
+@job_routes.route('/search', methods=['POST'])
 @login_required
 def search():
     """Search for jobs using JSearch via RapidAPI
@@ -92,14 +92,14 @@ def search():
 
     
 # Get all jobs of current user
-@job_search_routes.route('/')
+@job_routes.route('/')
 @login_required
 def get_jobs():
     jobs = Job.query.filter_by(user_id=current_user.id).order_by(Job.posted_at.desc()).all()
     return [j.to_dict() for j in jobs]
 
 # Get job by id
-@job_search_routes.route('/<int:id>')
+@job_routes.route('/<int:id>')
 @login_required
 def get_job_by_id(id):
     job = Job.query.get(id)
@@ -113,7 +113,7 @@ def get_job_by_id(id):
     return job.to_dict()
 
 # Create new job
-@job_search_routes.route('/', methods=['POST'])
+@job_routes.route('/', methods=['POST'])
 @login_required
 def create_job():
     data = request.json
@@ -140,7 +140,7 @@ def create_job():
     return new_job.to_dict(), 201
 
 # Add company details to job by id using OpenAI
-@job_search_routes.route('/<int:id>/company_details', methods=['POST'])
+@job_routes.route('/<int:id>/company_details', methods=['POST'])
 @login_required
 def add_company_details(id):
 
@@ -158,7 +158,7 @@ def add_company_details(id):
     return job.to_dict()
 
 # Update job by id
-@job_search_routes.route('/<int:id>', methods=['PUT'])
+@job_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_job(id):
     job = Job.query.get(id)
@@ -178,7 +178,7 @@ def update_job(id):
     return job.to_dict()
 
 # Delete job by id
-@job_search_routes.route('/<int:id>', methods=['DELETE'])
+@job_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_job(id):
     job = Job.query.get(id)

@@ -34,7 +34,7 @@ export default function Navigation() {
 								onClick={() => changeSelectedLink('easy apply')}
 								to="/jobs"
 							>
-								Easy Apply
+								Search & Apply
 							</NavLink>
 							<NavLink 
 								className={"nav-link" + (selectedLink === "resumes" ? " selected-link" : "")}

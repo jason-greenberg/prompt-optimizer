@@ -46,12 +46,14 @@ td.apply-cell {
 }
 /* BUTTONS */
 .apply-button {
+  font-weight: 600;
   margin-left: 30px;
   padding: 10px 30px;
 }
 
 .search-button {
   background-color: #6372F6;
+  box-sizing: border-box;
   border: 1px solid #6372F6;
   border-radius: 8px;
   color: white;
@@ -62,4 +64,8 @@ td.apply-cell {
   margin-top: 5px;
   margin-left: 10px;
   padding: 13px 16px;
+}
+
+.search-button:hover {
+  background-color: rgb(69, 27, 255);
 }

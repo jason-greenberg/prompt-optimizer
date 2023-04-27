@@ -7,7 +7,7 @@ import Navigation from '../Navigation';
 import './JobSearch.css';
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
-import { fetchAllJobsThunk } from '../../store/job';
+import { fetchAllJobsThunk, searchJobsThunk } from '../../store/job';
 import { formatDate } from '../../utils/format';
 
 export default function JobSearch() {
@@ -16,10 +16,10 @@ export default function JobSearch() {
   const location = useLocation();
   const jobs = useSelector(state => state.jobs.allJobs);
   const jobsArray = Object.values(jobs);
-  const { setSelectedLink } = useMenuSelector()
-
+  const { setSelectedLink } = useMenuSelector();
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -29,7 +29,7 @@ export default function JobSearch() {
     }
 
     fetchAsync();
-  }, [dispatch])
+  }, [dispatch, jobsArray.length])
 
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
@@ -38,6 +38,24 @@ export default function JobSearch() {
 
   const handleApply = async (app) => {
 
+  }
+
+  const handleSearch = async () => {
+    if (search !== '') {
+      // Construct searchData for JSearch API
+      const searchData = {
+        query: search,
+        page: 1,
+        num_pages: 1,
+        date_posted: 'today',
+        remote_jobs_only: false,
+        employment_types: 'FULLTIME',
+        job_requirements: 'under_3_years_experience,more_than_3_years_experience',
+        radius: 50
+      }
+
+      await dispatch(searchJobsThunk(searchData));
+    }
   }
 
   return (
@@ -54,11 +72,18 @@ export default function JobSearch() {
                     <div className="job-cue">What & Where</div>
                     <input 
                       className="job-search-input"
-                      type="text" 
                       placeholder='job title, keywords, and/or location'
+                      type="text" 
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                  <button className="search-button">Search</button>
+                  <button 
+                    className="search-button"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </button>
                 </div>
               </div>
               <table className="applications-table">

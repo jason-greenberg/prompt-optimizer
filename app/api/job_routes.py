@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required, current_user
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.exc import IntegrityError
 import requests
 from app.models import db, Job, User, Search
@@ -25,14 +25,27 @@ def search():
     Ultra-Fast and Simple Job Search for jobs posted on LinkedIn, Indeed, Glassdoor, ZipRecruiter, BeBee and many others, all in a single API.
     Full documentation can be found here: https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
     """
+    user = User.query.get(current_user.id)
     search_data = request.get_json()
+
+    # Get the user's most recent search
+    most_recent_search = user.searches[-1] if user.searches else None
+
+    # Check if the most recent search exists and matches the current search query
+    if (most_recent_search is not None and 
+        most_recent_search.search == search_data.get("search").lower() and
+        datetime.utcnow() - most_recent_search.created_at <= timedelta(minutes=15)):
+
+        # Return the jobs from the database associated with the user ID
+        jobs = Job.query.filter_by(user_id=current_user.id).all()
+        return jsonify([job.to_dict() for job in jobs])
 
     url = "https://jsearch.p.rapidapi.com/search"
 
     querystring = {
         "query": search_data.get("search", "Software Engineer in San Francisco, CA"),  # Free-form jobs search query. Highly recommended to include job title and location, eg. web development in chicago
-        "page": search_data.get("page", "1"),  # Page number of the results to return. Default is 1. Allowed values: 1-100
-        "num_pages": search_data.get("num_pages", "1"),  # Number of pages to return, starting from page. Allowed values: 1-20. Default: 1.
+        "page": search_data.get("page", 1),  # Page number of the results to return. Default is 1. Allowed values: 1-100
+        "num_pages": search_data.get("num_pages", 1),  # Number of pages to return, starting from page. Allowed values: 1-20. Default: 1.
         "date_posted": search_data.get("date_posted"),  # Find jobs posted within the time specified. Allowed values: all, today, 3days, week, month. Default: all.
         "remote_jobs_only": search_data.get("remote_jobs_only", False),  # Find remote jobs only (work from home). Default: false.
         "employment_types": search_data.get("employment_types"),  # Find jobs of particular employment types, specified as a comma delimited list of the following values: FULLTIME, CONTRACTOR, PARTTIME, INTERN.
@@ -48,10 +61,7 @@ def search():
     querystring = {k: v for k, v in querystring.items() if v is not None}
 
     # If search query is not identical to the user's most recent search, delete all previous user search entries
-    user = User.query.get(current_user.id)
-    # Get the user's most recent search
-    most_recent_search = user.searches[-1].search if user.searches else None
-    if most_recent_search is not None and most_recent_search.lower() != querystring.get("query").lower():
+    if most_recent_search is not None and most_recent_search.search.lower() != querystring.get("query").lower():
         # Delete all previous user job entries
         for job in user.jobs:
             db.session.delete(job)

@@ -13,7 +13,7 @@ def page_not_found():
 @search_history_routes.route('/')
 @login_required
 def get_searches():
-    searches = Search.search.filter_by(user_id=current_user.id).all()
+    searches = Search.query.filter_by(user_id=current_user.id).all()
 
     return jsonify([s.to_dict() for s in searches])
 
@@ -21,7 +21,7 @@ def get_searches():
 @search_history_routes.route('/<int:id>')
 @login_required
 def get_search_by_id(id):
-    search = Search.search.get(id)
+    search = Search.query.get(id)
 
     if search is None:
         return page_not_found()
@@ -36,7 +36,7 @@ def get_search_by_id(id):
 @login_required
 def create_search():
     data = request.json
-    query = data['query']
+    search = data['search']
     num_pages = data.get('num_pages', 1)
     date_posted = data.get('date_posted', 'today')
     remote_only = data.get('remote_only', False)
@@ -46,7 +46,7 @@ def create_search():
 
     new_search = Search(
         user_id=current_user.id,
-        query=query,
+        search=search,
         num_pages=num_pages,
         date_posted=date_posted,
         remote_only=remote_only,
@@ -64,7 +64,7 @@ def create_search():
 @search_history_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_search(id):
-    search = Search.search.get(id)
+    search = Search.query.get(id)
 
     if search is None:
         return page_not_found()

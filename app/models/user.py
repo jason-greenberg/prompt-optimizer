@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
     correspondences = db.relationship('Correspondence', back_populates='user')
     transactions = db.relationship('Transaction', back_populates='user')
     jobs = db.relationship('Job', back_populates='user')
+    searches = db.relationship('Search', back_populates='user')
 
     @property
     def password(self):

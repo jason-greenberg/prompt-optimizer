@@ -16,7 +16,7 @@ class Job(db.Model):
         )
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=True)
     external_api_id = db.Column(db.String, nullable=False)
     job_title = db.Column(db.String, nullable=False)
     job_description = db.Column(db.Text, nullable=False)

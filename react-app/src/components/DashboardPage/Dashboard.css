@@ -50,6 +50,13 @@
   padding: 25px 0px;
 }
 
+.applications-table tr {
+  cursor: pointer;
+}
+.applications-table tr:hover {
+  color: #4351e8;
+}
+
 .applications-table .individual-app:hover {
   background-color: rgb(255, 248, 249);
 }
@@ -137,5 +144,6 @@ td.company {
 td.job-title {
   font-weight: 500;
   padding-left: 20px;
-  max-width: 115px;
+  padding-right: 10px;
+  max-width: 90px;
 }

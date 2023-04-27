@@ -5,6 +5,7 @@ import { authenticate } from '../../store/session';
 import { fetchAllApplicationsThunk, fetchSingleApplicationThunk } from '../../store/application';
 import Navigation from '../Navigation';
 import './JobSearch.css';
+import loadingGif from '../Loading/assets/loading.gif'
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
 import { fetchAllJobsThunk, searchJobsThunk } from '../../store/job';
@@ -21,6 +22,7 @@ export default function JobSearch() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [search, setSearch] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -30,7 +32,7 @@ export default function JobSearch() {
     }
 
     fetchAsync();
-  }, [dispatch, jobsArray.length, searchSubmitted])
+  }, [dispatch, searchSubmitted])
 
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
@@ -43,6 +45,8 @@ export default function JobSearch() {
 
   const handleSearch = async () => {
     if (search !== '') {
+      // Toggle loading gif on search button
+      setSearchSubmitted(true)
       // Construct searchData for JSearch API
       const searchData = {
         search,
@@ -55,7 +59,7 @@ export default function JobSearch() {
         radius: 50
       }
       await dispatch(searchJobsThunk(searchData))
-        .then(() => setSearchSubmitted(true));
+        .then(() => setSearchSubmitted(false)); // reset loading gif
     }
   }
 
@@ -80,10 +84,19 @@ export default function JobSearch() {
                     />
                   </div>
                   <button 
-                    className="search-button"
+                    className={"search-button" + (searchSubmitted ? " search-load-container" : "")}
                     onClick={handleSearch}
                   >
-                    Search
+                    { !searchSubmitted && (
+                      <>
+                        Search
+                      </>
+                    )}
+                    { searchSubmitted && (
+                      <>
+                        <img src={loadingGif} className='loading-checkout loading-search' alt="loading-gif" />
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -99,7 +112,7 @@ export default function JobSearch() {
                   </tr>
                 </thead>
                 <tbody className="applications-container">
-                  {jobsArray.map((job) => (
+                  {jobsArray.map((job, index) => (
                     <tr 
                       key={job.id} 
                       className="individual-app"
@@ -110,7 +123,16 @@ export default function JobSearch() {
                           className="view-button apply-button"
                           onClick={handleApply}
                         >
-                          Easy Apply
+                          { !loading && (
+                            <>
+                              Easy Apply
+                            </>
+                          )}
+                          { loading && (
+                            <>
+                              <img src={loadingGif} className='loading-checkout' alt="loading-gif" />
+                            </>
+                          )}
                         </button>
                       </td>
                       <td className="job-title">{job.job_title}</td>

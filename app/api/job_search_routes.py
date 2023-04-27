@@ -95,7 +95,7 @@ def search():
 @job_search_routes.route('/')
 @login_required
 def get_jobs():
-    jobs = Job.query.filter_by(user_id=current_user.id).all()
+    jobs = Job.query.filter_by(user_id=current_user.id).order_by(Job.posted_at.desc()).all()
     return [j.to_dict() for j in jobs]
 
 # Get job by id

@@ -55,7 +55,7 @@ def seed_jobs():
         company_name='Example Company 3',
         company_website='https://example3.com',
         employment_type='Full-time',
-        publisher='Alice Johnson',
+        publisher='Geebo',
         employer_logo='https://example3.com/logo.png',
         posted_at=datetime.utcnow()
     )

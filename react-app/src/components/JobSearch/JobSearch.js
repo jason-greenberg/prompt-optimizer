@@ -7,7 +7,7 @@ import Navigation from '../Navigation';
 import './JobSearch.css';
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
-import { fetchAllJobsThunk } from '../../store/job';
+import { fetchAllJobsThunk, searchJobsThunk } from '../../store/job';
 import { formatDate } from '../../utils/format';
 
 export default function JobSearch() {
@@ -16,10 +16,10 @@ export default function JobSearch() {
   const location = useLocation();
   const jobs = useSelector(state => state.jobs.allJobs);
   const jobsArray = Object.values(jobs);
-  const { setSelectedLink } = useMenuSelector()
-
+  const { setSelectedLink } = useMenuSelector();
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -29,7 +29,7 @@ export default function JobSearch() {
     }
 
     fetchAsync();
-  }, [dispatch])
+  }, [dispatch, jobsArray.length])
 
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
@@ -38,6 +38,24 @@ export default function JobSearch() {
 
   const handleApply = async (app) => {
 
+  }
+
+  const handleSearch = async () => {
+    if (search !== '') {
+      // Construct searchData for JSearch API
+      const searchData = {
+        query: search,
+        page: 1,
+        num_pages: 1,
+        date_posted: 'today',
+        remote_jobs_only: false,
+        employment_types: 'FULLTIME',
+        job_requirements: 'under_3_years_experience,more_than_3_years_experience',
+        radius: 50
+      }
+
+      await dispatch(searchJobsThunk(searchData));
+    }
   }
 
   return (
@@ -52,7 +70,20 @@ export default function JobSearch() {
                   <h3 className="table-title">Job Search</h3>
                   <div className="job-search-box">
                     <div className="job-cue">What & Where</div>
+                    <input 
+                      className="job-search-input"
+                      placeholder='job title, keywords, and/or location'
+                      type="text" 
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
                   </div>
+                  <button 
+                    className="search-button"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </button>
                 </div>
               </div>
               <table className="applications-table">
@@ -62,7 +93,8 @@ export default function JobSearch() {
                     <th className="column-name job-title">JOB TITLE</th>
                     <th className="column-name company">COMPANY</th>
                     <th className="column-name">DATE POSTED</th>
-                    <th className="column-name">LOCATION</th>
+                    <th className="column-name location">LOCATION</th>
+                    <th className="column-name">PLATFORM</th>
                   </tr>
                 </thead>
                 <tbody className="applications-container">
@@ -82,8 +114,13 @@ export default function JobSearch() {
                       </td>
                       <td className="job-title">{job.job_title}</td>
                       <td className="company">{job.company_name}</td>
-                      <td>{formatDate(job.posted_at)}</td>
-                      <td>{job.city}, {job.state} {job.country}</td>
+                      <td className="date-posted">
+                        {formatDate(job.posted_at)}
+                      </td>
+                      <td className="location">
+                        {job.city}, {job.state} {job.country}
+                      </td>
+                      <td className="publisher">{job.publisher}</td>
                     </tr>
                   ))}
                 </tbody>

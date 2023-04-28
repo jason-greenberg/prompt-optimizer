@@ -4,11 +4,10 @@
   flex-direction: column;
   font-family: 'Roboto', sans-serif;
   max-height: 600px;
-  min-height: 300px;
-  height: 100%;
+  min-height: 200px;
   max-width: 1300px;
   min-width: 700px;
-  padding: 20px 20px;
+  padding: 20px 20px 40px 20px;
   row-gap: 5px;
   width: 100%;
 }
@@ -16,7 +15,7 @@
 .job-modal-desc {
   max-width: 660px;
   max-height: 500px;
-  height: 100%;
+  height: fit-content;
 }
 /* ---------- */
 .case-icon {
@@ -24,14 +23,31 @@
   margin-bottom: 3px;
 }
 
+.company-name-loc {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  margin-top: 10px;
+}
+
 .company-name-modal {
   font-size: 16px;
+}
+
+.company-name-right {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
 }
 
 .dollar-icon {
   height: 21px;
   margin-bottom: 2px;
   width: 19px;
+}
+
+.employer-logo {
+  height: 39px;
 }
 
 .employment-type {
@@ -44,10 +60,11 @@
   align-items: center;
   column-gap: 8px;
   display: flex;
+  margin-bottom: 5px;
 }
 
 .job-title-modal {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 }
 

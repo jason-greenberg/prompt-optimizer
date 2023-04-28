@@ -9,8 +9,17 @@ export default function IndividualJobModal({ job }) {
   return (
     <div className="job-modal-body">
       <div className="job-title-modal">{ job.job_title }</div>
-      <div className="company-name-modal">{job.company_name}</div>
-      <div>{job.city}, {job.state}</div>
+      <div className="company-name-loc">
+        { job.employer_logo && (
+          <div className="company-name-left">
+            <img className="employer-logo" src={job.employer_logo} alt="employer-logo" />
+          </div>
+        )}
+        <div className="company-name-right">
+          <div className="company-name-modal">{job.company_name}</div>
+          <div>{job.city}, {job.state}</div>
+        </div>
+      </div>
       <button className="view-button modal-apply-button">Easy Apply</button>
       <div className="job-characteristics">
         <div className="posted-date">

@@ -165,6 +165,10 @@ def create_job():
         company_name=data.get('company_name', ""),
         company_website=data.get('company_website', ""),
         employment_type=data.get('employment_type', ""),
+        job_min_salary=data.get('job_min_salary', ""),
+        job_max_salary=data.get('job_max_salary', ""),
+        job_salary_currency=data.get('job_salary_currency', ""),
+        job_salary_period=data.get('job_salary_period', ""),
         publisher=data.get('publisher', ""),
         employer_logo=data.get('employer_logo', ""),
         posted_at=datetime.utcnow()

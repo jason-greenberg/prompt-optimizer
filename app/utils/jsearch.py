@@ -20,6 +20,10 @@ def create_job_from_api_data(job_data, user_id):
         company_name=job_data.get("employer_name", ""),
         company_website=job_data.get("employer_website", ""),
         employment_type=job_data.get("job_employment_type", ""),
+        job_min_salary=job_data.get("job_min_salary", ""),
+        job_max_salary=job_data.get("job_max_salary", ""),
+        job_salary_currency=job_data.get("job_salary_currency", ""),
+        job_salary_period=job_data.get("job_salary_period", ""),
         publisher=job_data.get("job_publisher", ""),
         employer_logo=job_data.get("employer_logo", ""),
         posted_at=datetime.strptime(job_data.get("job_posted_at_datetime_utc", ""), "%Y-%m-%dT%H:%M:%S.%fZ")

@@ -28,6 +28,10 @@ class Job(db.Model):
     company_name = db.Column(db.String, nullable=False)
     company_website = db.Column(db.String, nullable=True)
     employment_type = db.Column(db.String, nullable=False)
+    job_min_salary = db.Column(db.Integer, nullable=True)
+    job_max_salary = db.Column(db.Integer, nullable=True)
+    job_salary_currency = db.Column(db.String, nullable=True)
+    job_salary_period = db.Column(db.String, nullable=True)
     publisher = db.Column(db.String, nullable=False)
     employer_logo = db.Column(db.String, nullable=True)
     posted_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
@@ -48,6 +52,10 @@ class Job(db.Model):
             'company_name': self.company_name,
             'company_website': self.company_website,
             'employment_type': self.employment_type,
+            'job_min_salary': self.job_min_salary,
+            'job_max_salary': self.job_max_salary,
+            'job_salary_currency': self.job_salary_currency,
+            'job_salary_period': self.job_salary_period,
             'publisher': self.publisher,
             'employer_logo': self.employer_logo,
             'posted_at': self.posted_at

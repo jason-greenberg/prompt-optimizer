@@ -121,24 +121,25 @@ export default function JobSearch() {
                       // onClick={() => handleClick(job)}
                     >
                       <td className="apply-cell">
-                        <button 
-                          onClick={handleApply}
-                        >
-                          { !loading && (
-                            <>
-                              <OpenModalButton
-                                className="view-button apply-button"
-                                modalComponent={<IndividualJobModal />}
-                                buttonText={'Easy Apply'}
-                              />
-                            </>
-                          )}
-                          { loading && (
-                            <>
-                              <img src={loadingGif} className='loading-checkout' alt="loading-gif" />
-                            </>
-                          )}
-                        </button>
+                        { !loading && (
+                          <>
+                            <OpenModalButton
+                              modalComponent={
+                                <IndividualJobModal job={job} />
+                              }
+                              buttonClassName={'view-button apply-button'}
+                              buttonText={'Easy Apply'}
+                            />
+                          </>
+                        )}
+                        { loading && (
+                          <button 
+                            className="view-button apply-button"
+                            onClick={handleApply}
+                          >
+                            <img src={loadingGif} className='loading-checkout' alt="loading-gif" />
+                          </button>
+                        )}
                       </td>
                       <td className="job-title">{job.job_title}</td>
                       <td className="company">{job.company_name}</td>

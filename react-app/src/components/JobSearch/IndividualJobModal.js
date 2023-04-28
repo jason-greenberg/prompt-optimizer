@@ -1,7 +1,10 @@
 import './IndividualJob.css'
 
-export default function IndividualJobModal() {
+export default function IndividualJobModal({ job }) {
   return (
-    <h1>Job Test</h1>
+    <div className="job-modal-body">
+      <h1>{ job.job_title }</h1>
+      <div className="break"></div>
+    </div>
   )
 }

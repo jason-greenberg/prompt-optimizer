@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { authenticate } from '../../store/session';
@@ -9,7 +9,7 @@ import loadingGif from '../Loading/assets/loading.gif'
 import loadingBars from '../Loading/assets/loading-ellipses.gif'
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
-import { fetchAllJobsThunk, searchJobsThunk, updateNewJobsCompanyDetailsThunk } from '../../store/job';
+import { fetchAllJobsThunk, populateJobs, searchJobsThunk, updateNewJobsCompanyDetailsThunk } from '../../store/job';
 import { formatDate } from '../../utils/format';
 import OpenModalButton from '../OpenModalButton';
 import IndividualJobModal from './IndividualJobModal';
@@ -26,9 +26,13 @@ export default function JobSearch() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [search, setSearch] = useState('');
+  const [loc, setLoc] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setModalContent, setOnModalClose } = useModal();
+  const [locError, setLocError] = useState(false);
+
+  const prevJobsRef = useRef(jobs);
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -47,6 +51,28 @@ export default function JobSearch() {
     fetchAsync();
   }, [dispatch])
 
+  // Fetch all jobs when company detail is updated
+  useEffect(() => {
+    const prevJobs = prevJobsRef.current;
+    const jobUpdated = jobsArray.some((job, index) => {
+      const prevJob = prevJobs[job.id];
+      return prevJob && !prevJob.company_details && job.company_details;
+    });
+  
+    if (jobUpdated) {
+      const updatedJobs = { ...jobs };
+      jobsArray.forEach(job => {
+        if (job.company_details) {
+          updatedJobs[job.id] = job;
+        }
+      });
+      dispatch(populateJobs(updatedJobs));
+    }
+  
+    prevJobsRef.current = jobs;
+  }, [jobs, jobsArray, dispatch]);
+  
+
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
     return history.push(`/applications/${app.id}`)
@@ -57,14 +83,14 @@ export default function JobSearch() {
   }
 
   const handleSearch = async () => {
-    if (search !== '') {
+    if (search !== '' && loc !== '') {
       // Toggle loading gif on search button
       setSearchSubmitted(true)
       // Construct searchData for JSearch API
       const searchData = {
-        search,
+        search: search + ' in ' + loc,
         page: 1,
-        num_pages: 3,
+        num_pages: 1,
         date_posted: 'today',
         remote_jobs_only: false,
         employment_types: 'FULLTIME',
@@ -73,7 +99,10 @@ export default function JobSearch() {
       }
       await dispatch(searchJobsThunk(searchData))
         .then(() => setSearchSubmitted(false)); // reset loading gif
-      dispatch(updateNewJobsCompanyDetailsThunk());
+    } else {
+      if (search !== '' && loc === '') {
+        setLocError(true);
+      }
     }
   }
 
@@ -88,14 +117,30 @@ export default function JobSearch() {
                 <div className="job-search-header">
                   <h3 className="table-title">Job Search</h3>
                   <div className="job-search-box">
-                    <div className="job-cue">What & Where</div>
+                    <div className="job-cue">What</div>
                     <input 
-                      className="job-search-input"
-                      placeholder='job title, keywords, and/or location'
+                      className="job-search-input what"
+                      placeholder='job title, keywords'
                       type="text" 
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
+                  </div>
+                  <div className={`job-search-box where${locError ? ' error' : ''}`}>
+                    <div className="job-cue">Where</div>
+                    {locError && <div className="location-error">Location required</div>}
+                    <input
+                      className='job-search-input where'
+                      placeholder='location'
+                      type="text"
+                      value={loc}
+                      onChange={(e) => {
+                        setLoc(e.target.value);
+                        if (locError) {
+                          setLocError(false);
+                        }
+                      }}
+                      />
                   </div>
                   <button 
                     className={"search-button" + (searchSubmitted ? " search-load-container" : "")}
@@ -108,7 +153,7 @@ export default function JobSearch() {
                     )}
                     { searchSubmitted && (
                       <>
-                        <img src={loadingGif} className='loading-checkout loading-search' alt="loading-gif" />
+                        <LoadingDots />
                       </>
                     )}
                   </button>
@@ -134,18 +179,9 @@ export default function JobSearch() {
                     >
                       <td className="apply-cell">
                         { !loading && (
-                          <>
-                          { job.company_details && (
                             <button className="view-button apply-button">
                               Easy Apply
                             </button>
-                          )}
-                          { !job.company_details && (
-                            <button className="view-button apply-button">
-                              <LoadingDots />
-                            </button>
-                          )}
-                          </>
                         )}
                         { loading && (
                           <button 

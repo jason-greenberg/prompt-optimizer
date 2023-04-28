@@ -19,7 +19,7 @@ const createJob = (job) => ({
   job
 })
 
-const populateJobs = (jobs) => ({
+export const populateJobs = (jobs) => ({
   type: POPULATE,
   jobs
 })

@@ -10,6 +10,8 @@ import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
 import { fetchAllJobsThunk, searchJobsThunk } from '../../store/job';
 import { formatDate } from '../../utils/format';
+import OpenModalButton from '../OpenModalButton';
+import IndividualJobModal from './IndividualJobModal';
 
 export default function JobSearch() {
   const user = useSelector(state => state.session.user);
@@ -119,21 +121,25 @@ export default function JobSearch() {
                       // onClick={() => handleClick(job)}
                     >
                       <td className="apply-cell">
-                        <button 
-                          className="view-button apply-button"
-                          onClick={handleApply}
-                        >
-                          { !loading && (
-                            <>
-                              Easy Apply
-                            </>
-                          )}
-                          { loading && (
-                            <>
-                              <img src={loadingGif} className='loading-checkout' alt="loading-gif" />
-                            </>
-                          )}
-                        </button>
+                        { !loading && (
+                          <>
+                            <OpenModalButton
+                              modalComponent={
+                                <IndividualJobModal job={job} />
+                              }
+                              buttonClassName={'view-button apply-button'}
+                              buttonText={'Easy Apply'}
+                            />
+                          </>
+                        )}
+                        { loading && (
+                          <button 
+                            className="view-button apply-button"
+                            onClick={handleApply}
+                          >
+                            <img src={loadingGif} className='loading-checkout' alt="loading-gif" />
+                          </button>
+                        )}
                       </td>
                       <td className="job-title">{job.job_title}</td>
                       <td className="company">{job.company_name}</td>

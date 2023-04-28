@@ -4,8 +4,31 @@ import './IndividualJob.css'
 import clock from './assets/time.png'
 import briefcase from './assets/briefcase.png'
 import dollar from './assets/dollar.png'
+import loadingGif from '../Loading/assets/loading.gif'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { createCoverLetterThunk } from '../../store/coverletter'
 
 export default function IndividualJobModal({ job }) {
+  const dispatch = useDispatch()
+  const resumes = useSelector(state => state.resumes.allResumes);
+  const resumesArray = Object.values(resumes)
+  const mostRecentResume = resumesArray[resumesArray.length - 1];
+  const [loading, setLoading] = useState(false);
+
+  const handleEasyApply = async () => {
+    setLoading(true);
+    if (job.company_details) {
+      await dispatch(createCoverLetterThunk(
+        mostRecentResume.id, // resume id
+        job.job_description, // job description
+        job.company_details, // company details
+        'gpt-3.5-turbo', // engine
+        job.job_title // job title
+      ));
+    }
+  }
+
   return (
     <div className="job-modal-body">
       <div className="job-title-modal">{ job.job_title }</div>
@@ -20,7 +43,21 @@ export default function IndividualJobModal({ job }) {
           <div>{job.city}, {job.state}</div>
         </div>
       </div>
-      <button className="view-button modal-apply-button">Easy Apply</button>
+      <button 
+        className="view-button modal-apply-button"
+        onClick={handleEasyApply}
+      >
+        { !loading && (
+          <>
+            Easy Apply
+          </>
+        )}
+        { loading && (
+          <>
+            <img src={loadingGif} className='loading-checkout loading-search' alt="loading-gif" />
+          </>
+        )}
+      </button>
       <div className="job-characteristics">
         <div className="posted-date">
           <img className="time-icon" src={clock} alt="clock" />

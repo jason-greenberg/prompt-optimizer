@@ -6,13 +6,15 @@ import { fetchAllApplicationsThunk, fetchSingleApplicationThunk } from '../../st
 import Navigation from '../Navigation';
 import './JobSearch.css';
 import loadingGif from '../Loading/assets/loading.gif'
+import loadingBars from '../Loading/assets/loading-ellipses.gif'
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
-import { fetchAllJobsThunk, searchJobsThunk } from '../../store/job';
+import { fetchAllJobsThunk, searchJobsThunk, updateNewJobsCompanyDetailsThunk } from '../../store/job';
 import { formatDate } from '../../utils/format';
 import OpenModalButton from '../OpenModalButton';
 import IndividualJobModal from './IndividualJobModal';
 import { useModal } from '../../context/Modal';
+import LoadingDots from '../Loading/LoadingDots';
 
 export default function JobSearch() {
   const user = useSelector(state => state.session.user);
@@ -38,6 +40,13 @@ export default function JobSearch() {
     fetchAsync();
   }, [dispatch, searchSubmitted])
 
+  useEffect(() => {
+    const fetchAsync = async () => {
+      await dispatch(fetchAllResumesThunk());
+    }
+    fetchAsync();
+  }, [dispatch])
+
   const handleClick = async (app) => {
     await dispatch(fetchSingleApplicationThunk(app.id))
     return history.push(`/applications/${app.id}`)
@@ -55,7 +64,7 @@ export default function JobSearch() {
       const searchData = {
         search,
         page: 1,
-        num_pages: 1,
+        num_pages: 3,
         date_posted: 'today',
         remote_jobs_only: false,
         employment_types: 'FULLTIME',
@@ -64,6 +73,7 @@ export default function JobSearch() {
       }
       await dispatch(searchJobsThunk(searchData))
         .then(() => setSearchSubmitted(false)); // reset loading gif
+      dispatch(updateNewJobsCompanyDetailsThunk());
     }
   }
 
@@ -118,20 +128,23 @@ export default function JobSearch() {
                 <tbody className="applications-container">
                   {jobsArray.map((job, index) => (
                     <tr 
-                      key={job.id} 
+                      key={job.company_details || job.id} 
                       className="individual-app"
                       onClick={() => setModalContent(<IndividualJobModal job={job} />)}
                     >
                       <td className="apply-cell">
                         { !loading && (
                           <>
-                            <OpenModalButton
-                              modalComponent={
-                                <IndividualJobModal job={job} />
-                              }
-                              buttonClassName={'view-button apply-button'}
-                              buttonText={'Easy Apply'}
-                            />
+                          { job.company_details && (
+                            <button className="view-button apply-button">
+                              Easy Apply
+                            </button>
+                          )}
+                          { !job.company_details && (
+                            <button className="view-button apply-button">
+                              <LoadingDots />
+                            </button>
+                          )}
                           </>
                         )}
                         { loading && (

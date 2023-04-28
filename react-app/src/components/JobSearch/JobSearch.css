@@ -45,6 +45,11 @@ td.apply-cell {
   outline: none;
 }
 
+.loading-bars-apply {
+  height: 55px;
+  padding: 0px;
+}
+
 .loading-checkout.loading-search {
   height: 25px;
   padding: 0px;

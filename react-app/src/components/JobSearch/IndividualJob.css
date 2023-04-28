@@ -48,6 +48,7 @@
 
 .employer-logo {
   height: 39px;
+  max-width: 90px;
 }
 
 .employment-type {

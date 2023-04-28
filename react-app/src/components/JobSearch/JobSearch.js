@@ -12,6 +12,7 @@ import { fetchAllJobsThunk, searchJobsThunk } from '../../store/job';
 import { formatDate } from '../../utils/format';
 import OpenModalButton from '../OpenModalButton';
 import IndividualJobModal from './IndividualJobModal';
+import { useModal } from '../../context/Modal';
 
 export default function JobSearch() {
   const user = useSelector(state => state.session.user);
@@ -25,6 +26,7 @@ export default function JobSearch() {
   const [search, setSearch] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { setModalContent, setOnModalClose } = useModal();
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -118,7 +120,7 @@ export default function JobSearch() {
                     <tr 
                       key={job.id} 
                       className="individual-app"
-                      // onClick={() => handleClick(job)}
+                      onClick={() => setModalContent(<IndividualJobModal job={job} />)}
                     >
                       <td className="apply-cell">
                         { !loading && (

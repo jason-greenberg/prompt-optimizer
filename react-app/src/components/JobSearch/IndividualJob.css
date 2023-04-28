@@ -19,13 +19,30 @@
   height: 100%;
 }
 /* ---------- */
+.case-icon {
+  height: 26px;
+  margin-bottom: 3px;
+}
+
 .company-name-modal {
   font-size: 16px;
 }
 
+.dollar-icon {
+  height: 21px;
+  margin-bottom: 2px;
+  width: 19px;
+}
+
+.employment-type {
+  align-items: center;
+  column-gap: 4px;
+  display: flex;
+}
+
 .job-characteristics {
   align-items: center;
-  column-gap: 5px;
+  column-gap: 8px;
   display: flex;
 }
 
@@ -49,7 +66,18 @@
 }
 
 .posted-date {
+  align-items: center;
+  display: flex;
+  column-gap: 3px;
+}
 
+.salary-info {
+  align-items: center;
+  display: flex;
+}
+
+.time-icon {
+  height: 26px;
 }
 /* BUTTONS */
 .modal-apply-button {

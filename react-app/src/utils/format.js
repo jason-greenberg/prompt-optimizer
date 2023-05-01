@@ -103,9 +103,9 @@ export const formatCorrType = (corrType) => {
 export const formatSalary = (jobObject) => {
   switch (jobObject.job_salary_period) {
     case 'YEAR':
-      return `${jobObject.job_min_salary / 1000}k-${jobObject.job_max_salary / 1000}k a year`;
+      return `${jobObject.job_min_salary / 1000}k–${jobObject.job_max_salary / 1000}k a year`;
     case 'HOUR':
-      return `${jobObject.job_min_salary}-${jobObject.job_max_salary} an hour`
+      return `${jobObject.job_min_salary}–${jobObject.job_max_salary} an hour`
     default:
       return '';
   }

@@ -16,6 +16,7 @@ import IndividualJobModal from './IndividualJobModal';
 import { useModal } from '../../context/Modal';
 import LoadingDots from '../Loading/LoadingDots';
 import LoadingDefault from '../Loading/LoadingDefault';
+import { createCoverLetterThunk } from '../../store/coverletter';
 
 export default function JobSearch() {
   const user = useSelector(state => state.session.user);
@@ -24,16 +25,20 @@ export default function JobSearch() {
   const coverLetterLoading = location.state?.coverLetterLoading || false;
   const jobs = useSelector(state => state.jobs.allJobs);
   const jobsArray = Object.values(jobs);
-  const { setSelectedLink } = useMenuSelector();
+  const resumes = useSelector(state => state.resumes.allResumes);
+  const resumesArray = Object.values(resumes);
+  const mostRecentResume = resumesArray[resumesArray.length - 1];
+  const { setSelectedLink, setSelectedSide } = useMenuSelector();
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [search, setSearch] = useState('');
   const [loc, setLoc] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({});
+  const [showLoadingBars, setShowLoadingBars] = useState(false);
   const { setModalContent, setOnModalClose } = useModal();
   const [locError, setLocError] = useState(false);
-
+  const [apiError, setApiError] = useState(false);
   const prevJobsRef = useRef(jobs);
 
   useEffect(() => {
@@ -80,8 +85,34 @@ export default function JobSearch() {
     return history.push(`/applications/${app.id}`)
   }
 
-  const handleApply = async (app) => {
+  const handleApply = async (e, job) => {
+    e.stopPropagation();
+    e.preventDefault();
 
+    setLoading({ ...loading, [job.id]: true });
+
+    setTimeout(() => {
+      setShowLoadingBars(true);
+    }, 3000);
+    
+    const response = await dispatch(createCoverLetterThunk(
+      mostRecentResume.id, // resume id
+      job.job_description, // job description
+      job.job_description, // company details
+      'gpt-3.5-turbo', // engine
+      job.job_title // job title
+    ));
+
+    // Check for error in response
+    if (response.error) {
+      setApiError(response.error);
+      // setCoverLetterLoading(false);
+      setLoading({ ...loading, [job.id]: false }); // toggle loading gif off on specific search result
+    } else {
+      await setSelectedSide('cover letter'); // sets up view in application details
+      await setSelectedLink('coverletters');
+      history.push(`/applications/${response.application.id}`);
+    }
   }
 
   const handleSearch = async () => {
@@ -109,7 +140,7 @@ export default function JobSearch() {
   }
 
   // show loading component while waiting for cover letter
-  if (coverLetterLoading) {
+  if (coverLetterLoading || showLoadingBars) {
     return (
       <>
         <Navigation />
@@ -171,6 +202,7 @@ export default function JobSearch() {
                   </button>
                 </div>
               </div>
+              {apiError && <div className="error-message">{apiError}</div>}
               <table className="applications-table">
                 <thead>
                   <tr className="column-headings">
@@ -190,17 +222,19 @@ export default function JobSearch() {
                       onClick={() => setModalContent(<IndividualJobModal job={job} />)}
                     >
                       <td className="apply-cell">
-                        { !loading && (
-                            <button className="view-button apply-button">
+                        { !loading[job.id] && (
+                            <button 
+                              className="view-button apply-button"
+                              onClick={(e) => handleApply(e, job)}
+                            >
                               Easy Apply
                             </button>
                         )}
-                        { loading && (
+                        { loading[job.id] && (
                           <button 
                             className="view-button apply-button"
-                            onClick={handleApply}
                           >
-                            <img src={loadingGif} className='loading-checkout' alt="loading-gif" />
+                            <LoadingDots />
                           </button>
                         )}
                       </td>

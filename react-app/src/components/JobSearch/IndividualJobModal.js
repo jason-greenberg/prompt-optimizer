@@ -8,24 +8,51 @@ import loadingGif from '../Loading/assets/loading.gif'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCoverLetterThunk } from '../../store/coverletter'
+import LoadingDots from '../Loading/LoadingDots'
+import { useHistory, useLocation } from 'react-router-dom'
+import { useMenuSelector } from '../../context/Menu'
+import LoadingDefault from '../Loading/LoadingDefault'
+import Navigation from '../Navigation'
+import { useModal } from '../../context/Modal'
 
 export default function IndividualJobModal({ job }) {
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { closeModal } = useModal()
+  const { setSelectedLink, setSelectedSide } = useMenuSelector();
   const resumes = useSelector(state => state.resumes.allResumes);
-  const resumesArray = Object.values(resumes)
+  const resumesArray = Object.values(resumes);
   const mostRecentResume = resumesArray[resumesArray.length - 1];
   const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState(false);
+  const [coverLetterLoading, setCoverLetterLoading] = useState(false);
 
   const handleEasyApply = async () => {
     setLoading(true);
-    if (job.company_details) {
-      await dispatch(createCoverLetterThunk(
-        mostRecentResume.id, // resume id
-        job.job_description, // job description
-        job.company_details, // company details
-        'gpt-3.5-turbo', // engine
-        job.job_title // job title
-      ));
+
+    setTimeout(() => {
+      setCoverLetterLoading(true);
+      location.state = { ...location.state, coverLetterLoading: true };
+      closeModal();
+    }, 3000);
+    
+    const response = await dispatch(createCoverLetterThunk(
+      mostRecentResume.id, // resume id
+      job.job_description, // job description
+      job.job_description, // company details
+      'gpt-3.5-turbo', // engine
+      job.job_title // job title
+    ));
+
+    // Check for error in response
+    if (response.error) {
+      setApiError(response.error);
+      setCoverLetterLoading(false);
+    } else {
+      await setSelectedSide('cover letter'); // sets up view in application details
+      await setSelectedLink('coverletters');
+      history.push(`/applications/${response.application.id}`);
     }
   }
 
@@ -53,9 +80,7 @@ export default function IndividualJobModal({ job }) {
           </>
         )}
         { loading && (
-          <>
-            <img src={loadingGif} className='loading-checkout loading-search' alt="loading-gif" />
-          </>
+          <LoadingDots />
         )}
       </button>
       <div className="job-characteristics">
@@ -74,6 +99,7 @@ export default function IndividualJobModal({ job }) {
           {capitalizeResumeTitle(job.employment_type)}
         </div>
       </div>
+      {apiError && <div className="error-message">{apiError}</div>}
       <div className="job-description-container job-modal-desc">
         <div className="job-description-body modal-desc-body">
           <div className="about modal-about">About</div>

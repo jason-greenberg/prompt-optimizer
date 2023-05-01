@@ -85,12 +85,11 @@ td.apply-cell {
 }
 
 .loading-checkout.loading-search {
-  height: 25px;
-  padding: 0px;
+  height: 22px;
 }
 
 .search-button.search-load-container {
-  padding: 8px 27px 6px 27px;
+  padding: 13px 27px 10px 27px;
 }
 /* BUTTONS */
 .apply-button {

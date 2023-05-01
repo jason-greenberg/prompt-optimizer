@@ -5,7 +5,7 @@ import { authenticate } from '../../store/session';
 import { fetchAllApplicationsThunk, fetchSingleApplicationThunk } from '../../store/application';
 import Navigation from '../Navigation';
 import './JobSearch.css';
-import loadingGif from '../Loading/assets/loading.gif'
+import loadingGif from '../Loading/assets/loading-ellipses.gif'
 import loadingBars from '../Loading/assets/loading-ellipses.gif'
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
@@ -15,11 +15,13 @@ import OpenModalButton from '../OpenModalButton';
 import IndividualJobModal from './IndividualJobModal';
 import { useModal } from '../../context/Modal';
 import LoadingDots from '../Loading/LoadingDots';
+import LoadingDefault from '../Loading/LoadingDefault';
 
 export default function JobSearch() {
   const user = useSelector(state => state.session.user);
-  const history = useHistory()
+  const history = useHistory();
   const location = useLocation();
+  const coverLetterLoading = location.state?.coverLetterLoading || false;
   const jobs = useSelector(state => state.jobs.allJobs);
   const jobsArray = Object.values(jobs);
   const { setSelectedLink } = useMenuSelector();
@@ -104,6 +106,16 @@ export default function JobSearch() {
         setLocError(true);
       }
     }
+  }
+
+  // show loading component while waiting for cover letter
+  if (coverLetterLoading) {
+    return (
+      <>
+        <Navigation />
+        <LoadingDefault />
+      </>
+    )
   }
 
   return (
@@ -212,25 +224,50 @@ export default function JobSearch() {
       { isLoaded && !(jobsArray.length > 0) && (
         <div className="dashboard-container">
           <div className="dashboard-body">
-          <div className="current-apps-table">
+            <div className="current-apps-table">
               <div className="job-search-container">
                 <div className="job-search-header">
                   <h3 className="table-title">Job Search</h3>
                   <div className="job-search-box">
-                    <div className="job-cue">What & Where</div>
+                    <div className="job-cue">What</div>
                     <input 
-                      className="job-search-input"
-                      placeholder='job title, keywords, and/or location'
+                      className="job-search-input what"
+                      placeholder='job title, keywords'
                       type="text" 
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
+                  <div className={`job-search-box where${locError ? ' error' : ''}`}>
+                    <div className="job-cue">Where</div>
+                    {locError && <div className="location-error">Location required</div>}
+                    <input
+                      className='job-search-input where'
+                      placeholder='location'
+                      type="text"
+                      value={loc}
+                      onChange={(e) => {
+                        setLoc(e.target.value);
+                        if (locError) {
+                          setLocError(false);
+                        }
+                      }}
+                      />
+                  </div>
                   <button 
-                    className="search-button"
+                    className={"search-button" + (searchSubmitted ? " search-load-container" : "")}
                     onClick={handleSearch}
                   >
-                    Search
+                    { !searchSubmitted && (
+                      <>
+                        Search
+                      </>
+                    )}
+                    { searchSubmitted && (
+                      <>
+                        <LoadingDots />
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

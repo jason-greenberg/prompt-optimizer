@@ -19,6 +19,8 @@ def seed_applications():
         job_description=demo_coverletters[0].job_description,
         company_details=demo_coverletters[0].company_details,
         position_type=demo_resume.position_type,
+        follow_up=True,
+        apply_link='https://www.linkedin.com/jobs/view/1234567890/',
         created_at=datetime.utcnow()
     )
 
@@ -30,6 +32,8 @@ def seed_applications():
         job_description=demo_coverletters[0].job_description,
         company_details=demo_coverletters[0].company_details,
         position_type=demo_resumes[1].position_type,
+        follow_up=True,
+        apply_link='https://www.indeed.com/jobs/view/2345678901/',
         created_at=datetime.utcnow()
     )
 
@@ -41,6 +45,8 @@ def seed_applications():
         job_description=demo_coverletters[1].job_description,
         company_details=demo_coverletters[1].company_details,
         position_type=demo_resumes[4].position_type,
+        follow_up=True,
+        apply_link='https://www.glassdoor.com/Job/Listing/345678901/',
         created_at=datetime.utcnow()
     )
 
@@ -52,6 +58,8 @@ def seed_applications():
         job_description=demo_coverletters[3].job_description,
         company_details=demo_coverletters[3].company_details,
         position_type=demo_resumes[6].position_type,
+        follow_up=True,
+        apply_link='https://www.monster.com/jobs/view/4567890123/',
         created_at=datetime.utcnow()
     )
 
@@ -63,6 +71,8 @@ def seed_applications():
         job_description=demo_coverletters[2].job_description,
         company_details=demo_coverletters[2].company_details,
         position_type=demo_resumes[4].position_type,
+        follow_up=True,
+        apply_link='https://www.simplyhired.com/job/5678901234/',
         created_at=datetime.utcnow()
     )
 
@@ -74,6 +84,8 @@ def seed_applications():
         job_description=demo_coverletters[3].job_description,
         company_details=demo_coverletters[3].company_details,
         position_type=demo_resumes[4].position_type,
+        follow_up=True,
+        apply_link='https://www.linkedin.com/jobs/view/6789012345/',
         created_at=datetime.utcnow()
     )
 
@@ -85,6 +97,8 @@ def seed_applications():
         job_description=demo_coverletters[0].job_description,
         company_details=demo_coverletters[0].company_details,
         position_type=demo_resumes[0].position_type,
+        follow_up=True,
+        apply_link='https://www.indeed.com/jobs/view/7890123456/',
         created_at=datetime.utcnow()
     )
 

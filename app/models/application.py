@@ -15,6 +15,8 @@ class Application(db.Model):
     job_description = db.Column(db.String, nullable=False)
     company_details = db.Column(db.String, nullable=True)
     position_type = db.Column(db.String, nullable=True)
+    follow_up = db.Column(db.Boolean, default=False)
+    apply_link = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow(), nullable=False)
 
     user = db.relationship('User', back_populates='applications')
@@ -30,6 +32,8 @@ class Application(db.Model):
             'cover_letter_id': self.cover_letter_id,
             'job_title': self.job_title,
             'position_type': self.position_type,
+            'follow_up': self.follow_up,
+            'apply_link': self.apply_link,
             'created_at': self.created_at,
             'job_description': self.job_description if self.job_description else None,
             'company_details': self.company_details if self.company_details else None

@@ -125,6 +125,8 @@ def update_application(id):
     cover_letter_id = data.get('cover_letter_id')
     job_title = data.get('job_title')
     job_description = data.get('job_description')
+    follow_up = data.get('follow_up')
+    apply_link = data.get('apply_link')
 
     #Update application fields
     if resume_id is not None:
@@ -135,6 +137,10 @@ def update_application(id):
         application.job_title = job_title
     if job_description is not None:
         application.job_description = job_description
+    if follow_up is not None:
+        application.follow_up = follow_up
+    if apply_link is not None:
+        application.apply_link = apply_link
     
     # Save changes to the database
     db.session.commit()

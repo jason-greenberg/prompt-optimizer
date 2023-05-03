@@ -11,6 +11,11 @@ export default function JobDetails() {
     <>
       { !notFound && (
         <div className="job-description-container">
+          { application.apply_link && (
+            <button className="view-button apply-direct-button">
+              {`Apply directly on`}
+            </button>
+          )}
           <div className="job-description-body">
             <div className="about">About</div>
             <div className="job-text">

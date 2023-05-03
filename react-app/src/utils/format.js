@@ -7,6 +7,35 @@ export const capitalizeResumeTitle = (string) => {
   return output.join(' ');
 }
 
+export const getJobBoardFromUrl = (url) => {
+  // Parsing the URL to extract the domain
+  const domain = new URL(url).hostname;
+
+  // A mapping object to map domain names to job board names
+  const domainToJobBoardName = {
+    "www.linkedin.com": "LinkedIn",
+    "www.indeed.com": "Indeed",
+    "www.monster.com": "Monster",
+    "www.glassdoor.com": "Glassdoor",
+    "www.careerbuilder.com": "CareerBuilder",
+    "www.simplyhired.com": "SimplyHired",
+    "www.ziprecruiter.com": "ZipRecruiter",
+    "www.dice.com": "Dice",
+    // Add more mappings here as needed
+  };
+
+  // If the domain is found in the mapping object, return the corresponding job board name
+  if (domainToJobBoardName.hasOwnProperty(domain)) {
+    return domainToJobBoardName[domain];
+  }
+
+  // If the domain is not found in the mapping, capitalize the first letter and make the rest lowercase
+  const [subdomain, ...rest] = domain.split(".");
+  const name = subdomain.charAt(0).toUpperCase() + subdomain.slice(1).toLowerCase();
+  return name;
+};
+
+
 export const numberToRoman = (num) => {
   const romanNumerals = [
     ['M', 1000],

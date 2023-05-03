@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import './JobDetails.css';
+import { getJobBoardFromUrl } from "../../utils/format";
 
 export default function JobDetails() {
   const application = useSelector(state => state.applications.currentApplication)
@@ -12,8 +13,11 @@ export default function JobDetails() {
       { !notFound && (
         <div className="job-description-container">
           { application.apply_link && (
-            <button className="view-button apply-direct-button">
-              {`Apply directly on`}
+            <button 
+              className="view-button apply-direct-button"
+              onClick={}
+            >
+              {`Apply directly on ${getJobBoardFromUrl(application.apply_link)}`}
             </button>
           )}
           <div className="job-description-body">

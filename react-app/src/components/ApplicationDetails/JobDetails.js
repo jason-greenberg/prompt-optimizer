@@ -8,6 +8,10 @@ export default function JobDetails() {
   const application = useSelector(state => state.applications.currentApplication)
   const [notFound, setNotFound] = useState(false)
 
+  const handleDirectApply = async () => {
+    window.open(application.apply_link, '_blank', 'noopener,noreferrer');
+  }
+
   return (
     <>
       { !notFound && (
@@ -15,7 +19,7 @@ export default function JobDetails() {
           { application.apply_link && (
             <button 
               className="view-button apply-direct-button"
-              onClick={}
+              onClick={handleDirectApply}
             >
               {`Apply directly on ${getJobBoardFromUrl(application.apply_link)}`}
             </button>

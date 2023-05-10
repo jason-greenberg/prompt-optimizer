@@ -40,7 +40,7 @@ const deleteCoverLetter = (coverLetterId) => ({
 });
 
 // ----- THUNK ACTIONS ------
-export const createCoverLetterThunk = (resumeId, jobDescription, companyDetails, engine, jobTitle) => async (dispatch) => {
+export const createCoverLetterThunk = (resumeId, jobDescription, companyDetails, engine, jobTitle, applyLink) => async (dispatch) => {
   const response = await fetch(`/api/resumes/${resumeId}/coverletters`, {
     method: 'POST',
     headers: {
@@ -50,7 +50,8 @@ export const createCoverLetterThunk = (resumeId, jobDescription, companyDetails,
       job_description: jobDescription,
       company_details: companyDetails,
       engine: engine,
-      job_title: jobTitle
+      job_title: jobTitle,
+      apply_link: applyLink
     }),
   });
   if (response.ok) {

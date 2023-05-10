@@ -13,20 +13,25 @@ export const getJobBoardFromUrl = (url) => {
 
   // A mapping object to map domain names to job board names
   const domainToJobBoardName = {
-    "www.linkedin.com": "LinkedIn",
-    "www.indeed.com": "Indeed",
-    "www.monster.com": "Monster",
-    "www.glassdoor.com": "Glassdoor",
-    "www.careerbuilder.com": "CareerBuilder",
-    "www.simplyhired.com": "SimplyHired",
-    "www.ziprecruiter.com": "ZipRecruiter",
-    "www.dice.com": "Dice",
+    "linkedin.com": "LinkedIn",
+    "indeed.com": "Indeed",
+    "monster.com": "Monster",
+    "glassdoor.com": "Glassdoor",
+    "careerbuilder.com": "CareerBuilder",
+    "simplyhired.com": "SimplyHired",
+    "ziprecruiter.com": "ZipRecruiter",
+    "dice.com": "Dice",
+    "bebee.com": "BeBee",
+    "geebo.com": "Geebo"
     // Add more mappings here as needed
   };
 
-  // If the domain is found in the mapping object, return the corresponding job board name
-  if (domainToJobBoardName.hasOwnProperty(domain)) {
-    return domainToJobBoardName[domain];
+  // Find the matching domain from the mapping object
+  const matchedDomain = Object.keys(domainToJobBoardName).find((key) => domain.endsWith(key));
+
+  // If a matching domain is found, return the corresponding job board name
+  if (matchedDomain) {
+    return domainToJobBoardName[matchedDomain];
   }
 
   // If the domain is not found in the mapping, capitalize the first letter and make the rest lowercase
@@ -34,6 +39,7 @@ export const getJobBoardFromUrl = (url) => {
   const name = subdomain.charAt(0).toUpperCase() + subdomain.slice(1).toLowerCase();
   return name;
 };
+
 
 
 export const numberToRoman = (num) => {

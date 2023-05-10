@@ -67,7 +67,7 @@ def create_new_cover_letter(id):
     company_details = data['company_details']
     engine=data['engine']
     job_title=data['job_title']
-    apply_link=data['apply_link']
+    apply_link=data.get('apply_link', '')
 
     # Generate a cover letter using OpenAI's API
     letter = generate_gpt_cover_letter(resume, job_description, company_details, engine, current_user)

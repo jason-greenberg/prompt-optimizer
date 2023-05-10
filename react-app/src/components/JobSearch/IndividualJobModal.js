@@ -42,7 +42,8 @@ export default function IndividualJobModal({ job }) {
       job.job_description, // job description
       job.job_description, // company details
       'gpt-3.5-turbo', // engine
-      job.job_title // job title
+      job.job_title, // job title
+      job.apply_link // apply link
     ));
 
     // Check for error in response

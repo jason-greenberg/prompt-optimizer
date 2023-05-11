@@ -35,7 +35,14 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
   }, [coverLetter?.id])
 
   const onSubmit = async (e) => {
+    await setApiError(false);
     e.preventDefault();
+
+    // prevent cover letter generation when associated resume has been deleted from application
+    if (!application.resume_id) {
+      setApiError(`The resume associated with this application has been deleted.\nSelect "Manage" and connect a new resume to generate a new cover letter.\n `)
+      return;
+    }
 
     setLoading(true);
       const response = await dispatch(
@@ -142,7 +149,7 @@ export default function CoverLetterDetails({ setDeletedCoverLetterId }) {
               </div>
             )}
           <div className={`resume-text letter-text ${loading ? 'anim-border' : ''}`}>
-            {apiError && <div className="error-message">{apiError}</div>}
+            {apiError && <div className="error-message api-error">{apiError}</div>}
                 {/* { loading && (
                   <img src={loadingGif} alt="loading-icon" className="regen-loading" />
                 )} */}

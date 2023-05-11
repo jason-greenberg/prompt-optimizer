@@ -14,6 +14,7 @@
     transform: rotate(1turn);
   }
 }
+
 .anim-border {
     /* color: white; */
     position: relative;
@@ -22,6 +23,7 @@
     border-radius: 10px;
     overflow: hidden;
 }
+
 .anim-border::before {
     content: "";
     position: absolute;
@@ -38,6 +40,7 @@
     -webkit-animation: rotate 4s linear infinite;
     animation: rotate 4s linear infinite;
 }
+
 .anim-border::after {
   content: "";
   position: absolute;
@@ -49,6 +52,10 @@
   background: white;
   border-radius: 5px;
 } 
+
+.api-error {
+  font-weight: 500;
+}
 
 .bracketed-highlight {
   background-color: rgb(255, 255, 194);

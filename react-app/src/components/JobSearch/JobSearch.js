@@ -78,12 +78,6 @@ export default function JobSearch() {
   
     prevJobsRef.current = jobs;
   }, [jobs, jobsArray, dispatch]);
-  
-
-  const handleClick = async (app) => {
-    await dispatch(fetchSingleApplicationThunk(app.id))
-    return history.push(`/applications/${app.id}`)
-  }
 
   const handleApply = async (e, job) => {
     e.stopPropagation();
@@ -140,6 +134,12 @@ export default function JobSearch() {
     }
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch()
+    }
+  }
+
   // show loading component while waiting for cover letter
   if (coverLetterLoading || showLoadingBars) {
     return (
@@ -168,6 +168,7 @@ export default function JobSearch() {
                       type="text" 
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(e)}
                     />
                   </div>
                   <div className={`job-search-box where${locError ? ' error' : ''}`}>
@@ -184,6 +185,7 @@ export default function JobSearch() {
                           setLocError(false);
                         }
                       }}
+                      onKeyDown={(e) => handleKeyDown(e)}
                       />
                   </div>
                   <button 

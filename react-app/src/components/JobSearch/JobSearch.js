@@ -39,6 +39,7 @@ export default function JobSearch() {
   const { setModalContent, setOnModalClose } = useModal();
   const [locError, setLocError] = useState(false);
   const [apiError, setApiError] = useState(false);
+  const [remoteMenuVisible, setRemoteMenuVisible] = useState(false);
   const prevJobsRef = useRef(jobs);
 
   useEffect(() => {
@@ -118,7 +119,7 @@ export default function JobSearch() {
       const searchData = {
         search: search + ' in ' + loc,
         page: 1,
-        num_pages: 1,
+        num_pages: 5,
         date_posted: 'today',
         remote_jobs_only: false,
         employment_types: 'FULLTIME',
@@ -203,6 +204,22 @@ export default function JobSearch() {
                       </>
                     )}
                   </button>
+                </div>
+                <div className="filters-container">
+                  <div className="onsite-remote">
+                    <div 
+                      className="onsite-menu"
+                      onClick={() => setRemoteMenuVisible(prev => !prev)}
+                    >
+                      On-site/remote
+                      { remoteMenuVisible && (
+                        <div className="remote-dropdown">
+                          <div>On-site</div>
+                          <div>Remote</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
               {apiError && <div className="error-message">{apiError}</div>}

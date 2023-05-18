@@ -215,15 +215,24 @@ export default function JobSearch() {
                     >
                       On-site/remote
                       { remoteMenuVisible && (
-                        <div className="remote-dropdown">
-                          <div className="remote-option">
+                        <div 
+                          className="remote-dropdown"
+                          onClick={ e => e.stopPropagation() }
+                        >
+                          <div 
+                            className="remote-option"
+                            onClick={() => setRemote(false)}
+                          >
                             <div 
-                              className={`custom-checkbox ${ onsite ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
+                              className={`custom-checkbox ${ !remote ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
                             >
                             </div>
                             <div>On-site & Hybrid</div>
                           </div>
-                          <div className="remote-option">
+                          <div 
+                            className="remote-option"
+                            onClick={() => setRemote(true)}
+                          >
                           <div 
                               className={`custom-checkbox ${ remote ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
                             >

@@ -40,6 +40,8 @@ export default function JobSearch() {
   const [locError, setLocError] = useState(false);
   const [apiError, setApiError] = useState(false);
   const [remoteMenuVisible, setRemoteMenuVisible] = useState(false);
+  const [onsite, setOnsite] = useState(true);
+  const [remote, setRemote] = useState(false);
   const prevJobsRef = useRef(jobs);
 
   useEffect(() => {
@@ -214,8 +216,20 @@ export default function JobSearch() {
                       On-site/remote
                       { remoteMenuVisible && (
                         <div className="remote-dropdown">
-                          <div>On-site</div>
-                          <div>Remote</div>
+                          <div className="remote-option">
+                            <div 
+                              className={`custom-checkbox ${ onsite ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
+                            >
+                            </div>
+                            <div>On-site & Hybrid</div>
+                          </div>
+                          <div className="remote-option">
+                          <div 
+                              className={`custom-checkbox ${ remote ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
+                            >
+                            </div>
+                            <div>Remote</div>
+                          </div>
                         </div>
                       )}
                     </div>

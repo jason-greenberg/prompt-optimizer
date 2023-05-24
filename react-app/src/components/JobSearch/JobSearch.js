@@ -122,11 +122,11 @@ export default function JobSearch() {
         search: search + ' in ' + loc,
         page: 1,
         num_pages: 5,
-        date_posted: 'week',
-        remote_jobs_only: false,
+        date_posted: 'all',
+        remote_jobs_only: remote,
         employment_types: 'FULLTIME',
         job_requirements: 'under_3_years_experience,more_than_3_years_experience',
-        radius: 50
+        radius: 100
       }
       await dispatch(searchJobsThunk(searchData))
         .then(() => setSearchSubmitted(false)); // reset loading gif

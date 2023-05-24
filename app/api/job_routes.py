@@ -33,7 +33,7 @@ def search():
 
     # Check if the most recent search exists and matches the current search query
     if (most_recent_search is not None and 
-        most_recent_search.search == search_data.get("search").lower() and
+        most_recent_search.search == search_data.get("query").lower() and
         datetime.utcnow() - most_recent_search.created_at <= timedelta(minutes=15)):
 
         # Return the jobs from the database associated with the user ID

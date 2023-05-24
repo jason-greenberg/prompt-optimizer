@@ -119,7 +119,7 @@ export default function JobSearch() {
         search: search + ' in ' + loc,
         page: 1,
         num_pages: 1,
-        date_posted: 'today',
+        date_posted: 'week',
         remote_jobs_only: false,
         employment_types: 'FULLTIME',
         job_requirements: 'under_3_years_experience,more_than_3_years_experience',

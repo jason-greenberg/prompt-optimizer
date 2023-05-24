@@ -61,16 +61,6 @@ def search():
     # Remove None values from the querystring
     querystring = {k: v for k, v in querystring.items() if v is not None}
 
-    # If search query is not identical to the user's most recent search, delete all previous user search entries
-    if (most_recent_search is not None and 
-    querystring.get("query") and
-    most_recent_search.search.lower() != querystring.get("query").lower()):
-
-        # Delete all previous user job entries
-        for job in user.jobs:
-            db.session.delete(job)
-        db.session.commit()
-
     headers = {
         "content-type": "application/octet-stream",
         "X-RapidAPI-Key": RAPIDAPI_KEY,
@@ -93,6 +83,16 @@ def search():
     )
     db.session.add(new_search)
     db.session.commit()
+
+    # If search query is not identical to the user's most recent search, delete all previous user search entries
+    if (most_recent_search is not None and 
+    querystring.get("query") and
+    most_recent_search.search.lower() != querystring.get("query").lower()):
+
+        # Delete all previous user job entries
+        for job in user.jobs:
+            db.session.delete(job)
+        db.session.commit()
 
     # For each job in the response, create a new Job object and add it to the database
     if response.status_code == 200:

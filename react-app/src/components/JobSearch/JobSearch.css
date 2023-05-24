@@ -1,13 +1,18 @@
 /* CONTAINERS */
 .job-search-container {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   margin-bottom: 20px;
   position: relative;
   width: 100%;
 }
 /* ---------- */
+.empty-search-message {
+  margin: 0;
+}
+
 td.apply-cell {
   padding: 20px 0px;
   position: relative;
@@ -88,6 +93,28 @@ td.apply-cell {
   height: 22px;
 }
 
+.remote-dropdown {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgba(0, 0, 0, 0.3) 0px 4px 4px 0px;
+  flex-direction: column;
+  font-size: 14px;
+  min-width: 200px;
+  padding: 15px;
+  position: absolute;
+  row-gap: 13px;
+  top: 35px;
+  left: 0px;
+  width: 100%;
+}
+
+.remote-option {
+  align-items: center;
+  column-gap: 8px;
+  display: flex;
+}
+
 .search-button.search-load-container {
   padding: 13px 27px 10px 27px;
 }
@@ -111,6 +138,15 @@ td.apply-cell {
   margin-top: 5px;
   margin-left: 10px;
   padding: 13px 16px;
+}
+
+.onsite-menu {
+  border: 1px solid #D0DBF0;
+  border-radius: 25px;
+  cursor: pointer;
+  padding: 5px 15px;
+  position: relative;
+  z-index: 1000;
 }
 
 .search-button:hover {

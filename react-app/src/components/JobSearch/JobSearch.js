@@ -39,6 +39,9 @@ export default function JobSearch() {
   const { setModalContent, setOnModalClose } = useModal();
   const [locError, setLocError] = useState(false);
   const [apiError, setApiError] = useState(false);
+  const [remoteMenuVisible, setRemoteMenuVisible] = useState(false);
+  const [onsite, setOnsite] = useState(true);
+  const [remote, setRemote] = useState(false);
   const prevJobsRef = useRef(jobs);
 
   useEffect(() => {
@@ -118,7 +121,7 @@ export default function JobSearch() {
       const searchData = {
         search: search + ' in ' + loc,
         page: 1,
-        num_pages: 1,
+        num_pages: 5,
         date_posted: 'week',
         remote_jobs_only: false,
         employment_types: 'FULLTIME',
@@ -140,6 +143,13 @@ export default function JobSearch() {
     }
   }
 
+  const closeFilterMenus = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log('closeFilterMenus');
+    setRemoteMenuVisible(false);
+  }
+
   // show loading component while waiting for cover letter
   if (coverLetterLoading || showLoadingBars) {
     return (
@@ -154,8 +164,13 @@ export default function JobSearch() {
     <>
       <Navigation />
       {isLoaded && jobsArray.length > 0 && (
-        <div className="dashboard-container">
-          <div className="dashboard-body">
+        <div 
+          className="dashboard-container">
+          <div 
+            className="dashboard-body"
+            onClick={(e) => closeFilterMenus(e)}
+
+          >
             <div className="current-apps-table">
               <div className="job-search-container">
                 <div className="job-search-header">
@@ -203,6 +218,45 @@ export default function JobSearch() {
                       </>
                     )}
                   </button>
+                </div>
+                <div className="filters-container">
+                  <div className="onsite-remote">
+                    <div 
+                      className="onsite-menu"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setRemoteMenuVisible(prev => !prev)}}
+                    >
+                      On-site/remote
+                      { remoteMenuVisible && (
+                        <div 
+                          className="remote-dropdown"
+                          onClick={ e => e.stopPropagation() }
+                        >
+                          <div 
+                            className="remote-option"
+                            onClick={() => setRemote(false)}
+                          >
+                            <div 
+                              className={`custom-checkbox ${ !remote ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
+                            >
+                            </div>
+                            <div>On-site & Hybrid</div>
+                          </div>
+                          <div 
+                            className="remote-option"
+                            onClick={() => setRemote(true)}
+                          >
+                          <div 
+                              className={`custom-checkbox ${ remote ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
+                            >
+                            </div>
+                            <div>Remote</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
               {apiError && <div className="error-message">{apiError}</div>}
@@ -260,7 +314,10 @@ export default function JobSearch() {
       )}
       { isLoaded && !(jobsArray.length > 0) && (
         <div className="dashboard-container">
-          <div className="dashboard-body">
+          <div 
+            className="dashboard-body"
+            onClick={(e) => closeFilterMenus(e)}
+          >
             <div className="current-apps-table">
               <div className="job-search-container">
                 <div className="job-search-header">
@@ -307,29 +364,54 @@ export default function JobSearch() {
                     )}
                   </button>
                 </div>
+                <div className="filters-container">
+                  <div className="onsite-remote">
+                    <div 
+                      className="onsite-menu"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setRemoteMenuVisible(prev => !prev)}}
+                    >
+                      On-site/remote
+                      { remoteMenuVisible && (
+                        <div 
+                          className="remote-dropdown"
+                          onClick={ e => e.stopPropagation() }
+                        >
+                          <div 
+                            className="remote-option"
+                            onClick={() => setRemote(false)}
+                          >
+                            <div 
+                              className={`custom-checkbox ${ !remote ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
+                            >
+                            </div>
+                            <div>On-site & Hybrid</div>
+                          </div>
+                          <div 
+                            className="remote-option"
+                            onClick={() => setRemote(true)}
+                          >
+                          <div 
+                              className={`custom-checkbox ${ remote ? 'custom-checkbox-checked' : 'custom-checkbox-unchecked'}`}
+                            >
+                            </div>
+                            <div>Remote</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <table className="applications-table">
-                <thead>
-                  <tr className="column-headings">
-                    <th className="column-name"></th>
-                    <th className="column-name job-title">JOB TITLE</th>
-                    <th className="column-name company">COMPANY</th>
-                    <th className="column-name">DATE POSTED</th>
-                    <th className="column-name location">LOCATION</th>
-                    <th className="column-name">PLATFORM</th>
-                  </tr>
-                </thead>
-                <tbody className="applications-container">
-                </tbody>
-              </table>
             </div>
-          </div>
-          <h4>Welcome! To create your first job application:</h4>
-          <div className="intro-instruct">
-            <p>1. Click the 'New' Button at the top of the screen</p>
-            <p>2. Upload a Resume</p>
-            <p>3. Once you've uploaded a resume, you can click 'New' and select 'Cover Letter' to create a Cover Letter and Job Application simultaneously</p>
-            <p>4. Optionally, select 'Job Application' from the 'New' menu to create a Job Application without a Cover Letter</p>
+            <h4 className='empty-search-message'>Welcome! Our job search aggregates postings from across all major recruiting boards.</h4>
+            <h5>Here's how to get started:</h5>
+            <div className="intro-instruct">
+              <p>1. Click the 'New' Button at the top of the screen</p>
+              <p>2. Upload a Resume</p>
+              <p>3. Once you've uploaded a resume, you can start applying to jobs with the one-click Easy Apply button!</p>
+            </div>
           </div>
         </div>
       )}

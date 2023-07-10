@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 from app.models import Prompt, db
 from datetime import datetime
 
+from app.utils.gpt import generate_gpt_optimized_prompt
+
 prompt_routes = Blueprint('prompt', __name__)
 
 def page_not_found():
@@ -49,9 +51,11 @@ def create_prompt():
     data = request.json
     prompt = data['prompt']
 
+    optimized_prompt = generate_gpt_optimized_prompt(prompt, "gpt-4-32k", current_user)
+
     new_prompt = Prompt(
         user_id=current_user.id,
-        prompt=prompt,
+        prompt=optimized_prompt,
         created_at=datetime.utcnow()
     )
     db.session.add(new_prompt)

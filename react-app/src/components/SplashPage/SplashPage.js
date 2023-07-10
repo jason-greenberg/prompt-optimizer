@@ -78,16 +78,16 @@ export default function SplashPage() {
             </Link>
           </div>
         </div>
-        <div className="product-demos">
+        {/* <div className="product-demos">
           <div className="head-and-pitch">
             <div className="headline">HOW PROMPTLY WORKS</div>
             <div className="pitch">Generate an optimized prompt in 60 seconds</div>
           </div>
-          {/* <div className="cover-letter-demo indiv-demo">
+          <div className="cover-letter-demo indiv-demo">
               <div className="demo-desc">{'1. Create a cover letter'}</div>
               <img className="demo-gif cov-gif" src={createCover} alt="cover-demo" />
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
     </div>
   )

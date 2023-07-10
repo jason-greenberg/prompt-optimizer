@@ -7,6 +7,7 @@ import Navigation from '../Navigation';
 import './Dashboard.css';
 import { fetchAllResumesThunk } from '../../store/resume';
 import { useMenuSelector } from '../../context/Menu';
+import PromptBox from '../PromptBox/PromptBox';
 
 export default function Dashboard() {
   const user = useSelector(state => state.session.user);
@@ -26,8 +27,6 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchAsync = async () => {
       await dispatch(authenticate());
-      await dispatch(fetchAllApplicationsThunk());
-      dispatch(fetchAllResumesThunk())
       setIsLoaded(true);
     }
     fetchAsync();
@@ -67,10 +66,10 @@ export default function Dashboard() {
   return (
     <>
       <Navigation />
-      { isLoaded && !(applicationsArray.length > 0) && (
+      { isLoaded && (
         <div className="dashboard-container">
           <div className="dashboard-body">
-            
+            <PromptBox />
           </div>
         </div>
       )}

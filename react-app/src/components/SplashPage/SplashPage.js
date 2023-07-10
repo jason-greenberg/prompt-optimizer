@@ -68,8 +68,8 @@ export default function SplashPage() {
             <div>{'The fastest way to optimize a prompt'}</div>
           </div>
           <div className="get-started-box">
-            <div className="app-desc">Experience effortless job hunting with ZipCover—
-              crafting impeccable cover letters in seconds, optimizing resumes, and turning introverts into networking wizards.
+            <div className="app-desc">Experience effortless prompt engineering with Promptly—
+            Seamlessly craft advanced LLM prompts in seconds, fine-tune system messages, and transform basic prompts into compelling commands.
             </div>
             <Link className="splash-start-container" to={ user ? '/dashboard' : '/signup' }>
               <button className="purple-button splash-start-button">

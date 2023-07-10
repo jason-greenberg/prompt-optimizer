@@ -51,7 +51,7 @@ export const fetchSinglePromptThunk = (promptId) => async (dispatch) => {
 };
 
 export const createPromptThunk = (promptData) => async (dispatch) => {
-  const response = await fetch('/api/prompt/', {
+  const response = await fetch('/api/prompts/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

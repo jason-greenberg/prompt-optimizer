@@ -64,7 +64,7 @@ function LoginFormPage() {
   return (
     <div className="signup-container">
       <img className="background" src={background} alt="background-img" />
-      <h1 className="sign-up-title">Sign in to ZipCover</h1>
+      <h1 className="sign-up-title">Sign in to Promptly</h1>
       <form onSubmit={handleSubmit}>
         <ul className="server-errors">
           {serverErrors}

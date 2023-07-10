@@ -51,7 +51,7 @@ def create_prompt():
     data = request.json
     prompt = data['prompt']
 
-    optimized_prompt = generate_gpt_optimized_prompt(prompt, "gpt-4-32k", current_user)
+    optimized_prompt = generate_gpt_optimized_prompt(prompt, "gpt-4", current_user)
 
     new_prompt = Prompt(
         user_id=current_user.id,

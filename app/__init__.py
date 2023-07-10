@@ -14,6 +14,7 @@ from .api.correspondence_routes import correspondence_routes
 from .api.payment_routes import payment_routes
 from .api.job_routes import job_routes
 from .api.search_history_routes import search_history_routes
+from .api.prompt_routes import prompt_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -42,6 +43,7 @@ app.register_blueprint(correspondence_routes, url_prefix='/api/correspondences')
 app.register_blueprint(payment_routes, url_prefix='/api/payments')
 app.register_blueprint(job_routes, url_prefix='/api/jobs')
 app.register_blueprint(search_history_routes, url_prefix='/api/searches')
+app.register_blueprint(prompt_routes, url_prefix='/api/prompts')
 db.init_app(app)
 Migrate(app, db)
 

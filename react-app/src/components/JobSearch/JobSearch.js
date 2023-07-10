@@ -128,6 +128,7 @@ export default function JobSearch() {
         job_requirements: 'under_3_years_experience,more_than_3_years_experience',
         radius: 100
       }
+      console.log('search', searchData.search)
       await dispatch(searchJobsThunk(searchData))
         .then(() => setSearchSubmitted(false)); // reset loading gif
     } else {

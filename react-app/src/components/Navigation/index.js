@@ -19,7 +19,7 @@ export default function Navigation() {
         <div className="navigation-bar">
           <div className="nav-left">
 						<Link to='/dashboard'>
-							<div className="logo">zipcover</div>
+							<div className="logo">promptly</div>
 						</Link>
 						<div className="first-nav-links">
 							<NavLink 
@@ -28,37 +28,6 @@ export default function Navigation() {
 								to="/dashboard"
 							>
 								Dashboard
-							</NavLink>
-							<NavLink 
-								className={"nav-link" + (selectedLink === "easy apply" ? " selected-link" : "")}
-								onClick={() => changeSelectedLink('easy apply')}
-								to="/jobs"
-							>
-								Search & Apply
-							</NavLink>
-							<NavLink 
-								className={"nav-link" + (selectedLink === "resumes" ? " selected-link" : "")}
-								onClick={() => changeSelectedLink('resumes')}
-								to="/resumes"
-							>
-								Resumes
-							</NavLink>
-							<NavLink 
-								className={"nav-link" + (selectedLink === "coverletters" ? " selected-link" : "")}
-								onClick={() => changeSelectedLink('coverletters')}
-								to="/coverletters"
-							>
-								Cover Letters
-							</NavLink>
-						</div>
-						<div className="vertical-divider"></div>
-						<div className="second-nav-links">
-							<NavLink 
-								className={"nav-link" + (selectedLink === "correspondences" ? " selected-link" : "")}
-								onClick={() => changeSelectedLink('correspondences')}
-								to="/correspondences"
-							>
-								Correspondences
 							</NavLink>
 							<NavLink 
 								className={"nav-link" + (selectedLink === "about" ? " selected-link" : "")}
@@ -70,7 +39,6 @@ export default function Navigation() {
 						</div>
 					</div>
           <div className="nav-right">
-						<NewButton />
             <ProfileButton user={user} />
           </div>
         </div>

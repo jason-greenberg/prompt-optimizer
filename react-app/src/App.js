@@ -38,23 +38,10 @@ function App() {
     <>
       {isLoaded && (
         <Switch>
-          <Route path="/checkout" component={CheckoutPage} />
           <Route path="/login" component={LoginFormPage} />
           <Route path="/signup" component={SignupFormPage} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/about" component={AboutDetails} />
-          <Route path="/applications/new" component={CreateApplication} />
-          <Route path="/applications/:applicationId" component={ApplicationDetails} />
-          <Route path="/jobs" component={JobSearch} />
-          <Route path="/resumes/new" component={CreateResumeForm} />
-          <Route path="/resumes/:resumeId/edit" component={EditResume} />
-          <Route path="/resumes/:resumeId" component={ResumeDetails} />
-          <Route path="/resumes" component={AllResumes} />
-          <Route path="/coverletters/add/:applicationId" component={CreateCoverLetterExistingApp} />
-          <Route path="/coverletters/new" component={CreateCoverLetter} />
-          <Route path="/coverletters" component={AllCoverLetters} />
-          <Route path="/correspondences" component={ManageCorrespondences} />
-          <Route path="/cancel" component={Cancel} />
           <Route exact path = '/' component={SplashPage} />
           <Route path = '*' component={NotFound} />
         </Switch>

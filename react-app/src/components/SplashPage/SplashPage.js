@@ -47,7 +47,7 @@ export default function SplashPage() {
       <div className="splash-nav-container">
         <div className="splash-nav-bar">
           <div className="splash-nav-left">
-            <NavLink to="/">zipcover</NavLink>
+            <NavLink to="/">promptly</NavLink>
           </div>
           <div className="splash-nav-right">
             <NavLink to='/about'>About</NavLink>
@@ -65,12 +65,11 @@ export default function SplashPage() {
       <div className="splash-body-container">
         <div className="message-container">
           <div className="message">
-            <div>{'The fastest way to '}</div>
-            {<TypingComponent text={messages[currentIndex]} />}
+            <div>{'The fastest way to optimize a prompt'}</div>
           </div>
           <div className="get-started-box">
-            <div className="app-desc">Experience effortless job hunting with ZipCover—
-              crafting impeccable cover letters in seconds, optimizing resumes, and turning introverts into networking wizards.
+            <div className="app-desc">Experience effortless prompt engineering with Promptly—
+            Seamlessly craft advanced LLM prompts in seconds, fine-tune system messages, and transform basic prompts into compelling commands.
             </div>
             <Link className="splash-start-container" to={ user ? '/dashboard' : '/signup' }>
               <button className="purple-button splash-start-button">

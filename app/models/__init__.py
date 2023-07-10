@@ -7,4 +7,5 @@ from .correspondence import Correspondence
 from .transaction import Transaction
 from .job import Job
 from .search import Search
+from .prompt import Prompt
 from .db import environment, SCHEMA

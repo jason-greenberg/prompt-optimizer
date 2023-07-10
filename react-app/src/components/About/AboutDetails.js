@@ -30,7 +30,7 @@ export default function AboutDetails() {
         <div className="splash-nav-container">
           <div className="splash-nav-bar">
             <div className="splash-nav-left">
-              <NavLink to="/">zipcover</NavLink>
+              <NavLink to="/">promptly</NavLink>
             </div>
             <div className="splash-nav-right">
               <NavLink to="/about">About</NavLink>

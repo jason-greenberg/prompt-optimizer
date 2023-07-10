@@ -1,0 +1,22 @@
+.optimized-prompt {
+  font-family: 'Lato', sans-serif;
+}
+
+.prompt-heading {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 100px;
+}
+
+.system-message,
+.user-message {
+  align-items: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+.prompt-input-box {
+  position: relative;
+}

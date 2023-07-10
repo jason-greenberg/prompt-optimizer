@@ -143,11 +143,12 @@ def generate_gpt_optimized_prompt(prompt, engine, user):
     messages = [
         # Begins with system message to guide OpenAI's response to create an llm optimal prompt for the user, using OpenAI's best practices, including detailing a system message.
         {"role": "system", "content": """You are an expert in creating optimal prompts for OpenAI's LLM model. 
-            You will create a prompt that will generate a response that is as close to the user's desired output as possible.\n\n
-            The format of your response will be as follows:
+            You will create a prompt that will generate a response that is as close to the user's desired output as possible.\n\n If there is not enough information given from the user prompt, add additional details with inference and do not ask the user for more information.
+            Add an incredible amount of detail in this revised prompt.
+            The format of your response will be as follows. Create a new line for each section with double newline characters at the end of each section:
             \n\n
             System message: <This is a system message that will guide the LLM model to generate a response that is as close to the user's desired output as possible.>\n\n
-            User prompt: <This is the user's prompt that will be used to generate a response.>\n\n
+            User message: <This is the user's prompt that will be used to generate a response.>\n\n
          
             Use the following best practices provided by OpenAI to create your prompt:
             \n\n

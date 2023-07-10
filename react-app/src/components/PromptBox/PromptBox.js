@@ -11,7 +11,7 @@ export default function PromptBox() {
   const history = useHistory();
   const { setSelectedLink } = useMenuSelector();
   const [resumeText, setResumeText] = useState('');
-  const [positionType, setPositionType] = useState('');
+  const [prompt, setPrompt] = useState('');
   const [skillLevel, setSkillLevel] = useState('Entry Level');
   const [errors, setErrors] = useState({});
 
@@ -22,10 +22,7 @@ export default function PromptBox() {
   const validate = () => {
     const validationErrors = {}
 
-    if (!resumeText) validationErrors.resumeText = 'Resume text is required'
-    if (!positionType) validationErrors.positionType = 'Postion type is required'
-    if (positionType && positionType.split(' ').length > 3) validationErrors.positionType = 'Position type must be less than 3 words'
-    if (!skillLevel) validationErrors.skillLevel = 'Skill level is required'
+    if (!prompt) validationErrors.positionType = 'Prompt is required.'
 
     return validationErrors;
   }
@@ -39,7 +36,7 @@ export default function PromptBox() {
     if (!Object.keys(validationErrors).length > 0) {
       const newResume = {
         resume_text: resumeText,
-        position_type: positionType,
+        position_type: prompt,
         skill_level: skillLevel
       }
 
@@ -60,9 +57,9 @@ export default function PromptBox() {
               type="text" 
               className="position-type-input"
               placeholder='"Create a lesson plan..."'
-              value={positionType}
+              value={prompt}
               onChange={(e) => {
-                setPositionType(e.target.value)
+                setPrompt(e.target.value)
                 setErrors({...errors, positionType: null})
               }} 
             />

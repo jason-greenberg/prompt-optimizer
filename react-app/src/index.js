@@ -12,6 +12,7 @@ import * as applicationActions from "./store/application";
 import * as correspondenceActions from "./store/correspondence";
 import * as jobsActions from "./store/job"
 import * as searchActions from "./store/search"
+import * as promptActions from "./store/prompt"
 import App from "./App";
 
 import "./index.css";
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV !== "production") {
 	window.correspondenceActions = correspondenceActions;
 	window.jobsActions = jobsActions;
 	window.searchActions = searchActions;
+	window.promptActions = promptActions;
 }
 
 // Wrap the application with the Modal provider and render the Modal component

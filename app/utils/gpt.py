@@ -13,7 +13,8 @@ from .prompts import (
     corr_request_for_feedback,
     corr_job_offer_follow_up,
     corr_job_offer_acceptance_decline,
-    corr_reconnection
+    corr_reconnection,
+    openai_best_practices
 )
 from ..models import db, User
 import os
@@ -132,4 +133,28 @@ def generate_gpt_optimized_resume(resume, job_description, engine, user):
         {"role": "assistant", "content": 'Assistant generates an optimized resume here'}
     ]
 
+    return call_gpt(messages, user, engine)
+
+def generate_gpt_optimized_prompt(prompt, engine, user):
+    """
+    Generates an optimized prompt using OpenAI's chat completion API.
+    """
+
+    messages = [
+        # Begins with system message to guide OpenAI's response to create an llm optimal prompt for the user, using OpenAI's best practices, including detailing a system message.
+        {"role": "system", "content": """You are an expert in creating optimal prompts for OpenAI's LLM model. 
+            You will create a prompt that will generate a response that is as close to the user's desired output as possible.\n\n
+            The format of your response will be as follows:
+            \n\n
+            System message: <This is a system message that will guide the LLM model to generate a response that is as close to the user's desired output as possible.>\n\n
+            User prompt: <This is the user's prompt that will be used to generate a response.>\n\n
+         
+            Use the following best practices provided by OpenAI to create your prompt:
+            \n\n
+            Guidelines: 
+            {openai_best_practices}
+         """},
+        {"role": "user", "content": prompt},
+        ]
+    
     return call_gpt(messages, user, engine)

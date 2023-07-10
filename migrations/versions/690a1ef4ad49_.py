@@ -161,6 +161,18 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE searches SET SCHEMA {SCHEMA};")
+
+    op.create_table('prompts',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('prompt', sa.String(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('id')
+    )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE prompts SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

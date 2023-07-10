@@ -27,7 +27,7 @@ const deletePrompt = (promptId) => ({
 
 // ----- THUNK ACTIONS ------
 export const fetchAllPromptsThunk = () => async (dispatch) => {
-  const response = await fetch('/api/prompt/');
+  const response = await fetch('/api/prompts/');
   if (response.ok) {
     const prompts = await response.json();
     await dispatch(getAllPrompts(prompts));
@@ -38,7 +38,7 @@ export const fetchAllPromptsThunk = () => async (dispatch) => {
 };
 
 export const fetchSinglePromptThunk = (promptId) => async (dispatch) => {
-  const response = await fetch(`/api/prompt/${promptId}`);
+  const response = await fetch(`/api/prompts/${promptId}`);
   if (response.ok) {
     const prompt = await response.json();
     await dispatch(getPrompt(prompt));
@@ -69,7 +69,7 @@ export const createPromptThunk = (promptData) => async (dispatch) => {
 };
 
 export const deletePromptThunk = (promptId) => async (dispatch) => {
-  const response = await fetch(`/api/prompt/${promptId}`, {
+  const response = await fetch(`/api/prompts/${promptId}`, {
     method: 'DELETE',
   });
   if (response.ok) {

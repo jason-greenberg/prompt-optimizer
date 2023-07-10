@@ -9,6 +9,7 @@ import { createPromptThunk, fetchAllPromptsThunk } from "../../store/prompt";
 import { formatPrompt, formatPromptForCopy } from "../../utils/format";
 import copyIcon from "../CoverLetters/CoverLetterDetails/assets/copy-icon-grey.png"
 import { copyToClipboardFormatted } from "../../utils/clipboard";
+import LoadingDots from "../Loading/LoadingDots";
 
 export default function PromptBox() {
   const dispatch = useDispatch();
@@ -36,20 +37,27 @@ export default function PromptBox() {
     return validationErrors;
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onSubmit(e)
+    }
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault()
     const validationErrors = validate()
     setErrors(validationErrors)
-
     // If no validation errors, submit prompt
     if (!Object.keys(validationErrors).length > 0) {
       // Set loading to true
+      setLoading(true);
 
       const newPrompt = {
         prompt: prompt
       }
 
       await dispatch(createPromptThunk(newPrompt));
+      setLoading(false);
     }
   }
 
@@ -69,24 +77,33 @@ export default function PromptBox() {
               onChange={(e) => {
                 setPrompt(e.target.value)
                 setErrors({...errors, positionType: null})
-              }} 
+              }}
+              onKeyDown={(e) => handleKeyDown(e)} 
             />
             {errors.positionType && <div className="error-message">{errors.positionType}</div>}
           </div>
           <div className={`skill-box resume-input-box prompt-input-box ${errors.skillLevel ? 'error' : ''}`}>
             <div className="input-msg">Our Prompt</div>
-            <img
-                src={copyIcon}
-                alt="Copy"
-                className="copy-icon copy-cover"
-                onClick={(e) => {
-                  setCopySelected(true)
-                  e.stopPropagation();
-                  copyToClipboardFormatted((formatPromptForCopy(gptPrompts[gptPrompts.length - 1].prompt)));
-                }}
-              />
-            <div>{gptPrompts.length > 0 && formatPrompt(gptPrompts[gptPrompts.length - 1]?.prompt)}</div>
-            {errors.skillLevel && <div className="error-message">{errors.skillLevel}</div>}
+            { loading && (
+              <>
+                <LoadingDots />
+              </>
+            )}
+            { !loading && (
+              <>
+                <img
+                    src={copyIcon}
+                    alt="Copy"
+                    className="copy-icon copy-cover"
+                    onClick={(e) => {
+                      setCopySelected(true)
+                      e.stopPropagation();
+                      copyToClipboardFormatted((formatPromptForCopy(gptPrompts[gptPrompts.length - 1].prompt)));
+                    }}
+                  />
+                <div>{gptPrompts.length > 0 && formatPrompt(gptPrompts[gptPrompts.length - 1]?.prompt)}</div>
+              </>
+            )}
           </div>
           <div className="submit-container">
             <button 

@@ -7,6 +7,7 @@ import applicationsReducer from './application';
 import correspondencesReducer from './correspondence';
 import jobsReducer from './job';
 import searchReducer from './search';
+import promptReducer from './prompt';
 
 const rootReducer = combineReducers({
   session,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   applications: applicationsReducer,
   correspondences: correspondencesReducer,
   jobs: jobsReducer,
-  searches: searchReducer
+  searches: searchReducer,
+  prompts: promptReducer
 });
 
 

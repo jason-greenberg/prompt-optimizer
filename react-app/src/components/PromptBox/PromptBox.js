@@ -72,7 +72,7 @@ export default function PromptBox() {
             <input 
               type="text" 
               className="position-type-input"
-              placeholder='"Create a lesson plan..."'
+              placeholder='"Create a lesson plan to teach 1st graders about vector databases..."'
               value={prompt}
               onChange={(e) => {
                 setPrompt(e.target.value)

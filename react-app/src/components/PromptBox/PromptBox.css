@@ -15,6 +15,7 @@
   justify-content: flex-start;
   font-size: 16px;
   padding: 8px 16px;
+  position: relative;
 }
 
 .prompt-input-box {

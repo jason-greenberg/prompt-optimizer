@@ -14,7 +14,7 @@ export default function CopyPaste({ textToCopy }) {
       onClick={(e) => {
         setCopySelected(true)
         e.stopPropagation();
-        copyToClipboardFormatted((formatPromptForCopy(textToCopy)));
+        copyToClipboardFormatted(textToCopy);
       }}
     />
   )

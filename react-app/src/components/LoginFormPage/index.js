@@ -53,7 +53,7 @@ function LoginFormPage() {
     e.preventDefault();
     e.stopPropagation();
 
-    const data = await dispatch(login('demo@aa.io', 'password'))
+    const data = await dispatch(login('david@heytutor.com', 'password'))
     if (data) {
       setServerErrors('Error logging in Demo User, please try again')
     } else {

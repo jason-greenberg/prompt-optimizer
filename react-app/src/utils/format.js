@@ -1,4 +1,5 @@
 import React from "react";
+import CopyPaste from "../components/CopyPaste/CopyPaste";
 
 export const capitalizeResumeTitle = (string) => {
   const output = []
@@ -245,6 +246,7 @@ export const convertResumeTextToHtml = (text) => {
 };
 
 // Format prompt for Copy & Paste -------------
+// Format prompt for Copy & Paste -------------
 export function formatPrompt(message) {
   // Replace "system prompt" with "system message"
   // and "user prompt" with "user message"
@@ -260,29 +262,15 @@ export function formatPrompt(message) {
   return (
     <div className="optimized-prompt">
       <div className="system-message">
+        <CopyPaste textToCopy={systemMessage} />
         <div className="prompt-heading">SYSTEM</div>
         <div>{systemMessage}</div>
       </div>
       <div className="user-message">
+        <CopyPaste textToCopy={userMessage} />
         <div className="prompt-heading">USER</div>
         <div>{userMessage}</div>
       </div>
     </div>
   );
 }
-
-export function formatPromptForCopy(message) {
-  // Replace "system prompt" with "system message"
-  // and "user prompt" with "user message"
-  message = message.replace("system prompt", "system message")
-                   .replace("user prompt", "user message");
-
-  // Split the message into system and user parts
-  let splitMessage = message.split("User message: ");
-  let systemMessage = splitMessage[0].replace("System message: ", "").trim();
-  let userMessage = splitMessage[1] ? splitMessage[1].trim() : '';
-
-  // Return formatted messages as a string with line breaks
-  return `SYSTEM\n${systemMessage}\nUSER\n${userMessage}`;
-}
-

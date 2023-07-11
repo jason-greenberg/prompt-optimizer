@@ -3,23 +3,21 @@ import { useEffect, useState } from 'react';
 import Navigation from "../Navigation";
 import { useMenuSelector } from "../../context/Menu";
 import { useDispatch, useSelector } from 'react-redux'
-import { createResumeThunk } from "../../store/resume";
 import { useHistory } from 'react-router-dom'
 import { createPromptThunk, fetchAllPromptsThunk } from "../../store/prompt";
 import { formatPrompt, formatPromptForCopy } from "../../utils/format";
 import copyIcon from "../CoverLetters/CoverLetterDetails/assets/copy-icon-grey.png"
 import { copyToClipboardFormatted } from "../../utils/clipboard";
 import LoadingDots from "../Loading/LoadingDots";
+import CopyPaste from "../CopyPaste/CopyPaste";
 
 export default function PromptBox() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { setSelectedLink } = useMenuSelector();
   const [prompt, setPrompt] = useState('');
-  const [optimizedPrompt, setOptimizedPrompt] = useState('...')
   const [errors, setErrors] = useState({});
   const gptPrompts = Object.values(useSelector(state => state.prompts.allPrompts));
-  const [copySelected, setCopySelected] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -91,16 +89,6 @@ export default function PromptBox() {
             )}
             { !loading && (
               <>
-                <img
-                    src={copyIcon}
-                    alt="Copy"
-                    className="copy-icon copy-cover"
-                    onClick={(e) => {
-                      setCopySelected(true)
-                      e.stopPropagation();
-                      copyToClipboardFormatted((formatPromptForCopy(gptPrompts[gptPrompts.length - 1].prompt)));
-                    }}
-                  />
                 <div>{gptPrompts.length > 0 && formatPrompt(gptPrompts[gptPrompts.length - 1]?.prompt)}</div>
               </>
             )}

@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import userImage from "./assets/default_gravatar.webp"
 import downArrow from "./assets/down-arrow.png";
 import signOut from "./assets/sign_out_icon.png";
-import coverLetterIcon from './assets/zipcover-logo.png'
+import promptlyIcon from './assets/p.png'
 import { authenticate } from "../../store/session";
 
 function ProfileButton() {
@@ -70,7 +70,7 @@ function ProfileButton() {
               className="signout-container gen-count-container"
             >
               <div className="signout-container">
-                <img className="option-icon" src={coverLetterIcon} alt="option-icon" />
+                <img className="option-icon" src={promptlyIcon} alt="option-icon" />
                 <div className="gen-balance">{user.generation_balance}</div>
               </div>
               <button 
